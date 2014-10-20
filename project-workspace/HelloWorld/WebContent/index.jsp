@@ -7,6 +7,7 @@
 <title>Hello World</title>
 </head>
 <body>
-Hello World!!
+Hello World!!<br>
+Redirect to Servlet: <a href="./HelloServlet">Here</a>
 </body>
 </html>
