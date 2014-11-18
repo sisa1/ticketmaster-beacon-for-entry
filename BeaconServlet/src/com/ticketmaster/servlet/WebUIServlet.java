@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class HelloWorld
  */
 @WebServlet("/WebUIServlet")
-public class HelloWorld extends HttpServlet {
+public class WebUIServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
         
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HelloWorld() {
+    public WebUIServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
