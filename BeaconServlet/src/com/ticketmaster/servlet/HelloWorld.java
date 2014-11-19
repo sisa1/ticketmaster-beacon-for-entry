@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+
+import java.sql.*;
+
 /**
  * Servlet implementation class HelloWorld
  */
@@ -31,6 +33,20 @@ public class HelloWorld extends HttpServlet {
         PrintWriter printWriter  = response.getWriter();
         printWriter.println("<h1>Hello World! Test Commit</h1>");
         printWriter.println("<h3>Shelby was here :)</h3>");
+        try {
+        	Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE name = \"Tan\"");
+			printWriter.println("<h5>" + rs.getString("name") + "was here </h5>");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
     }
  
     /**
