@@ -36,9 +36,14 @@ public class HelloWorld extends HttpServlet {
         try {
         	Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
-			Statement stmt = con.createStatement();
+			Statement stmt = con.createStatement();				
 			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE name = \"Tan\"");
-			printWriter.println("<h5>" + rs.getString("name") + "was here </h5>");
+			if(rs.next()){
+				printWriter.println("<h3>" + rs.getString("name") + "was here </h3>");
+			}
+			else{
+				printWriter.println("<h3> empty query </h3>");				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
