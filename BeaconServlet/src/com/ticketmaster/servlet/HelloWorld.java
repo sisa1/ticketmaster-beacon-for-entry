@@ -39,7 +39,7 @@ public class HelloWorld extends HttpServlet {
 			Statement stmt = con.createStatement();				
 			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE name = \"Tan\"");
 			if(rs.next()){
-				printWriter.println("<h3>" + rs.getString("name") + "was here </h3>");
+				printWriter.println("<h3>" + rs.getString("name") + " was here </h3>");
 			}
 			else{
 				printWriter.println("<h3> empty query </h3>");				
