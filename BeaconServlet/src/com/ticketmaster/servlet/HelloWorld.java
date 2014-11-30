@@ -44,6 +44,10 @@ public class HelloWorld extends HttpServlet {
 			else{
 				printWriter.println("<h3> empty query </h3>");				
 			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
