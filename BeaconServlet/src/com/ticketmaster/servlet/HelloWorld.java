@@ -33,6 +33,7 @@ public class HelloWorld extends HttpServlet {
         PrintWriter printWriter  = response.getWriter();
         printWriter.println("<h1>Hello World! Test Commit</h1>");
         printWriter.println("<h3>Shelby was here :)</h3>");
+        printWriter.println("<h2>Matt committed again with T2 Server </h2>");
         try {
         	Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
