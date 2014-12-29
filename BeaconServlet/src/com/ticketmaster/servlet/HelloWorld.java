@@ -37,12 +37,12 @@ public class HelloWorld extends HttpServlet {
         printWriter.println("<h1>Hello World! Test Commit</h1>");
         printWriter.println("<h3>Shelby was here :)</h3>");
         printWriter.println("<h2>Matt committed again with T2 Server </h2>");
-        
+        printWriter.println("<br/>Printing list...<br/>");
         try {
 	        UserDao userDao = MySqlDaoFactory.getUserDAO();
 	        List<UserBean> userList = userDao.getAllUsers();
 	        for(int i = 0; i < userList.size(); i++) {
-	        	printWriter.println("<br>" + userList.get(i).getUsername());
+	        	printWriter.println("<br/>" + userList.get(i).getUsername());
 	        }
         } catch (Exception Ex) {
         	printWriter.println("<h2>Error retrieving all users</h2>");
