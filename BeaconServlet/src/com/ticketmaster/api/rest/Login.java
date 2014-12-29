@@ -8,6 +8,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.ticketmaster.bean.UserBean;
+import com.ticketmaster.dao.MySqlDaoFactory;
+
 @Path("rest/Login")
 public class Login {
 	
@@ -15,10 +18,14 @@ public class Login {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getResponse(	@FormParam("username")@DefaultValue("") String strUsername ,
 									@FormParam("password")@DefaultValue("") String strPassword) {
-		if(strUsername.compareTo("Username") == 0 && strPassword.compareTo("Password") == 0) {
+		
+		UserBean userBean = MySqlDaoFactory.getUserDAO().getUser(strUsername);
+		
+		if(strUsername.compareTo(userBean.getUsername()) == 0 && strPassword.compareTo(userBean.getPassword()) == 0) { // DANGEROUS - MUST CHANGE: PLAIN TXT PASS PASSING
 			String apiKey = strUsername.toLowerCase()+strPassword.toLowerCase();
 			return Response.status(200).entity(apiKey).build();
-		}	
+		}
+		
 		return Response.status(200).entity("Invalid Login").build();
 	}
 }
