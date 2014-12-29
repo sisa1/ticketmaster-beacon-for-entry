@@ -56,6 +56,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 				userToAddToList.setFirstName(rs.getString("FirstName"));
 				userToAddToList.setLastName(rs.getString("LastName"));
 				userToAddToList.setUsername(rs.getString("Username"));
+				userList.add(userToAddToList);
 			}
 			
 		} catch (SQLException e) {
