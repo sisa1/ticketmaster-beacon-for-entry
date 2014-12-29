@@ -1,6 +1,7 @@
 package com.ticketmaster.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.sql.*;
+import com.ticketmaster.bean.UserBean;
+import com.ticketmaster.dao.MySqlDaoFactory;
+import com.ticketmaster.dao.UserDao;
 
 /**
  * Servlet implementation class HelloWorld
@@ -34,29 +37,16 @@ public class HelloWorld extends HttpServlet {
         printWriter.println("<h1>Hello World! Test Commit</h1>");
         printWriter.println("<h3>Shelby was here :)</h3>");
         printWriter.println("<h2>Matt committed again with T2 Server </h2>");
-        try {
-        	Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
-			Statement stmt = con.createStatement();				
-			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE name = \"Tan\"");
-			if(rs.next()){
-				printWriter.println("<h3>" + rs.getString("name") + " was here </h3>");
-			}
-			else{
-				printWriter.println("<h3> empty query </h3>");				
-			}
-			
-			rs.close();
-			stmt.close();
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         
+        try {
+	        UserDao userDao = MySqlDaoFactory.getUserDAO();
+	        List<UserBean> userList = userDao.getAllUsers();
+	        for(int i = 0; i < userList.size(); i++) {
+	        	printWriter.println("<br>" + userList.get(i).getUsername());
+	        }
+        } catch (Exception Ex) {
+        	printWriter.println("<h2>Error retrieving all users</h2>");
+        }
     }
  
     /**

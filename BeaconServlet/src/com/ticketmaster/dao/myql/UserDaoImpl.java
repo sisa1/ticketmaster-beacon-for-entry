@@ -38,7 +38,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 
 	@Override
 	public List<UserBean> getAllUsers() {
-		/*Connection mySqlConnection = null;
+		Connection mySqlConnection = null;
 		mySqlConnection = MySqlDao.getConnection();
 		
 		List<UserBean> userList = new ArrayList<UserBean>();
@@ -66,8 +66,8 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 			MySqlDao.cleanup(mySqlConnection);
 		}
 		return userList;
-		*/
-		/* FOR USE WITH LOCALHOST*/
+		
+		/* FOR USE WITH LOCALHOST
 		List<UserBean> li = new ArrayList<UserBean>();
 		UserBean u1 = new UserBean(0, "fname", "lname", "user", "pass");
 		UserBean u2 = new UserBean(1, "john", "doe", "jdoe", "pass");
@@ -77,7 +77,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		li.add(u2);
 		li.add(u3);
 		li.add(u4);
-		
 		return li;
+		*/
 	}
 }

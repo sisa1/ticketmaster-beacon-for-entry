@@ -15,7 +15,6 @@ public class Login {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getResponse(	@FormParam("username")@DefaultValue("") String strUsername ,
 									@FormParam("password")@DefaultValue("") String strPassword) {
-		
 		if(strUsername.compareTo("Username") == 0 && strPassword.compareTo("Password") == 0) {
 			String apiKey = strUsername.toLowerCase()+strPassword.toLowerCase();
 			return Response.status(200).entity(apiKey).build();
