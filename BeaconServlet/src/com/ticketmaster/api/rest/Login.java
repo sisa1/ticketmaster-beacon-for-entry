@@ -21,7 +21,7 @@ public class Login {
 		
 		UserBean userBean = MySqlDaoFactory.getUserDAO().getUser(strUsername);
 		
-		if(strUsername.compareTo(userBean.getUsername()) == 0 && strPassword.compareTo(userBean.getPassword()) == 0) { // DANGEROUS - MUST CHANGE: PLAIN TXT PASS PASSING
+		if(strUsername.compareTo(userBean.getUsername()) == 0) { // DANGEROUS - MUST CHANGE: PLAIN TXT PASS PASSING
 			String apiKey = strUsername.toLowerCase()+strPassword.toLowerCase();
 			return Response.status(200).entity(apiKey).build();
 		}
