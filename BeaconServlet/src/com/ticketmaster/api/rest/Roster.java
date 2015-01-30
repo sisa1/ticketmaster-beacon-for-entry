@@ -23,7 +23,7 @@ public class Roster {
 	public List<EventBean> responseGetEventsWithRoster() {
 		return null;
 	}
-	
+	/*
 	// Event ID parameter -> Get roster for event
 	@GET
 	@Path("Event")
@@ -40,4 +40,5 @@ public class Roster {
 										 @FormParam("username") @DefaultValue("") String username) {
 		return null;
 	}
+	*/
 }
