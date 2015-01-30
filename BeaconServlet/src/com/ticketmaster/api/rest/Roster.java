@@ -26,7 +26,7 @@ public class Roster {
 	
 	// Event ID parameter -> Get roster for event
 	@GET
-	@Path("")
+	@Path("Event")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RosterEntryBean> responseGetUsersAtRoster(@FormParam("eventId") @DefaultValue("-1") int eventId) {
 		return null;
@@ -34,7 +34,7 @@ public class Roster {
 	
 	//eventId, username parameter -> 
 	@POST
-	@Path("")
+	@Path("User")
 	@Produces(MediaType.APPLICATION_JSON)
 	public RosterEntryBean setUserAttend(@FormParam("eventId") @DefaultValue("-1") int eventId,
 										 @FormParam("username") @DefaultValue("") String username) {
