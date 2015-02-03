@@ -161,6 +161,49 @@ body {
 	background-color: pink;
 }
 
+#stream-box {		/*holds content and success/fail status bar*/
+	background-color: pink;
+	float: left;
+	display: inline-block;
+
+	height: 150px;
+	width: 500px;
+	margin-top: 10px;
+
+	text-align: left;
+	border-radius: 10px;
+}
+
+#stream-box-content {
+	position: relative;
+	float: left;
+	display: inline-block;
+
+	height: 140px;		/*150px - 2 5px borders*/
+	width: 450px;
+	margin-right: -10px;	/*border goes behind success/fail box*/
+
+	border-style: solid;
+	border-width: 5px;
+	border-color: blue;
+	border-radius: 5px;
+	border-right: none;
+}
+
+#success {
+	position: relative;
+	float: right;
+
+	background-color: green;
+
+	margin: 0;
+	height: 150px;	/*height of containing div*/
+	width: 50px;
+
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
 #sign-in {	
 	float: left;
 
