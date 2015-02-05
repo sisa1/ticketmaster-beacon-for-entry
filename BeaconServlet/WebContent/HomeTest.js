@@ -14,7 +14,9 @@ $(document).ready(function(){
 					"<div id=\"success\">success</div>" +
 				"</div>"
 				
-			);
+			); //end of .append
+			
+			$("#stream-content").hide().fadeIn(800);
 		})
 	});
 });
