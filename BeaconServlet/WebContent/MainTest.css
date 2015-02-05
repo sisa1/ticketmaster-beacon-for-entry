@@ -162,7 +162,7 @@ body {
 	background-color: pink;
 }
 
-#stream-box {		/*holds content and success/fail status bar*/
+#stream-box {		/*holds stream content and success/fail status bar*/
 	background-color: pink;
 	float: left;
 	display: inline-block;
