@@ -6,8 +6,8 @@ import com.ticketmaster.bean.EventBean;
 
 public interface EventDao {
 	public List<EventBean> getAllEvents();
-	public EventBean getEvent();
-	public EventBean readEvent();
-	public EventBean createEvent();
-	public EventBean deleteEvent();
+	public EventBean getEvent(String name);
+	public EventBean readEvent(int id);
+	//public EventBean createEvent(int id, String name);
+	//public EventBean deleteEvent(int id);
 }
