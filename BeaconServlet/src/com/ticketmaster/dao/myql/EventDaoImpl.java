@@ -53,7 +53,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM beacon_servlet.users WHERE EventName = " + name + ";";
+			String selectQuery = "SELECT ? FROM beacon_servlet.events WHERE EventName = " + name + ";";
 			
 			
 			ResultSet rs = stmt.executeQuery(selectQuery);
@@ -87,7 +87,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM beacon_servlet.users WHERE EventId = " + id + ";";
+			String selectQuery = "SELECT ? FROM beacon_servlet.events WHERE EventId = " + id + ";";
 			
 			
 			ResultSet rs = stmt.executeQuery(selectQuery);
@@ -112,10 +112,32 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		return result;
 		
 	}
-	/*public EventBean createEvent(int id, String name){
-		
+	public EventBean createEvent(int id, String name){
+		EventBean tmp = null;
+		Connection con = null;
+		Statement stmt = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
+			stmt = con.createStatement();		
+			stmt.executeUpdate("INSERT INTO beacon_servlet.events VALUES (" + id +", '" + name +  "')");
+			// I should probably fetch the object from the data base to make sure it was added successfully
+			tmp = new EventBean();
+			tmp.setName(name);
+			tmp.setId(id);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			cleanup(con, stmt);		
+		}
+		return tmp;	
 	}
-	public EventBean deleteEvent(int id){
+	/*public EventBean deleteEvent(int id){
 		
 	}*/
 
