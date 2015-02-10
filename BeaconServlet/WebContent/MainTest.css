@@ -160,6 +160,8 @@ body {
 #stream-content {
 	display: inline-block;	/*shrink to fit containing divs*/
 	background-color: pink;
+	
+	width: 500px;	/*WILL THIS FIX IT??*/
 }
 
 #stream-box {		/*holds stream content and success/fail status bar*/
