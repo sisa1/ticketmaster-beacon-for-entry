@@ -8,6 +8,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,11 +29,12 @@ public class Roster {
 	public List<EventBean> responseGetEventsWithRoster() {
 		return null;
 	}*/
-	/*
+	
 	// Event ID parameter -> Get roster for event
 	@GET
+	@Path("/Event/{eventId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<RosterEntryBean> responseGetUsersAtRoster(@FormParam("eventId") @DefaultValue("-1") int eventId) {
+	public List<RosterEntryBean> responseGetUsersAtRoster(@PathParam("eventId") @DefaultValue("-1") int eventId) {
 		List<RosterEntryBean> completeRoster = new ArrayList<RosterEntryBean>();
 		
 		UserBean usr1 = new UserBean(1, "John", "Doe", "Jdoe", "pass");
@@ -69,7 +71,7 @@ public class Roster {
 		
 		return null;
 	}
-	*/
+	
 	//eventId, username parameter -> 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
