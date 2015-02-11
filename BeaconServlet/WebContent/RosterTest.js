@@ -4,14 +4,14 @@ $(document).ready(function(){
 	}).then(function(data) {
 		$.each(data, function(i, item) {
 			$("#results").append(
-				"<p>Visitor ID: " + item.visitor.id + "</p>" +
-				"<p>Visitor Username: " + item.visitor.username + "</p>" +
-				"<p>Visitor Password: " + item.visitor.password + "</p>" +
-				"<p>First name: " + item.visitor.firstName + "</p>" +
-				"<p>Last name: " + item.visitor.lastName + "</p>" +
+				"<p>Visitor ID: " + item.visitor[0].id + "</p>" +
+				"<p>Visitor Username: " + item.visitor[0].username + "</p>" +
+				"<p>Visitor Password: " + item.visitor[0].password + "</p>" +
+				"<p>First name: " + item.visitor[0].firstName + "</p>" +
+				"<p>Last name: " + item.visitor[0].lastName + "</p>" +
 				"<p>Attended? " + item.didAttend + "</p>" +
-				"<p>Event ID: " + item.event.id + "</p>" +
-				"<p>Event Name: " + item.event.name + "</p>"
+				"<p>Event ID: " + item.event[0].id + "</p>" +
+				"<p>Event Name: " + item.event[0].name + "</p>"
 			); //end of .append
 		}) //end of .each
 	});
