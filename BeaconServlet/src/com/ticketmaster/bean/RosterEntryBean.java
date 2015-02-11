@@ -9,6 +9,12 @@ public class RosterEntryBean implements Serializable {
 	UserBean Visitor;
 	boolean DidAttend;
 	
+	public RosterEntryBean(EventBean event, UserBean user, boolean attendStatus) {
+		Event = event;
+		Visitor = user;
+		DidAttend = attendStatus;
+	}
+	
 	public UserBean getVisitor() {
 		return Visitor;
 	}
