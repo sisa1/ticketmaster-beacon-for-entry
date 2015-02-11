@@ -13,11 +13,11 @@ $(document).ready(function(){
 			//******************************//
 			$.each(item.visitor, function(x, y) {
 				$("#results").append(
-					"<p>Visitor ID: " + y.id + "</p>" +
-					"<p>Visitor Username: " + y.username + "</p>" +
-					"<p>Visitor Password: " + y.password + "</p>" +
-					"<p>First name: " + y.firstName + "</p>" +
-					"<p>Last name: " + y.lastName + "</p>"
+					"<p>Visitor ID: " + y[0] + "\n" +
+					"Visitor last name: " + y[1] + "\n" +
+					"Visitor first name: " + y[2] + "\n" +
+					"Visitor username: " + y[3] + "\n" +
+					"Visitor password: " + y[4] + "</p>"
 				);
 			}) //end of .each visitor
 			
@@ -31,10 +31,11 @@ $(document).ready(function(){
 			//******************************//
 			//	for each event, append...	//
 			//******************************//
-			$.each(item.event, function(x, y) {
+			$.each(item.event, function(a, b) {
 				$("#results").append(
-					"<p>Event ID: " + y.id + "</p>" +
-					"<p>Event Name: " + y.name + "</p>"
+					"<p>Event ID: " + b.id + "\n" +
+					"Event Name: " + b.name + "</p>" +
+					"<p></p>"
 				);
 			}) //end of .each event
 			
