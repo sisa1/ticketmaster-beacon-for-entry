@@ -33,11 +33,12 @@ public class UserRest {
 		return users;
 	}
 	
-	// Integer Parameter -> Get at ID
+	/* Integer Parameter -> Get at ID
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserBean responseGetId(@PathParam("id") int id) {
 		return null;
 	}
+	*/
 }
