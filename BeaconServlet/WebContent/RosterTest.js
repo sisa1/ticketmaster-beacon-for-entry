@@ -2,17 +2,41 @@ $(document).ready(function(){
 	$.ajax({
 		url: "0/BeaconServlet/api/rest/Roster/Event/1"
 	}).then(function(data) {
+		
+		//**************************//
+		//		for each item		//
+		//**************************//
 		$.each(data, function(i, item) {
+			
+			//******************************//
+			//	for each visitor, append...	//
+			//******************************//
+			$.each(item.visitor, function(x, y) {
+				$("#results").append(
+					"<p>Visitor ID: " + y.id + "</p>" +
+					"<p>Visitor Username: " + y.username + "</p>" +
+					"<p>Visitor Password: " + y.password + "</p>" +
+					"<p>First name: " + y.firstName + "</p>" +
+					"<p>Last name: " + y.lastName + "</p>"
+				);  //end of .append
+			}) //end of .each visitor
+			
+			//**************************//
+			//		append attended?	//
+			//**************************//
 			$("#results").append(
-				"<p>Visitor ID: " + item.visitor[0].id + "</p>" +
-				"<p>Visitor Username: " + item.visitor[0].username + "</p>" +
-				"<p>Visitor Password: " + item.visitor[0].password + "</p>" +
-				"<p>First name: " + item.visitor[0].firstName + "</p>" +
-				"<p>Last name: " + item.visitor[0].lastName + "</p>" +
-				"<p>Attended? " + item.didAttend + "</p>" +
-				"<p>Event ID: " + item.event[0].id + "</p>" +
-				"<p>Event Name: " + item.event[0].name + "</p>"
-			); //end of .append
-		}) //end of .each
+					"<p>Attended? " + item.didAttend + "</p>"
+			);
+			
+			//******************************//
+			//	for each event, append...	//
+			//******************************//
+			$.each(item.event, function(x, y) {
+				$("#results").append(
+					"<p>Event ID: " + y.id + "</p>" +
+					"<p>Event Name: " + y.name + "</p>"
+				);
+			}) //end of .each event
+		}) //end of .each item
 	});
 });
