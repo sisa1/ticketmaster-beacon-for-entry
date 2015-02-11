@@ -28,7 +28,7 @@ public class Roster {
 	public List<EventBean> responseGetEventsWithRoster() {
 		return null;
 	}*/
-	
+	/*
 	// Event ID parameter -> Get roster for event
 	@GET
 	@Path("Event")
@@ -98,4 +98,5 @@ public class Roster {
 		
 		return Response.status(200).entity("Invalid user, or no ticket?").build();
 	}
+	*/
 }
