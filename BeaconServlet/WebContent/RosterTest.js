@@ -8,16 +8,16 @@ $(document).ready(function(){
 		//**************************//
 		$.each(data, function(i, item) {
 			$("#results").append(
-				"<p>Visitor ID: " + item.visitor[id] + "</p>" +
-				"<p>Visitor last name: " + item.visitor[lastName] + "</p>" +
-				"<p>Visitor first name: " + item.visitor[firstName] + "</p>" +
-				"<p>Visitor Username: " + item.visitor[username] + "</p>" +
-				"<p>Visitor Password: " + item.visitor[password] + "</p>" +
+				"<p>Visitor ID: " + item[0].id + "</p>" +
+				"<p>Visitor last name: " + item[0].lastName + "</p>" +
+				"<p>Visitor first name: " + item[0].firstName + "</p>" +
+				"<p>Visitor Username: " + item[0].username + "</p>" +
+				"<p>Visitor Password: " + item[0].password + "</p>" +
 				
 				"<p>Attended? " + item.didAttend + "</p>" +
 				
-				"<p>Event ID: " + item.event[id] + "</p>" +
-				"<p>Event name: " + item.event[name] + "</p>" +
+				"<p>Event ID: " + item[1].id + "</p>" +
+				"<p>Event name: " + item[1].name + "</p>" +
 				"<p></p>"
 			);			
 		}) //end of .each item
