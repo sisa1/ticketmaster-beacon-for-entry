@@ -21,13 +21,13 @@ import com.ticketmaster.dao.UserDao;
 @Path("rest/Roster")
 public class Roster {
 	
-	// No Parameter -> Get all events
+	/* No Parameter -> Get all events
 	@GET
 	@Path("")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<EventBean> responseGetEventsWithRoster() {
 		return null;
-	}
+	}*/
 	
 	// Event ID parameter -> Get roster for event
 	@GET
