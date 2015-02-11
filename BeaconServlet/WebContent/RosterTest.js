@@ -7,38 +7,21 @@ $(document).ready(function(){
 		//		for each item		//
 		//**************************//
 		$.each(data, function(i, item) {
-			
-			//******************************//
-			//	for each visitor, append...	//
-			//******************************//
-			$.each(item.visitor, function(x, y) {
-				$("#results").append(
-					"<p>Visitor ID: " + y[0] + "\n" +
-					"Visitor last name: " + y[1] + "\n" +
-					"Visitor first name: " + y[2] + "\n" +
-					"Visitor username: " + y[3] + "\n" +
-					"Visitor password: " + y[4] + "</p>"
-				);
-			}) //end of .each visitor
-			
-			//**************************//
-			//		append attended?	//
-			//**************************//
 			$("#results").append(
-					"<p>Attended? " + item.didAttend + "</p>"
-			);
-			
-			//******************************//
-			//	for each event, append...	//
-			//******************************//
-			$.each(item.event, function(a, b) {
-				$("#results").append(
-					"<p>Event ID: " + b.id + "\n" +
-					"Event Name: " + b.name + "</p>" +
-					"<p></p>"
-				);
-			}) //end of .each event
-			
+				"<p>Visitor ID: " + item.visitor[i].id + "</p>" +
+				"<p>Visitor Username: " + item.visitor[i].username + "</p>" +
+				"<p>Visitor Password: " + item.visitor[i].password + "</p>" +
+				"<p>First name: " + item.visitor[i].firstName + "</p>" +
+				"<p>Last name: " + item.visitor[i].lastName + "</p>" +
+				
+				"<p>Attended? " + item.didAttend + "</p>" +
+				
+				"<p>Event ID: " + item.event[i].id + "</p>" +
+				"<p>Event Name: " + item.event[i].name + "</p>" +
+				"<p></p>"
+			);			
 		}) //end of .each item
+		
+		
 	});
 });
