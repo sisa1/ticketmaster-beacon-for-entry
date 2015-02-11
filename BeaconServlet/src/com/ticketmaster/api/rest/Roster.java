@@ -28,7 +28,7 @@ public class Roster {
 	public List<EventBean> responseGetEventsWithRoster() {
 		return null;
 	}*/
-	
+	/*
 	// Event ID parameter -> Get roster for event
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -69,13 +69,12 @@ public class Roster {
 		
 		return null;
 	}
-	/*
+	*/
 	//eventId, username parameter -> 
 	@POST
-	@Path("User")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setUserAttend(@FormParam("eventId") @DefaultValue("-1") int eventId,
-										 @FormParam("username") @DefaultValue("") String username) {
+								  @FormParam("username") @DefaultValue("") String username) {
 		boolean didFindUser = false;
 		
 		try {
@@ -97,5 +96,5 @@ public class Roster {
 		
 		return Response.status(200).entity("Invalid user, or no ticket?").build();
 	}
-	*/
+	
 }
