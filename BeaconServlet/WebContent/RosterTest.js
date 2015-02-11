@@ -4,10 +4,10 @@ $(document).ready(function(){
 	}).then(function(data) {
 		$.each(data, function(i, item) {
 			$("#results").append(
-				"<p>Visitor: " + item.visitor + "</p>" +
-				"<p>Event: " + item.event + "</p>" +
-				"<p>First name: " + item.firstName + "</p>" +
-				"<p>Last name: " + item.lastName + "</p>"
+				"<p>Visitor ID: " + item.visitor.id + "</p>" +
+				"<p>First name: " + item.visitor.firstName + "</p>" +
+				"<p>Last name: " + item.visitor.lastName + "</p>" +
+				"<p>Event: " + item.event.id + "</p>"
 			); //end of .append
 		}) //end of .each
 	});
