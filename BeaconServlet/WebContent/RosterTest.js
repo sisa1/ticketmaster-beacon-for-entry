@@ -16,8 +16,8 @@ $(document).ready(function(){
 				
 				"<p>Attended? " + item.didAttend + "</p>" +
 				
-				"<p>Event ID: " + item[1].id + "</p>" +
-				"<p>Event name: " + item[1].name + "</p>" +
+				"<p>Event ID: " + item[2].id + "</p>" +
+				"<p>Event name: " + item[2].name + "</p>" +
 				"<p></p>"
 			);			
 		}) //end of .each item
