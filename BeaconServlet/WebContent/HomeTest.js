@@ -5,7 +5,7 @@ $(document).ready(function(){
 		$.each(data, function(i, item) {
 			
 			//$("#stream-content").append(
-			var html =
+			var fadeThis =
 				"<div id=\"stream-box\">" +
 					"<div id=\"stream-box-content\">" +
 						"<p>ID number: " + item.id + "</p>" +
@@ -15,7 +15,7 @@ $(document).ready(function(){
 					"</div>" +
 					"<div id=\"success\">success</div>" +
 				"</div>"
-			$("html").appendTo("#stream-content").hide().fadeIn(8000);
+			$("fadeThis").appendTo("#stream-content").hide().fadeIn(8000);
 			
 		}) //end of .each
 	});
