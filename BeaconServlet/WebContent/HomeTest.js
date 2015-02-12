@@ -15,7 +15,8 @@ $(document).ready(function(){
 				"</div>"
 				
 			); //end of .append
+			$("#stream-box").hide().fadeIn(800);
 		}) //end of .each
-		$("#stream-content").hide().fadeIn(800);
+		//$("#stream-content").hide().fadeIn(800);
 	});
 });
