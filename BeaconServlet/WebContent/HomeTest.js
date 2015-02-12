@@ -3,7 +3,9 @@ $(document).ready(function(){
 		url: "/BeaconServlet/api/rest/User"
 	}).then(function(data) {
 		$.each(data, function(i, item) {
-			$("#stream-content").append(
+			
+			//$("#stream-content").append(
+			var html =
 				"<div id=\"stream-box\">" +
 					"<div id=\"stream-box-content\">" +
 						"<p>ID number: " + item.id + "</p>" +
@@ -13,10 +15,8 @@ $(document).ready(function(){
 					"</div>" +
 					"<div id=\"success\">success</div>" +
 				"</div>"
-				
-			); //end of .append
-			$("#stream-box").hide().fadeIn(800);
+			$("html").appendTo("#stream-content").hide().fadeIn(8000);
+			
 		}) //end of .each
-		//$("#stream-content").hide().fadeIn(800);
 	});
 });
