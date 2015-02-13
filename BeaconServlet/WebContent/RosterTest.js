@@ -25,5 +25,5 @@ function doAJAX(url){
 };	//end of doAJAX
 
 
-$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/1"));
-$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/2"));
+$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/9"));
+//$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/2"));
