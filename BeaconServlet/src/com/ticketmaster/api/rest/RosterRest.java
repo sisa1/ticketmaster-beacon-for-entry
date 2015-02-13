@@ -17,10 +17,11 @@ import com.ticketmaster.bean.EventBean;
 import com.ticketmaster.bean.RosterEntryBean;
 import com.ticketmaster.bean.UserBean;
 import com.ticketmaster.dao.MySqlDaoFactory;
+import com.ticketmaster.dao.RosterEntryDao;
 import com.ticketmaster.dao.UserDao;
 
 @Path("rest/Roster")
-public class Roster {
+public class RosterRest {
 	
 	/* No Parameter -> Get all events
 	@GET
@@ -35,41 +36,34 @@ public class Roster {
 	@Path("/Event/{eventId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RosterEntryBean> responseGetUsersAtRoster(@PathParam("eventId") @DefaultValue("-1") int eventId) {
-		List<RosterEntryBean> completeRoster = new ArrayList<RosterEntryBean>();
 		
-		UserBean usr1 = new UserBean(1, "John", "Doe", "Jdoe", "pass");
-		UserBean usr2 = new UserBean(2, "Jane", "Doe", "Jdoe", "pass");
-		UserBean usr3 = new UserBean(3, "LOL", "DOUGH", "Jdoe", "pass");
-		UserBean usr4 = new UserBean(4, "TheLastPerson", "ToEnter", "lastty", "pass");
-		
-		EventBean evt1 = new EventBean(1, "Event1");
-		EventBean evt2 = new EventBean(2, "Why are you here?");
-		EventBean evt3 = new EventBean(3, "Forever Alone");
-		
-		RosterEntryBean entry1 = new RosterEntryBean(evt1, usr1, true);
-		RosterEntryBean entry2 = new RosterEntryBean(evt1, usr2, true);
-		RosterEntryBean entry3 = new RosterEntryBean(evt1, usr3, true);
-		RosterEntryBean entry4 = new RosterEntryBean(evt1, usr4, true);
-		
-		RosterEntryBean entry5 = new RosterEntryBean(evt2, usr1, true);
-		RosterEntryBean entry6 = new RosterEntryBean(evt2, usr2, true);
-		
-		
-		if(eventId == 1) {
+		if(eventId == 9) {
+			List<RosterEntryBean> completeRoster = new ArrayList<RosterEntryBean>();
+			
+			UserBean usr1 = new UserBean(1, "Obama", "Doe", "Odoe", "pass");
+			UserBean usr2 = new UserBean(2, "Obama", "Senpai", "Jdoe", "pass");
+			UserBean usr3 = new UserBean(3, "user", "nane", "user", "pass");
+			UserBean usr4 = new UserBean(4, "TheLastPerson", "ToEnter", "lastty", "pass");
+			
+			EventBean evt1 = new EventBean(9, "Love Potion Number 9");
+			
+			RosterEntryBean entry1 = new RosterEntryBean(evt1, usr1, true);
+			RosterEntryBean entry2 = new RosterEntryBean(evt1, usr2, false);
+			RosterEntryBean entry3 = new RosterEntryBean(evt1, usr3, true);
+			RosterEntryBean entry4 = new RosterEntryBean(evt1, usr4, true);
+						
 			completeRoster.add(entry1);
 			completeRoster.add(entry2);
 			completeRoster.add(entry3);
 			completeRoster.add(entry4);
 			
 			return completeRoster;
-		} else if (eventId == 2) {
-			completeRoster.add(entry5);
-			completeRoster.add(entry6);
-			
-			return completeRoster;
 		}
 		
-		return null;
+		List<RosterEntryBean> completeRoster = new ArrayList<RosterEntryBean>();
+		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
+		completeRoster = dao.getRosterForEvent(eventId);
+		return completeRoster;
 	}
 	
 	//eventId, username parameter -> 
