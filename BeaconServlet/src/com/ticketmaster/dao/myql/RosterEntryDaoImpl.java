@@ -19,7 +19,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 	public List<RosterEntryBean> getAllRosterEntries() {
 		return null;
 	}
-	public EventBean getRosterForEvent(int eventId) {
+	public List<RosterEntryBean> getRosterForEvent(int eventId) {
 		return null;
 	}
 	

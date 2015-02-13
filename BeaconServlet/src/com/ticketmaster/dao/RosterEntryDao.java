@@ -8,7 +8,7 @@ import com.ticketmaster.bean.UserBean;
 
 public interface RosterEntryDao {
 	public List<RosterEntryBean> getAllRosterEntries();
-	public EventBean getRosterForEvent(int eventId);
+	public List<RosterEntryBean> getRosterForEvent(int eventId);
 	
 	// CRUD
 	public EventBean createRoster(String name);
