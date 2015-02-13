@@ -1,10 +1,9 @@
-/*package com.ticketmaster.api.rest;
+package com.ticketmaster.api.rest;
 
 import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -17,7 +16,6 @@ public class UserRest {
 	
 	// No Parameter -> Get all
 	@GET
-	@Path("")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserBean> responseGetAll() {
 		UserDao dao = MySqlDaoFactory.getUserDAO();
@@ -40,5 +38,5 @@ public class UserRest {
 	public UserBean responseGetId(@PathParam("id") int id) {
 		return null;
 	}
-	*
-}*/
+	*/
+}
