@@ -2,8 +2,9 @@ function doAJAX(url){
 	$.ajax({
 		url: url
 	}).then(function(data) {
-		
 		$.each(data, function(i, item) {
+			var a = item.didAttend;
+			
 			$("#results").append(
 				"<h2>NEXT VISITOR:</h2>" +
 				"<p>Visitor ID: " + item.visitor.id + "</p>" +
@@ -12,15 +13,21 @@ function doAJAX(url){
 				"<p>Visitor Username: " + item.visitor.username + "</p>" +
 				//"<p>Visitor Password: " + item.visitor.password + "</p>" +
 				
-				"<p>Attended? " + item.didAttend + "</p>" +
+				"<p id=attended" + i + ">Attended? " + item.didAttend + "</p>" +
 				
 				"<p>Event ID: " + item.event.id + "</p>" +
-				"<p>Event name: " + item.event.name + "</p>" +
-				"<p></p>"
-			);			
+				"<p>Event name: " + item.event.name + "</p>"
+			);	//end of .append
+			
+			//change the css color of the attended <p>
+			if($a == "true") {
+				$("#attended" + i).css("background-color", green);
+			}
+			else {
+				$("#attended" + i).css("background-color", red);
+			}
+
 		}) //end of .each item
-		
-		
 	});	//end of .then
 };	//end of doAJAX
 
