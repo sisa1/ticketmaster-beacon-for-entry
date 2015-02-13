@@ -1,6 +1,6 @@
-$(document).ready(function(){
+function doAJAX(url){
 	$.ajax({
-		url: "/BeaconServlet/api/rest/Roster/Event/1"
+		url: url
 	}).then(function(data) {
 		
 		$.each(data, function(i, item) {
@@ -10,7 +10,7 @@ $(document).ready(function(){
 				"<p>Visitor last name: " + item.visitor.lastName + "</p>" +
 				"<p>Visitor first name: " + item.visitor.firstName + "</p>" +
 				"<p>Visitor Username: " + item.visitor.username + "</p>" +
-				"<p>Visitor Password: " + item.visitor.password + "</p>" +
+				//"<p>Visitor Password: " + item.visitor.password + "</p>" +
 				
 				"<p>Attended? " + item.didAttend + "</p>" +
 				
@@ -21,5 +21,9 @@ $(document).ready(function(){
 		}) //end of .each item
 		
 		
-	});
-});
+	});	//end of .then
+};	//end of doAJAX
+
+
+$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/1"));
+$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/2"));
