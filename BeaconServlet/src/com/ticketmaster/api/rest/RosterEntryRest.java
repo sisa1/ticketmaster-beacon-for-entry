@@ -1,4 +1,4 @@
-package com.ticketmaster.api.rest;
+/*package com.ticketmaster.api.rest;
 
 import java.util.List;
 
@@ -46,4 +46,4 @@ public class RosterEntryRest {
 			return Response.status(500).entity("Event Dao Exception: " + ex.getMessage()).build();
 		}
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.ticketmaster.api.rest;
+/*package com.ticketmaster.api.rest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,7 @@ public class RosterRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<EventBean> responseGetEventsWithRoster() {
 		return null;
-	}*/
-	
+	}*	
 	// Event ID parameter -> Get roster for event
 	@GET
 	@Path("/Event/{eventId}")
@@ -91,6 +90,6 @@ public class RosterRest {
 		}
 		
 		return Response.status(200).entity("Invalid user, or no ticket?").build();
-	}*/
+	}*
 	
-}
+}*/

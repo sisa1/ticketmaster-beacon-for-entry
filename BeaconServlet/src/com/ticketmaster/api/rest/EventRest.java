@@ -31,7 +31,7 @@ public class EventRest {
 		}
 		return events;
 	}
-	
+	/*
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response responseInsertEvent(@FormParam("eventId") @DefaultValue("-1") int eventId,
@@ -44,7 +44,7 @@ public class EventRest {
 			return Response.status(500).entity("Event Dao Exception: " + ex.getMessage()).build();
 		}
 	}
-	
+	*/
 	/* Integer Parameter -> Get at ID
 	@GET
 	@Path("/{id}")
