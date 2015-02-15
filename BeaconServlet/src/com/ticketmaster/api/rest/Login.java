@@ -1,4 +1,4 @@
-/*package com.ticketmaster.api.rest;
+package com.ticketmaster.api.rest;
 
 import java.util.List;
 
@@ -44,4 +44,4 @@ public class Login {
 		
 		return Response.status(200).entity("Invalid Login").build();
 	}
-}*/
+}

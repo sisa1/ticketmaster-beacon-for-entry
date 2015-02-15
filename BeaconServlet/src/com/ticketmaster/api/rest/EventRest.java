@@ -32,20 +32,7 @@ public class EventRest {
 		}
 		return events;
 	}
-	/*
-	@PUT
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response responseInsertEvent(@FormParam("eventId") @DefaultValue("-1") int eventId,
-										 @FormParam("eventName") @DefaultValue("") String eventName) {
-		EventDao dao = MySqlDaoFactory.getEventDAO();
-		try {
-			EventBean result = dao.createEvent(eventId, eventName);
-			return Response.status(200).entity(result).build();
-		} catch(Exception ex) {
-			return Response.status(500).entity("Event Dao Exception: " + ex.getMessage()).build();
-		}
-	}
-	*/
+	
 	/* Integer Parameter -> Get at ID */
 	@GET
 	@Path("/{id}")
@@ -61,4 +48,18 @@ public class EventRest {
 		return event;
 	}
 	
+	/*
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response responseInsertEvent(@FormParam("eventId") @DefaultValue("-1") int eventId,
+										 @FormParam("eventName") @DefaultValue("") String eventName) {
+		EventDao dao = MySqlDaoFactory.getEventDAO();
+		try {
+			EventBean result = dao.createEvent(eventId, eventName);
+			return Response.status(200).entity(result).build();
+		} catch(Exception ex) {
+			return Response.status(500).entity("Event Dao Exception: " + ex.getMessage()).build();
+		}
+	}
+	*/
 }
