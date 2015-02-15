@@ -1,4 +1,4 @@
-package com.ticketmaster.api.rest;
+/*package com.ticketmaster.api.rest;
 
 import java.util.List;
 
@@ -51,6 +51,6 @@ public class EventRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserBean responseGetId(@PathParam("id") int id) {
 		return null;
-	}*/
+	}*
 	
-}
+}*/

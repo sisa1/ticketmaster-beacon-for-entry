@@ -1,4 +1,4 @@
-package com.ticketmaster.api.rest;
+/*package com.ticketmaster.api.rest;
 
 import java.util.List;
 
@@ -38,5 +38,5 @@ public class UserRest {
 	public UserBean responseGetId(@PathParam("id") int id) {
 		return null;
 	}
-	*/
-}
+	*
+}*/
