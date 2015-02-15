@@ -1,4 +1,4 @@
-/*package com.ticketmaster.api.rest;
+package com.ticketmaster.api.rest;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -45,12 +46,19 @@ public class EventRest {
 		}
 	}
 	*/
-	/* Integer Parameter -> Get at ID
+	/* Integer Parameter -> Get at ID */
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserBean responseGetId(@PathParam("id") int id) {
-		return null;
-	}*
+	public EventBean responseGetId(@PathParam("id") int id) {
+		EventDao dao = MySqlDaoFactory.getEventDAO();
+		EventBean event;
+		try {
+			event = dao.readEvent(id);
+		} catch (Exception ex) {
+			event = null;
+		}
+		return event;
+	}
 	
-}*/
+}
