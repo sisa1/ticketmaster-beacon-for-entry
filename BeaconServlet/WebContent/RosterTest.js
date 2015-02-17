@@ -2,9 +2,10 @@ function doAJAX(url){
 	$.ajax({
 		url: url
 	}).then(function(data) {
+		$("#status").append("<br> polling...");
 		$.each(data, function(i, item) {
 			var $a = item.didAttend;
-			$("#status").setValue("Status: " + changed);
+			
 			/*
 			$("#results").append(
 				"<h2>NEXT VISITOR:</h2>" +
@@ -38,11 +39,17 @@ function doAJAX(url){
 //******************************************************//
 
 (function poll() {
+	var times = 0;
 	setTimeout (function() {
-		$ajax({url:"/BeaconServlet/api/rest/Roster/Event/9", success: function(data) {
-			$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/9"));
-		}, dataType: "json", complete: poll });
-	}, 30000); //end of setTimeout
+		doAJAX("/BeaconServlet/api/rest/Roster/Event/9");
+		
+		if(times < 5) {
+			times = times + 1;
+			poll();
+		}
+		else
+			$("$status").append("<br>Stop polling...");
+	}, 5000); //end of setTimeout to 5s
 })(); //end of poll
 
 
