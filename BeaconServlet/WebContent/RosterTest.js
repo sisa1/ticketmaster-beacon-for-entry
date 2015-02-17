@@ -52,7 +52,7 @@ var $times = 0;
 			alert($times + " stopping...");
 	}, 5000); //end of setTimeout to 5s
 })(); //end of poll
-
+ 
 
 //$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/9"));	//only event 9 has tuples for now
 //$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/2"));
