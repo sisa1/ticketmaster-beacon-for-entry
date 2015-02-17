@@ -37,18 +37,19 @@ function doAJAX(url){
 //******************************************************//
 //		poll the database for changes to didAttend		//
 //******************************************************//
-
+var $times = 0;
 (function poll() {
-	var times = 0;
 	setTimeout (function() {
-		doAJAX("/BeaconServlet/api/rest/Roster/Event/9");
-		
-		if(times < 5) {
-			times = times + 1;
+		$times++;
+		if($times <= 5) {
+			// TEST: print $times
+			alert($times + " doing ajax, calling poll()");
+			
+			doAJAX("/BeaconServlet/api/rest/Roster/Event/9");
 			poll();
 		}
 		else
-			$("$status").append("<br>Stop polling...");
+			alert($times + " stopping...");
 	}, 5000); //end of setTimeout to 5s
 })(); //end of poll
 
