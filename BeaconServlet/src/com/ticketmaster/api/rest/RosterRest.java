@@ -65,7 +65,7 @@ public class RosterRest {
 		return completeRoster;
 	}
 	
-	/*eventId, username parameter -> */
+	/* eventId, username parameter -> */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setUserAttend(@FormParam("eventId") @DefaultValue("-1") int eventId,
