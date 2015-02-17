@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import com.ticketmaster.bean.EventBean;
 import com.ticketmaster.bean.RosterEntryBean;
 import com.ticketmaster.bean.UserBean;
+import com.ticketmaster.dao.EventDao;
 import com.ticketmaster.dao.MySqlDaoFactory;
 import com.ticketmaster.dao.RosterEntryDao;
 import com.ticketmaster.dao.UserDao;
@@ -23,13 +24,21 @@ import com.ticketmaster.dao.UserDao;
 @Path("rest/Roster")
 public class RosterRest {
 	
-	/* No Parameter -> Get all events
+	/* No Parameter -> Get all events */
 	@GET
 	@Path("")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<EventBean> responseGetEventsWithRoster() {
-		return null;
-	}*/
+	public List<RosterEntryBean> responseGetEventsWithRoster() {
+		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
+		List<RosterEntryBean> rosterEntries = null;
+		try {
+			rosterEntries = dao.getAllRosterEntries();
+		} catch (Exception ex) {
+			rosterEntries = null;
+		}
+		return rosterEntries;
+	}
+	
 	// Event ID parameter -> Get roster for event
 	@GET
 	@Path("/Event/{eventId}")
