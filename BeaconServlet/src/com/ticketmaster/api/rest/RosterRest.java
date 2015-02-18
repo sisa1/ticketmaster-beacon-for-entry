@@ -83,7 +83,7 @@ public class RosterRest {
 		boolean didSucceed = false;
 		
 		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
-		//didSucceed = dao.setDidAttend(eventId, username);
+		didSucceed = dao.setAttend(eventId, username);
 		
 		if(didSucceed) {
 			String response = "welcome to event " + eventId;
