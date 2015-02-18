@@ -22,7 +22,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		con = MySqlDao.getConnection();
 		
 		try {
-			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.Id AND eventRoster.EventId=events.EventId;";
+			String selectAllQuery = "SELECT * FROM beacon_servlet.eventRoster, beacon_servlet.users, beacon_servlet.events WHERE beacon_servlet.eventRoster.UserId=beacon_servlet.users.Id AND beacon_servlet.eventRoster.EventId=beacon_servlet.events.EventId";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			ResultSet rs = pStatement.executeQuery();
 			
