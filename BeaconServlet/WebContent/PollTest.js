@@ -2,10 +2,11 @@ function doAJAX(url){
 	$.ajax({
 		url: url
 	}).then(function(data) {
+		$("#status").append("<br> polling...");
 		$.each(data, function(i, item) {
 			var $a = item.didAttend;
 			
-			
+			/*
 			$("#results").append(
 				"<h2>NEXT VISITOR:</h2>" +
 				"<p>Visitor ID: " + item.visitor.id + "</p>" +
@@ -25,14 +26,35 @@ function doAJAX(url){
 				$("#attended" + i).css("background-color", "green");
 			else
 				$("#attended" + i).css("background-color", "red");
-			
+			*/
 
 		}) //end of .each item
 	});	//end of .then
 };	//end of doAJAX
 
 
-$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/9"));	//only event 9 has tuples for now
+
+//******************************************************//
+//		poll the database for changes to didAttend		//
+//******************************************************//
+var $times = 0;
+(function poll() {
+	setTimeout (function() {
+		$times++;
+		if($times <= 5) {
+			// TEST: print $times
+			alert($times + " doing ajax, calling poll()");
+			
+			doAJAX("/BeaconServlet/api/rest/Roster/Event/9");
+			poll();
+		}
+		else
+			alert($times + " stopping...");
+	}, 5000); //end of setTimeout to 5s
+})(); //end of poll
+ 
+
+//$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/9"));	//only event 9 has tuples for now
 //$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/2"));
 
 
