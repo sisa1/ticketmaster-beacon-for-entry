@@ -63,14 +63,14 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 	public boolean setAttend(int eventId, String username) {
 		//UPDATE `beacon_servlet`.`eventRoster` SET `AttendedFlag`='1' WHERE `Id`='2';
 		Connection con = null;
+		int affectedRows = 0;
 		con = MySqlDao.getConnection();
-		ResultSet rs = null;
 		try {
-			String selectAllQuery = "UPDATE beacon_servlet.eventRoster SET AttendedFlag=1 WHERE(UserId = (SELECT Id FROM beacon_servlet.users WHERE beacon_servlet.users.Username='?') and eventId = ?)";
+			String selectAllQuery = "UPDATE beacon_servlet.eventRoster SET AttendedFlag=1 WHERE(UserId = (SELECT Id FROM beacon_servlet.users WHERE beacon_servlet.users.Username=?) and eventId = ?)";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			pStatement.setString(1, username);
 			pStatement.setInt(2, eventId);
-			rs = pStatement.executeQuery();
+			affectedRows = pStatement.executeUpdate();
 			pStatement.close();
 			
 		} catch (SQLException e) {
@@ -80,14 +80,10 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 			MySqlDao.cleanup(con);
 		}
 		
-		try {
-			if(rs != null && rs.getRow() != 0) {
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(affectedRows != 0) {
+			return true;
 		}
-		
+	
 		return false;
 	}
 	
