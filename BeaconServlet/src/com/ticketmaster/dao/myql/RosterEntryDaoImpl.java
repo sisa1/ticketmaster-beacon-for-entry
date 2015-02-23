@@ -22,7 +22,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		con = MySqlDao.getConnection();
 		
 		try {
-			String selectAllQuery = "SELECT * FROM beacon_servlet.eventRoster, beacon_servlet.users, beacon_servlet.events WHERE beacon_servlet.eventRoster.UserId=beacon_servlet.users.Id AND beacon_servlet.eventRoster.EventId=beacon_servlet.events.EventId";
+			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.Id AND eventRoster.EventId=events.EventId";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			ResultSet rs = pStatement.executeQuery();
 			
@@ -57,7 +57,43 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 	}
 	
 	public List<RosterEntryBean> getRosterForEvent(int eventId) {
-		return null;
+		Connection con = null;
+		List<RosterEntryBean> result = new ArrayList<RosterEntryBean>();
+		con = MySqlDao.getConnection();
+		
+		try {
+			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.Id AND eventRoster.EventId=events.EventId AND events.EventId = " + eventId + "";
+			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
+			ResultSet rs = pStatement.executeQuery();
+			
+			// Iterate ResultSet and Initialize Camera list
+			while(rs.next()) {
+				EventBean eventToAddToEntry = new EventBean();
+				eventToAddToEntry.setId(Integer.parseInt(rs.getString("EventId")));
+				eventToAddToEntry.setName(rs.getString("EventName"));
+				
+				UserBean userToAddToEntry = new UserBean();
+				userToAddToEntry.setId(Integer.parseInt(rs.getString("Id")));
+				userToAddToEntry.setFirstName(rs.getString("FirstName"));
+				userToAddToEntry.setLastName(rs.getString("LastName"));
+				userToAddToEntry.setUsername(rs.getString("Username"));
+				
+				boolean userAttendedEntry = rs.getBoolean("AttendedFlag");
+				
+				RosterEntryBean entry = new RosterEntryBean(eventToAddToEntry, userToAddToEntry, userAttendedEntry);
+				result.add(entry);
+			}
+			
+			pStatement.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = null;
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(con);
+		}
+		return result;
 	}
 	
 	public boolean setAttend(int eventId, String username) {
@@ -66,7 +102,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		int affectedRows = 0;
 		con = MySqlDao.getConnection();
 		try {
-			String selectAllQuery = "UPDATE beacon_servlet.eventRoster SET AttendedFlag=1 WHERE(UserId = (SELECT Id FROM beacon_servlet.users WHERE beacon_servlet.users.Username=?) and eventId = ?)";
+			String selectAllQuery = "UPDATE eventRoster SET AttendedFlag=1 WHERE(UserId = (SELECT Id FROM users WHERE users.Username=?) and eventId = ?)";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			pStatement.setString(1, username);
 			pStatement.setInt(2, eventId);
@@ -89,6 +125,29 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 	
 	// CRUD
 	public EventBean createRoster(String name) {
+		/*EventBean tmp = null;
+		Connection con = null;
+		Statement stmt = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
+			stmt = con.createStatement();		
+			stmt.executeUpdate("INSERT INTO events VALUES (" + id +", '" + name +  "')");
+			// I should probably fetch the object from the data base to make sure it was added successfully
+			tmp = new EventBean();
+			tmp.setName(name);
+			tmp.setId(id);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			cleanup(con, stmt);		
+		}
+		return tmp;	*/
 		return null;
 	}
 	

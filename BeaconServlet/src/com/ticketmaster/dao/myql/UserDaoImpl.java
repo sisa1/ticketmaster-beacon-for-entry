@@ -22,7 +22,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		List<UserBean> userList = new ArrayList<UserBean>();
 		try {
 			mySqlConnection.setAutoCommit(false);
-			String selectAllQuery = "SELECT * FROM beacon_servlet.users";
+			String selectAllQuery = "SELECT * FROM users";
 			PreparedStatement pStatement = mySqlConnection.prepareStatement(selectAllQuery);
 			ResultSet rs = pStatement.executeQuery();
 			
@@ -56,7 +56,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		UserBean userToReturn = null;
 		try {
 			mySqlConnection.setAutoCommit(false);
-			String selectAllQuery = "SELECT ? FROM beacon_servlet.users";
+			String selectAllQuery = "SELECT ? FROM users";
 			PreparedStatement pStatement = mySqlConnection.prepareStatement(selectAllQuery);
 			pStatement.setString(1, username);
 			
@@ -91,9 +91,9 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
-			stmt.executeUpdate("INSERT INTO beacon_servlet.users VALUES (" + id +", '" + firstName + "', '" + lastName + "', '" + username +  "')");
+			stmt.executeUpdate("INSERT INTO users VALUES (" + id +", '" + firstName + "', '" + lastName + "', '" + username +  "')");
 			// I should probably fetch the object from the data base to make sure it was added successfully
 			tmp = new UserBean();
 			tmp.setFirstName(firstName);
@@ -121,7 +121,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM beacon_servlet.users WHERE Id = " + id + ";";
+			String selectQuery = "SELECT ? FROM users WHERE Id = " + id + ";";
 			
 			
 			ResultSet rs = stmt.executeQuery(selectQuery);
@@ -153,9 +153,9 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
-			stmt.executeUpdate("UPDATE beacon_servlet.users SET FirstName = '"+ userToUpDate.getFirstName() 
+			stmt.executeUpdate("UPDATE users SET FirstName = '"+ userToUpDate.getFirstName() 
 					+ "', LastName = '" + userToUpDate.getLastName() + "', UserName = '" 
 					+ userToUpDate.getUsername() +"' WHERE Id = " + id + ";");
 			result = userToUpDate;
@@ -180,9 +180,9 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		try {
 			tmp = readUser(id);
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
-			stmt.executeUpdate("DELETE FROM beacon_servlet.users WHERE Id = " + id + ";");
+			stmt.executeUpdate("DELETE FROM users WHERE Id = " + id + ";");
 			result = tmp;
 
 		} catch (SQLException e) {

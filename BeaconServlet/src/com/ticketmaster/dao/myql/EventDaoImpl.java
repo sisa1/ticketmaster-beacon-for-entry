@@ -19,7 +19,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		con = MySqlDao.getConnection();
 		
 		try {
-			String selectAllQuery = "SELECT * FROM beacon_servlet.events";
+			String selectAllQuery = "SELECT * FROM events";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			ResultSet rs = pStatement.executeQuery();
 			
@@ -53,7 +53,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM beacon_servlet.events WHERE EventName = " + name + ";";
+			String selectQuery = "SELECT ? FROM events WHERE EventName = " + name + ";";
 			
 			
 			ResultSet rs = stmt.executeQuery(selectQuery);
@@ -87,7 +87,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM beacon_servlet.events WHERE EventId = " + id + ";";
+			String selectQuery = "SELECT ? FROM events WHERE EventId = " + id + ";";
 			
 			
 			ResultSet rs = stmt.executeQuery(selectQuery);
@@ -118,9 +118,9 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		Statement stmt = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
-			stmt.executeUpdate("INSERT INTO beacon_servlet.events VALUES (" + id +", '" + name +  "')");
+			stmt.executeUpdate("INSERT INTO events VALUES (" + id +", '" + name +  "')");
 			// I should probably fetch the object from the data base to make sure it was added successfully
 			tmp = new EventBean();
 			tmp.setName(name);
