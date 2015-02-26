@@ -44,30 +44,6 @@ public class RosterRest {
 	@Path("/Event/{eventId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RosterEntryBean> responseGetUsersAtRoster(@PathParam("eventId") @DefaultValue("-1") int eventId) {
-		
-		if(eventId == 9) {
-			List<RosterEntryBean> completeRoster = new ArrayList<RosterEntryBean>();
-			
-			UserBean usr1 = new UserBean(1, "Obama", "Doe", "Odoe", "pass");
-			UserBean usr2 = new UserBean(2, "Obama", "Senpai", "Jdoe", "pass");
-			UserBean usr3 = new UserBean(3, "user", "nane", "user", "pass");
-			UserBean usr4 = new UserBean(4, "TheLastPerson", "ToEnter", "lastty", "pass");
-			
-			EventBean evt1 = new EventBean(9, "Love Potion Number 9");
-			
-			RosterEntryBean entry1 = new RosterEntryBean(evt1, usr1, true);
-			RosterEntryBean entry2 = new RosterEntryBean(evt1, usr2, false);
-			RosterEntryBean entry3 = new RosterEntryBean(evt1, usr3, true);
-			RosterEntryBean entry4 = new RosterEntryBean(evt1, usr4, true);
-						
-			completeRoster.add(entry1);
-			completeRoster.add(entry2);
-			completeRoster.add(entry3);
-			completeRoster.add(entry4);
-			
-			return completeRoster;
-		}
-		
 		List<RosterEntryBean> completeRoster = new ArrayList<RosterEntryBean>();
 		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
 		completeRoster = dao.getRosterForEvent(eventId);

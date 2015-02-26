@@ -62,8 +62,9 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		con = MySqlDao.getConnection();
 		
 		try {
-			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.UserId AND eventRoster.EventId=events.EventId AND events.EventId = " + eventId + "";
+			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.UserId AND eventRoster.EventId=events.EventId AND events.EventId = ?";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
+			pStatement.setInt(1, eventId);
 			ResultSet rs = pStatement.executeQuery();
 			
 			// Iterate ResultSet and Initialize Camera list
