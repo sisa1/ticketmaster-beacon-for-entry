@@ -103,13 +103,12 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		int affectedRows = 0;
 		con = MySqlDao.getConnection();
 		try {
-			String selectAllQuery = "UPDATE eventRoster SET AttendedFlag=1 WHERE(UserId = (SELECT Id FROM users WHERE users.Username=?) and eventId = ?)";
+			String selectAllQuery = "UPDATE eventRoster SET AttendedFlag=1 WHERE(UserId = (SELECT UserId FROM users WHERE users.Username=?) and EventId = ?)";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			pStatement.setString(1, username);
 			pStatement.setInt(2, eventId);
 			affectedRows = pStatement.executeUpdate();
 			pStatement.close();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
