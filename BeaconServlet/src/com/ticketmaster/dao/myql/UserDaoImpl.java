@@ -30,7 +30,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 			while(rs.next()) {
 				UserBean userToAddToList;
 				userToAddToList = new UserBean();
-				userToAddToList.setId(Integer.parseInt(rs.getString("Id")));
+				userToAddToList.setId(Integer.parseInt(rs.getString("UserId")));
 				userToAddToList.setFirstName(rs.getString("FirstName"));
 				userToAddToList.setLastName(rs.getString("LastName"));
 				userToAddToList.setUsername(rs.getString("Username"));
@@ -65,7 +65,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 			// Iterate ResultSet and Initialize Camera list
 			while(rs.next()) {
 				userToReturn = new UserBean();
-				userToReturn.setId(Integer.parseInt(rs.getString("Id")));
+				userToReturn.setId(Integer.parseInt(rs.getString("UserId")));
 				userToReturn.setFirstName(rs.getString("FirstName"));
 				userToReturn.setLastName(rs.getString("LastName"));
 				userToReturn.setUsername(rs.getString("Username"));
@@ -157,7 +157,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 			stmt = con.createStatement();		
 			stmt.executeUpdate("UPDATE users SET FirstName = '"+ userToUpDate.getFirstName() 
 					+ "', LastName = '" + userToUpDate.getLastName() + "', UserName = '" 
-					+ userToUpDate.getUsername() +"' WHERE Id = " + id + ";");
+					+ userToUpDate.getUsername() +"' WHERE UserId = " + id + ";");
 			result = userToUpDate;
 
 		} catch (SQLException e) {
@@ -182,7 +182,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
-			stmt.executeUpdate("DELETE FROM users WHERE Id = " + id + ";");
+			stmt.executeUpdate("DELETE FROM users WHERE UserId = " + id + ";");
 			result = tmp;
 
 		} catch (SQLException e) {

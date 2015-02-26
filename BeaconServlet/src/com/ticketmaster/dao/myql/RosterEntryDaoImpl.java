@@ -22,7 +22,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		con = MySqlDao.getConnection();
 		
 		try {
-			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.Id AND eventRoster.EventId=events.EventId";
+			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.UserId AND eventRoster.EventId=events.EventId";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			ResultSet rs = pStatement.executeQuery();
 			
@@ -33,7 +33,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 				eventToAddToEntry.setName(rs.getString("EventName"));
 				
 				UserBean userToAddToEntry = new UserBean();
-				userToAddToEntry.setId(Integer.parseInt(rs.getString("Id")));
+				userToAddToEntry.setId(Integer.parseInt(rs.getString("UserId")));
 				userToAddToEntry.setFirstName(rs.getString("FirstName"));
 				userToAddToEntry.setLastName(rs.getString("LastName"));
 				userToAddToEntry.setUsername(rs.getString("Username"));
@@ -62,7 +62,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		con = MySqlDao.getConnection();
 		
 		try {
-			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.Id AND eventRoster.EventId=events.EventId AND events.EventId = " + eventId + "";
+			String selectAllQuery = "SELECT * FROM eventRoster, users, events WHERE eventRoster.UserId=users.UserId AND eventRoster.EventId=events.EventId AND events.EventId = " + eventId + "";
 			PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
 			ResultSet rs = pStatement.executeQuery();
 			
@@ -73,7 +73,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 				eventToAddToEntry.setName(rs.getString("EventName"));
 				
 				UserBean userToAddToEntry = new UserBean();
-				userToAddToEntry.setId(Integer.parseInt(rs.getString("Id")));
+				userToAddToEntry.setId(Integer.parseInt(rs.getString("UserId")));
 				userToAddToEntry.setFirstName(rs.getString("FirstName"));
 				userToAddToEntry.setLastName(rs.getString("LastName"));
 				userToAddToEntry.setUsername(rs.getString("Username"));
