@@ -53,17 +53,17 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM events WHERE EventName = " + name + ";";
+			String selectQuery = "SELECT * FROM events WHERE EventName = ?";
 			
-			
-			ResultSet rs = stmt.executeQuery(selectQuery);
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(selectQuery);
+			pStatement.setString(1, name);
+			ResultSet rs = pStatement.executeQuery();
 			
 			// Iterate ResultSet and Initialize Camera list
 			while(rs.next()) {
 				result = new EventBean();
 				result.setId(Integer.parseInt(rs.getString("EventId")));
 				result.setName(rs.getString("EventName"));
-
 			}
 			
 			stmt.close();
@@ -87,10 +87,11 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		try {
 			mySqlConnection.setAutoCommit(false);
 			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM events WHERE EventId = " + id + ";";
+			String selectQuery = "SELECT * FROM events WHERE EventId = ?";
 			
-			
-			ResultSet rs = stmt.executeQuery(selectQuery);
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(selectQuery);
+			pStatement.setInt(1, id);
+			ResultSet rs = pStatement.executeQuery();
 			
 			// Iterate ResultSet and Initialize Camera list
 			while(rs.next()) {
