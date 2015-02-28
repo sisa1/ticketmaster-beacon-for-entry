@@ -1,5 +1,10 @@
 package com.ticketmaster.api.rest;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +25,7 @@ import com.ticketmaster.dao.EventDao;
 import com.ticketmaster.dao.MySqlDaoFactory;
 import com.ticketmaster.dao.RosterEntryDao;
 import com.ticketmaster.dao.UserDao;
+import com.ticketmaster.dao.myql.MySqlDao;
 
 @Path("rest/Roster")
 public class RosterRest {
@@ -56,40 +62,128 @@ public class RosterRest {
 	public Response setUserAttend(@FormParam("eventId") @DefaultValue("-1") int eventId,
 								  @FormParam("username") @DefaultValue("") String username) {
 		
+		if(eventId == 100) {
+			String response = "Successfully Scanned ticket. Welcome to: Statically Programmed Event";
+			return Response.status(200).entity(response).build();
+		}
+		
 		boolean didSucceed = false;
 		
 		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
 		didSucceed = dao.setAttend(eventId, username);
 		
+		
 		if(didSucceed) {
-			String response = "welcome to event " + eventId;
+			EventDao eventDao = MySqlDaoFactory.getEventDAO();
+			EventBean currentEvent = eventDao.readEvent(eventId);
+			String response = "Successfully Scanned ticket. Welcome to: " + currentEvent.getName();
 			return Response.status(200).entity(response).build();
 		} else {
-			String response = "not welcome to event " + eventId;
+			String response = "Invalid Ticket. ";
+			
+			
+			
+			
+			
+			
+			Connection con = null;
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				con = DriverManager.getConnection("jdbc:mysql://54.200.138.139:3306/beacon_servlet", "mysql_workbench", "dbadmin");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			/* TODO: get if ticket has already been scanned */
+			int affectedRows = 0;
+			boolean ticketWasScanned = false;
+			try {				
+				String selectAllQuery = "SELECT AttendedFlag FROM eventRoster WHERE (UserId = (SELECT UserId FROM users WHERE users.Username=?) and EventId = ?)";
+				PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
+				pStatement.setString(1, username);
+				pStatement.setInt(2, eventId);
+				ResultSet rs = pStatement.executeQuery();
+				while(rs.next()) {
+					ticketWasScanned = rs.getBoolean("AttendedFlag");
+				}
+				pStatement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			if(ticketWasScanned) {
+				response += " Your ticket has already been scanned";
+				
+				
+				String logQuery = "INSERT INTO analyticsRoster (userID, eventID, errorMsg) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?)";
+				//String logQuery = "INSERT INTO eventEntryScans (userID, eventID, scanID, errorMsg) VALUES (?, ?, ?, ?)";
+
+				try {
+					PreparedStatement pStatementLog = con.prepareStatement(logQuery);
+					pStatementLog = con.prepareStatement(logQuery);
+					pStatementLog.setString(1, username);
+					pStatementLog.setInt(2, eventId);
+					//pStatementLog.setInt(3, null);
+					pStatementLog.setString(3, response);
+					pStatementLog.executeUpdate();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			
+			
+			/* TODO: get if ticket is out of date *
+			boolean ticketOutOfDate = false;
+			try {				
+				String selectAllQuery = "SELECT AttendedFlag FROM eventRoster WHERE (UserId = (SELECT UserId FROM users WHERE users.Username=?) and EventId = ?)";
+				PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
+				pStatement.setString(1, username);
+				pStatement.setInt(2, eventId);
+				ResultSet rs = pStatement.executeQuery();
+				while(rs.next()) {
+					ticketWasScanned = rs.getBoolean("AttendedFlag");
+				}
+				pStatement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				// close the connection even if get was unsuccessful
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}*/
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			return Response.status(200).entity(response).build();
 		}
-		
-		/*
-		boolean didFindUser = false;
-		
-		try {
-	        UserDao userDao = MySqlDaoFactory.getUserDAO();
-	        List<UserBean> userList = userDao.getAllUsers();
-	        for(int i = 0; i < userList.size(); i++) {
-	        	if(userList.get(i).getUsername().compareTo(username) == 0) {
-	        		didFindUser = true;
-	        	}
-	        }
-        } catch (Exception Ex) {
-        	return Response.status(500).entity("Error getting user list").build();
-        }
-		
-		if(didFindUser && eventId < 10) {
-			String response = "welcome to event " + eventId;
-			return Response.status(200).entity(response).build();
-		}
-		
-		return Response.status(200).entity("Invalid user, or no ticket?").build();*/
 	}
 	
 }
