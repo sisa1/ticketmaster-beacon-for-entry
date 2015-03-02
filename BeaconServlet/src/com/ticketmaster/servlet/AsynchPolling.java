@@ -27,6 +27,18 @@ public class AsynchPolling extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	PrintWriter printWriter  = response.getWriter();
+        try {
+	        UserDao userDao = MySqlDaoFactory.getUserDAO();
+	        List<UserBean> userList = userDao.getAllUsers();
+	        for(int i = 0; i < userList.size(); i++) {
+	        	printWriter.println("<br/>" + userList.get(i).getUsername());
+	        }
+        } catch (Exception Ex) {
+        	printWriter.println("<h2>Error retrieving all users</h2>");
+        }
+    	
         /*final AsyncContext asyncContext = request.startAsync(request, response);
         asyncContext.setTimeout(10 * 60 * 1000);
         contexts.add(asyncContext);*/
@@ -34,18 +46,7 @@ public class AsynchPolling extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    	PrintWriter printWriter  = response.getWriter();
-        try {
-	        UserDao userDao = MySqlDaoFactory.getUserDAO();
-	        List<UserBean> userList = userDao.getAllUsers();
-	        for(int i = 0; i < userList.size(); i++) {
-	        	request.setAttribute("username", userList.get(i).getUsername());
-	        }
-        } catch (Exception Ex) {
-        	printWriter.println("<h2>Error retrieving all users</h2>");
-        }
-        
+            throws ServletException, IOException {        
 /*        List<AsyncContext> asyncContexts = new ArrayList<>(this.contexts);
         this.contexts.clear();
         String name = request.getParameter("name");

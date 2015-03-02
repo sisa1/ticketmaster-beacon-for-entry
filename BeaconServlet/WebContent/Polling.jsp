@@ -31,7 +31,7 @@
         <script>
             function poll() {
                 var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", "asynchPolling?t="+new Date(), true);
+                xmlhttp.open("GET", "asynchPolling?t="+new Date(), true);
                 xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xmlhttp.send();
                 //var nameText = escape(document.getElementById("name").value);
