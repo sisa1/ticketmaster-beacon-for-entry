@@ -10,12 +10,8 @@
         <form method="POST" action="asynchPolling">
             <table>
                 <tr>
-                    <td>Your name:</td>
-                    <td><input type="text" id="name" name="name"/></td>
-                </tr>
-                <tr>
-                    <td>Your shout:</td>
-                    <td><input type="text" id="message" name="message" /></td>
+                    <td>Which Event? (please enter 1)</td>
+                    <td><input type="text" id="eventId" name="eventId"/></td>
                 </tr>
                 <tr>
                     <td><input type="submit" value="POLL" /></td>
