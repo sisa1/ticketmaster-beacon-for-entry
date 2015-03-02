@@ -7,6 +7,7 @@ function doAJAX(url){
 			
 			
 			$("#results").append(
+				"============================================" +
 				"<h2>NEXT VISITOR:</h2>" +
 				"<p>Visitor ID: " + item.visitor.id + "</p>" +
 				"<p>Visitor last name: " + item.visitor.lastName + "</p>" +
@@ -21,7 +22,7 @@ function doAJAX(url){
 			);	//end of .append
 			
 			//change the css color of the attended <p>
-			if($a = "true")
+			if($a = true)
 				$("#attended" + i).css("background-color", "green");
 			else
 				$("#attended" + i).css("background-color", "red");
@@ -32,7 +33,7 @@ function doAJAX(url){
 };	//end of doAJAX
 
 
-$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/9"));	//only event 9 has tuples for now
+$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/1"));	//only event 1 has tuples for now
 //$(document).ready(doAJAX("/BeaconServlet/api/rest/Roster/Event/2"));
 
 
