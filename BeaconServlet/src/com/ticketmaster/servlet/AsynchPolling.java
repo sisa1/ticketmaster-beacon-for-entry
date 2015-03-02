@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.ticketmaster.bean.RosterEntryBean;
 import com.ticketmaster.dao.MySqlDaoFactory;
 import com.ticketmaster.dao.RosterEntryDao;
-import com.ticketmaster.dao.EventDao;
 
 @WebServlet(urlPatterns = {"/asynchPolling"})
 public class AsynchPolling extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	RosterEntryBean[] existingUsers = new RosterEntryBean[10];
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +29,7 @@ public class AsynchPolling extends HttpServlet {
     	int eventId = Integer.parseInt(request.getParameter("eventId"));
     	String htmlMessage = "";
         ServletContext sc = request.getServletContext();
-        sc.setAttribute("entries", null);
+        sc.setAttribute("entries", null);	//clear
         
         try {
         	List<RosterEntryBean> roster = new ArrayList<RosterEntryBean>();
@@ -37,22 +38,32 @@ public class AsynchPolling extends HttpServlet {
     		
     		// Print all data in the roster list
 	        for(int i = 0; i < roster.size(); i++) {
-	        	// do not duplicate entries (usernames)
 	        	
+	        	// check the array of preexisting RosterEntryBeans
+	        		// that user already exists
+	        	if(roster.get(i).getVisitor().getId() == existingUsers[i].getVisitor().getId())
+	        	{
+	        		// check to see if attended needs to be updated
+	        		if(roster.get(i).isDidAttend() != existingUsers[i].isDidAttend())
+	        			existingUsers[i].setDidAttend(roster.get(i).isDidAttend());
+	        	}
+	        		// note new user
+	        	else
+	        		existingUsers[i] = roster.get(i);
 	        	
-	        	// final create htmlMessage to send as response
-	        	htmlMessage = "<div id=entry" + roster.get(i).getVisitor().getUsername() + ">" +
+	        	// create final htmlMessage to send as response
+	        	htmlMessage = "<div id=entry" + existingUsers[i].getVisitor().getUsername() + ">" +
 	        				  "<br/>Visitor:" + 
-	        				  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getVisitor().getId() +
-	        				  "<br/>&nbsp;&nbsp; First Name: " + roster.get(i).getVisitor().getFirstName() +
-	        				  "<br/>&nbsp;&nbsp; Last Name: " + roster.get(i).getVisitor().getLastName() +
-	        				  "<br/>&nbsp;&nbsp; Username: " + roster.get(i).getVisitor().getUsername() +
-	        				  "<br/>&nbsp;&nbsp; Visitor ID: " + roster.get(i).getVisitor().getFirstName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; ID: " + existingUsers[i].getVisitor().getId() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; First Name: " + existingUsers[i].getVisitor().getFirstName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Last Name: " + existingUsers[i].getVisitor().getLastName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Username: " + existingUsers[i].getVisitor().getUsername() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Visitor ID: " + existingUsers[i].getVisitor().getFirstName() +
 	        				  "<br/>Attended?" +
-	        				  "<br/>&nbsp;&nbsp; Status: " + roster.get(i).isDidAttend() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Status: " + existingUsers[i].isDidAttend() +
 	        				  "<br/>Event:" +
-	        				  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getEvent().getId() +
-	        				  "<br/>&nbsp;&nbsp; Name: " + roster.get(i).getEvent().getName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; ID: " + existingUsers[i].getEvent().getId() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Name: " + existingUsers[i].getEvent().getName() +
 	        				  "</div>";
 	        	
 	        	// for each htmlMessage, append it to the response, "entries"
