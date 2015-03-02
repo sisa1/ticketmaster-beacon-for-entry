@@ -26,7 +26,7 @@ public class AsynchPolling extends HttpServlet {
     	
     	// get event id from request
     	int eventId = Integer.parseInt(request.getParameter("eventId"));
-    	String htmlMessage = "";
+    	String htmlMessage = null;
         ServletContext sc = request.getServletContext();
         sc.setAttribute("content", "");
         
@@ -39,8 +39,9 @@ public class AsynchPolling extends HttpServlet {
 	        for(int i = 0; i < roster.size(); i++) {
 	        	// do not duplicate entries (usernames)
 	        	
+	        	
 	        	// final create htmlMessage to send as response
-	        	htmlMessage = "<div id=entry" + i + ">" +
+	        	htmlMessage = "<div id=entry" + roster.get(i).getVisitor().getUsername() + ">" +
 	        				  "<br/>Visitor:" + 
 	        				  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getVisitor().getId() +
 	        				  "<br/>&nbsp;&nbsp; First Name: " + roster.get(i).getVisitor().getFirstName() +
@@ -52,7 +53,7 @@ public class AsynchPolling extends HttpServlet {
 	        				  "<br/>Event:" +
 	        				  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getEvent().getId() +
 	        				  "<br/>&nbsp;&nbsp; Name: " + roster.get(i).getEvent().getName() +
-	        				  "</div id=entry" + i + ">";
+	        				  "</div>";
 	        	
 	        	// for each htmlMessage, append it to the response, "entries"
 	        	if (sc.getAttribute("entries") == null) {

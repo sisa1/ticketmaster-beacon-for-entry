@@ -19,9 +19,6 @@
             </table>
         </form>
         <h2> Display Roster: </h2>
-        <script>
-        		document.getElementById("content").innerHTML = "";
-        </script>
         <div id="content">
             <% if (application.getAttribute("entries") != null) {%>
             <%= application.getAttribute("entries")%>
