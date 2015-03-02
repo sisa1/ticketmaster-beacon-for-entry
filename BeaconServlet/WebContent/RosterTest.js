@@ -22,7 +22,7 @@ function doAJAX(url){
 			);	//end of .append
 			
 			//change the css color of the attended <p>
-			if($a = true)
+			if($a)
 				$("#attended" + i).css("background-color", "green");
 			else
 				$("#attended" + i).css("background-color", "red");
