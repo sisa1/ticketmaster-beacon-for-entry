@@ -29,7 +29,7 @@ public class AsynchPolling extends HttpServlet {
     	int eventId = Integer.parseInt(request.getParameter("eventId"));
     	String htmlMessage = "";
         ServletContext sc = request.getServletContext();
-        sc.setAttribute("entries", null);	//clear
+        sc.setAttribute("entries", null);	//NEED TO CLEAR THIS
         
         try {
         	List<RosterEntryBean> roster = new ArrayList<RosterEntryBean>();
@@ -52,18 +52,18 @@ public class AsynchPolling extends HttpServlet {
 	        		existingUsers[i] = roster.get(i);
 	        	
 	        	// create final htmlMessage to send as response
-	        	htmlMessage = "<div id=entry" + existingUsers[i].getVisitor().getUsername() + ">" +
+	        	htmlMessage = "<div id=entry" + roster.get(i).getVisitor().getUsername() + ">" +
 	        				  "<br/>Visitor:" + 
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; ID: " + existingUsers[i].getVisitor().getId() +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; First Name: " + existingUsers[i].getVisitor().getFirstName() +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Last Name: " + existingUsers[i].getVisitor().getLastName() +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Username: " + existingUsers[i].getVisitor().getUsername() +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Visitor ID: " + existingUsers[i].getVisitor().getFirstName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; ID: " + roster.get(i).getVisitor().getId() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; First Name: " + roster.get(i).getVisitor().getFirstName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Last Name: " + roster.get(i).getVisitor().getLastName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Username: " + roster.get(i).getVisitor().getUsername() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Visitor ID: " + roster.get(i).getVisitor().getFirstName() +
 	        				  "<br/>Attended?" +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Status: " + existingUsers[i].isDidAttend() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Status: " + roster.get(i).isDidAttend() +
 	        				  "<br/>Event:" +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; ID: " + existingUsers[i].getEvent().getId() +
-	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Name: " + existingUsers[i].getEvent().getName() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; ID: " + roster.get(i).getEvent().getId() +
+	        				  "<br/>&nbsp;&nbsp;&nbsp;&nbsp; Name: " + roster.get(i).getEvent().getName() +
 	        				  "</div>";
 	        	
 	        	// for each htmlMessage, append it to the response, "entries"
