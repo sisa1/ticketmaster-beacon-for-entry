@@ -35,13 +35,12 @@ public class AsynchPolling extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
     	PrintWriter printWriter  = response.getWriter();
         try {
 	        UserDao userDao = MySqlDaoFactory.getUserDAO();
 	        List<UserBean> userList = userDao.getAllUsers();
 	        for(int i = 0; i < userList.size(); i++) {
-	        	printWriter.println("<br/>" + userList.get(i).getUsername());
+	        	request.setAttribute("username", userList.get(i).getUsername());
 	        }
         } catch (Exception Ex) {
         	printWriter.println("<h2>Error retrieving all users</h2>");

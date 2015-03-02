@@ -18,20 +18,20 @@
                     <td><input type="text" id="message" name="message" /></td>
                 </tr> -->
                 <tr>
-                    <td><input type="button" onclick="poll();" value="SHOUT" /></td>
+                    <td><input type="button" onclick="poll();" value="POLL" /></td>
                 </tr>
             </table>
         </form>
         <h2> Roster: </h2>
         <div id="content">
-            <%-- <% if (application.getAttribute("messages") != null) {%>
-            <%= application.getAttribute("messages")%>
-            <% }%> --%>
+            <% if (application.getAttribute("username") != null) {%>
+            <%= application.getAttribute("username")%>
+            <% }%>
         </div>
         <script>
             function poll() {
                 var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", "asynchPolling?t="+new Date(), false);
+                xmlhttp.open("POST", "asynchPolling?t="+new Date(), true);
                 xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xmlhttp.send();
                 //var nameText = escape(document.getElementById("name").value);
