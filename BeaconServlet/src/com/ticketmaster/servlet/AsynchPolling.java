@@ -28,6 +28,7 @@ public class AsynchPolling extends HttpServlet {
     	int eventId = Integer.parseInt(request.getParameter("eventId"));
     	String htmlMessage = "";
         ServletContext sc = request.getServletContext();
+        sc.setAttribute("content", "");
         
         try {
         	List<RosterEntryBean> roster = new ArrayList<RosterEntryBean>();
