@@ -19,10 +19,10 @@
             </table>
         </form>
         <h2> Display Roster: </h2>
-        <div id="content">
-        	<script>
+        <script>
         		document.getElementById("content").innerHTML = "";
-        	</script>
+        </script>
+        <div id="content">
             <% if (application.getAttribute("entries") != null) {%>
             <%= application.getAttribute("entries")%>
             <% }%>
