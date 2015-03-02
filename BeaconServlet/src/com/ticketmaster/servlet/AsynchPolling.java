@@ -23,6 +23,8 @@ public class AsynchPolling extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	// get event id from request
     	int eventId = Integer.parseInt(request.getParameter("eventId"));
     	String htmlMessage = "";
         ServletContext sc = request.getServletContext();
@@ -31,11 +33,27 @@ public class AsynchPolling extends HttpServlet {
         	List<RosterEntryBean> roster = new ArrayList<RosterEntryBean>();
     		RosterEntryDao rosterDAO = MySqlDaoFactory.getRosterEntryDAO();
     		roster = rosterDAO.getRosterForEvent(eventId);
-//	        UserDao userDao = MySqlDaoFactory.getUserDAO();
-//	        List<UserBean> userList = userDao.getAllUsers();
+    		
+    		// Print all data in the roster list
 	        for(int i = 0; i < roster.size(); i++) {
-	        	htmlMessage = "<br/>" + roster.get(i).getEvent().getName();
+	        	// do not duplicate entries (usernames)
 	        	
+	        	// final create htmlMessage to send as response
+	        	htmlMessage = "<div id=entry" + i + ">" +
+	        				  "<br/>Visitor:" + 
+	        				  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getVisitor().getId() +
+	        				  "<br/>&nbsp;&nbsp; First Name: " + roster.get(i).getVisitor().getFirstName() +
+	        				  "<br/>&nbsp;&nbsp; Last Name: " + roster.get(i).getVisitor().getLastName() +
+	        				  "<br/>&nbsp;&nbsp; Username: " + roster.get(i).getVisitor().getUsername() +
+	        				  "<br/>&nbsp;&nbsp; Visitor ID: " + roster.get(i).getVisitor().getFirstName() +
+	        				  "<br/>Attended?" +
+	        				  "<br/>&nbsp;&nbsp; Status: " + roster.get(i).isDidAttend() +
+	        				  "<br/>Event:" +
+	        				  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getEvent().getId() +
+	        				  "<br/>&nbsp;&nbsp; Name: " + roster.get(i).getEvent().getName() +
+	        				  "</div id=entry" + i + ">";
+	        	
+	        	// for each htmlMessage, append it to the response, "entries"
 	        	if (sc.getAttribute("entries") == null) {
 	                sc.setAttribute("entries", htmlMessage);
 	            } else {
@@ -44,6 +62,7 @@ public class AsynchPolling extends HttpServlet {
 	            }
 	        	
 	        }
+	        
         } catch (Exception Ex) {
         	sc.setAttribute("entries", "<h2>Error retrieving all users</h2>");
         }
