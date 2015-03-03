@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +21,6 @@ public class EventTimeDaoImpl extends MySqlDao implements EventTimeDao {
 	public boolean compareScanTime(int eventId){
 		Date currentTime = new Date();
 		Date startTime = null;
-		Time duration;
 		Date endTime = null;
 		Connection con = null;
 		Statement stmt = null;
@@ -37,7 +35,7 @@ public class EventTimeDaoImpl extends MySqlDao implements EventTimeDao {
 
 			while(rs.next()) {
 				startTime = rs.getDate("StartTime");
-				endTime = new Date(startTime.getTime() + rs.getTime("Duration").getTime());
+				endTime = rs.getDate("EndTime");
 			}
 			
 			stmt.close();

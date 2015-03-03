@@ -151,9 +151,8 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		UserBean result = null;
 		Connection con = null;
 		Statement stmt = null;
+		con = MySqlDao.getConnection();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
 			stmt.executeUpdate("UPDATE users SET FirstName = '"+ userToUpDate.getFirstName() 
 					+ "', LastName = '" + userToUpDate.getLastName() + "', UserName = '" 
@@ -177,10 +176,9 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		Statement stmt = null;
 		UserBean result = null;
 		UserBean tmp = null;
+		con = MySqlDao.getConnection();
 		try {
 			tmp = readUser(id);
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
 			stmt = con.createStatement();		
 			stmt.executeUpdate("DELETE FROM users WHERE UserId = " + id + ";");
 			result = tmp;

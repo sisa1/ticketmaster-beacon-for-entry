@@ -117,9 +117,9 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		EventBean tmp = null;
 		Connection con = null;
 		Statement stmt = null;
+		con = MySqlDao.getConnection();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
+
 			stmt = con.createStatement();		
 			stmt.executeUpdate("INSERT INTO events VALUES (" + id +", '" + name +  "')");
 			// I should probably fetch the object from the data base to make sure it was added successfully
