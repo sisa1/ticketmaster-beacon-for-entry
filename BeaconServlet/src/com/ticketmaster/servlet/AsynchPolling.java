@@ -18,34 +18,55 @@ import com.ticketmaster.dao.EventDao;
 
 @WebServlet(urlPatterns = {"/asynchPolling"})
 public class AsynchPolling extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	int eventId = Integer.parseInt(request.getParameter("eventId"));
-    	String htmlMessage = "";
+        
+        // get event id from request
+        int eventId = Integer.parseInt(request.getParameter("eventId"));
+        String htmlMessage = "";
         ServletContext sc = request.getServletContext();
+        sc.setAttribute("entries", null);
         
         try {
-        	List<RosterEntryBean> roster = new ArrayList<RosterEntryBean>();
-    		RosterEntryDao rosterDAO = MySqlDaoFactory.getRosterEntryDAO();
-    		roster = rosterDAO.getRosterForEvent(eventId);
-//	        UserDao userDao = MySqlDaoFactory.getUserDAO();
-//	        List<UserBean> userList = userDao.getAllUsers();
-	        for(int i = 0; i < roster.size(); i++) {
-	        	htmlMessage = "<br/>" + roster.get(i).getEvent().getName();
-	        	
-	        	if (sc.getAttribute("entries") == null) {
-	                sc.setAttribute("entries", htmlMessage);
-	            } else {
-	                String currentMessages = (String) sc.getAttribute("entries");
-	                sc.setAttribute("entries", htmlMessage + currentMessages);
-	            }
-	        	
-	        }
+                List<RosterEntryBean> roster = new ArrayList<RosterEntryBean>();
+                RosterEntryDao rosterDAO = MySqlDaoFactory.getRosterEntryDAO();
+                roster = rosterDAO.getRosterForEvent(eventId);
+                
+                // Print all data in the roster list
+                for(int i = 0; i < roster.size(); i++) {
+                        // do not duplicate entries (usernames)
+                        
+                        
+                        // final create htmlMessage to send as response
+                        htmlMessage = "<div id=entry" + roster.get(i).getVisitor().getUsername() + ">" +
+                                                  "<br/>Visitor:" + 
+                                                  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getVisitor().getId() +
+                                                  "<br/>&nbsp;&nbsp; First Name: " + roster.get(i).getVisitor().getFirstName() +
+                                                  "<br/>&nbsp;&nbsp; Last Name: " + roster.get(i).getVisitor().getLastName() +
+                                                  "<br/>&nbsp;&nbsp; Username: " + roster.get(i).getVisitor().getUsername() +
+                                                  "<br/>&nbsp;&nbsp; Visitor ID: " + roster.get(i).getVisitor().getFirstName() +
+                                                  "<br/>Attended?" +
+                                                  "<br/>&nbsp;&nbsp; Status: " + roster.get(i).isDidAttend() +
+                                                  "<br/>Event:" +
+                                                  "<br/>&nbsp;&nbsp; ID: " + roster.get(i).getEvent().getId() +
+                                                  "<br/>&nbsp;&nbsp; Name: " + roster.get(i).getEvent().getName() +
+                                                  "</div>";
+                        
+                        // for each htmlMessage, append it to the response, "entries"
+                        if (sc.getAttribute("entries") == null) {
+                        sc.setAttribute("entries", htmlMessage);
+                    } else {
+                        String currentMessages = (String) sc.getAttribute("entries");
+                        sc.setAttribute("entries", htmlMessage + currentMessages);
+                    }
+                        
+                }
+                
         } catch (Exception Ex) {
-        	sc.setAttribute("entries", "<h2>Error retrieving all users</h2>");
+                sc.setAttribute("entries", "<h2>Error retrieving all users</h2>");
         }
         
         response.sendRedirect("Polling.jsp");

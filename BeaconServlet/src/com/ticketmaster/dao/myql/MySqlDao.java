@@ -10,7 +10,7 @@ public class MySqlDao{
 	protected static Connection getConnection(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/beacon_servlet", "root", "");
+			Connection con = DriverManager.getConnection("jdbc:mysql://54.200.138.139:3306/beacon_servlet", "mysql_workbench", "dbadmin");
 			return con;
 
 		} catch (SQLException e) {
