@@ -117,7 +117,7 @@ public class RosterRest {
 			}
 			
 			if(ticketWasScanned) {
-				response += " Your ticket has already been scanned";
+				response += " Your ticket has already been scanned; ";
 				
 				
 				String logQuery = "INSERT INTO analyticsRoster (userID, eventID, errorMsg) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?)";
@@ -135,28 +135,25 @@ public class RosterRest {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} finally {
-					try {
-						con.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				}
 			}
 			
 			
 			
-			/* TODO: get if ticket is out of date *
-			boolean ticketOutOfDate = false;
+			/* TODO: get if ticket is out of date */
+			boolean ticketOutOfDate = true;
 			try {				
-				String selectAllQuery = "SELECT AttendedFlag FROM eventRoster WHERE (UserId = (SELECT UserId FROM users WHERE users.Username=?) and EventId = ?)";
-				PreparedStatement pStatement = con.prepareStatement(selectAllQuery);
-				pStatement.setString(1, username);
-				pStatement.setInt(2, eventId);
+				String selectTimeQuery = "SELECT EventId, UNIX_TIMESTAMP(EndTime) - UNIX_TIMESTAMP() AS SubtractDate FROM eventTimes  WHERE EventId=?";
+				PreparedStatement pStatement = con.prepareStatement(selectTimeQuery);
+				pStatement.setInt(1, eventId);
 				ResultSet rs = pStatement.executeQuery();
 				while(rs.next()) {
-					ticketWasScanned = rs.getBoolean("AttendedFlag");
+					int diff = rs.getInt("SubtractDate");
+					
+					if(diff > 0) {
+						ticketOutOfDate = false;
+						
+					}
 				}
 				pStatement.close();
 			} catch (SQLException e) {
@@ -169,10 +166,14 @@ public class RosterRest {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}*/
+			}
 			
 			
-			
+			if(ticketOutOfDate) {
+				response += " Event has already passed";
+			} else {
+				//response += " Event has already passed";
+			}
 			
 			
 			
