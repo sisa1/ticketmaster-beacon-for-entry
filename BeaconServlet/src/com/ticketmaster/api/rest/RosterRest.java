@@ -140,7 +140,7 @@ public class RosterRest {
 			
 			
 			
-			/* TODO: check if ticket is out of date */
+			/* TODO: check if ticket is out of dates */
 			boolean ticketOutOfDate = true;
 			try {				
 				String selectTimeQuery = "SELECT EventId, UNIX_TIMESTAMP(EndTime) - UNIX_TIMESTAMP() AS SubtractDate FROM eventTimes  WHERE EventId=?";
