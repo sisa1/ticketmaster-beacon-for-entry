@@ -16,7 +16,7 @@ import com.ticketmaster.dao.MySqlDaoFactory;
 import com.ticketmaster.dao.RosterEntryDao;
 import com.ticketmaster.dao.EventDao;
 
-@WebServlet(urlPatterns = {"/asynchPolling"})
+@WebServlet(urlPatterns = {"/AsynchPolling"})
 public class AsynchPolling extends HttpServlet {
         private static final long serialVersionUID = 1L;
 
