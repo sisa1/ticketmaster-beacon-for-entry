@@ -12,6 +12,7 @@ package com.ticketmaster.dao;
 import com.ticketmaster.dao.myql.RosterEntryDaoImpl;
 import com.ticketmaster.dao.myql.UserDaoImpl;
 import com.ticketmaster.dao.myql.EventDaoImpl;
+import com.ticketmaster.dao.myql.EventTimeDaoImpl;
 
 public class MySqlDaoFactory {
 
@@ -25,5 +26,9 @@ public class MySqlDaoFactory {
 	
 	public static RosterEntryDao getRosterEntryDAO(){
 		return new RosterEntryDaoImpl();
+	}
+	
+	public static EventTimeDao getEventTimeDAO(){
+		return new EventTimeDaoImpl();
 	}
 }

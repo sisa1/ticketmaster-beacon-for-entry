@@ -15,6 +15,12 @@ public class RosterEntryBean implements Serializable {
 		DidAttend = attendStatus;
 	}
 	
+	public RosterEntryBean() {
+		Event = null;
+		Visitor = null;
+		DidAttend = false;
+	}
+	
 	public UserBean getVisitor() {
 		return Visitor;
 	}

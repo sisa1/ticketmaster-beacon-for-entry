@@ -12,8 +12,10 @@ public interface RosterEntryDao {
 	public boolean setAttend(int eventId, String username);
 	
 	// CRUD
-	public EventBean createRoster(String name);
-	public EventBean readRoster(int id);
-	public EventBean updateRoster(int id, UserBean userBean, EventBean eventBean);
+	public RosterEntryBean createRoster(String name);
+	public RosterEntryBean readRoster(int id);
+	public RosterEntryBean readRoster(int eventId, int userId);
+	public RosterEntryBean readRoster(int eventId, String username);
+	public RosterEntryBean updateRoster(int id, UserBean userBean, EventBean eventBean);
 	public void deleteRoster(int id);
 }
