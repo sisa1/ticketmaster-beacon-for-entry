@@ -110,22 +110,30 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 			// close the connection even if get was unsuccessful
 			MySqlDao.cleanup(mySqlConnection);
 		}
-		return result;
-		
+		return result;		
 	}
-	public EventBean createEvent(int id, String name){
-		EventBean tmp = null;
+	public EventBean createEvent(String name){
+		EventBean result = null;
 		Connection con = null;
 		Statement stmt = null;
 		con = MySqlDao.getConnection();
 		try {
 
-			stmt = con.createStatement();		
-			stmt.executeUpdate("INSERT INTO events VALUES (" + id +", '" + name +  "')");
-			// I should probably fetch the object from the data base to make sure it was added successfully
-			tmp = new EventBean();
-			tmp.setName(name);
-			tmp.setId(id);
+			stmt = con.createStatement();	
+			stmt.executeUpdate("INSERT INTO events (EventName) VALUES ('" + name +  "')", 1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			
+			Statement stmt2 = con.createStatement();
+			while(rs.next()){
+				ResultSet rs2 = stmt2.executeQuery("SELECT * FROM events WHERE EventId = " + rs.getInt(1));
+				while(rs2.next()){
+					result = new EventBean();
+					result.setId(rs2.getInt("EventId"));
+					result.setName(rs2.getString("EventName"));
+				}
+			}
+			
+			stmt2.close();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -136,7 +144,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 		} finally {
 			cleanup(con, stmt);		
 		}
-		return tmp;	
+		return result;	
 	}
 	/*public EventBean deleteEvent(int id){
 		
