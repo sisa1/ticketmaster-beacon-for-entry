@@ -50,9 +50,10 @@ public class ScanEntryRest {
 		} else {
 			completeRoster = dao.getScansForEvent(eventId);
 		}
-		
-		for(int i = 0; i < completeRoster.size(); i++) {
-			//completeRoster.get(i) iterate through errors only
+		if(showOnlyErrors) {
+			for(int i = 0; i < completeRoster.size(); i++) {
+				//completeRoster.get(i) iterate through errors only
+			}
 		}
 		
 		return completeRoster;
