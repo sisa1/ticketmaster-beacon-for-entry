@@ -1,0 +1,17 @@
+<html>
+<body>
+	
+	<div>
+		<p>Scan a ticket at the gate with its corresponding event ID, and the username of the person scanned.</p>
+	</div>
+	
+	<div>
+		<form action="http://54.200.138.139:8080/BeaconServlet/api/rest/Roster" method="POST">
+			 EventID: <input type="text" name="eventId"/><br/>
+			 Username: <input type="text" name="username"/></br>
+			 <input type="submit"/>
+		</form>
+	</div>
+	
+</body>
+</html>

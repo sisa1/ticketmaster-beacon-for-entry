@@ -1,0 +1,18 @@
+<html>
+<body>
+	
+	<div>
+		<p>Scan a ticket at the gate with its corresponding event ID, and the username of the person scanned.</p>
+	</div>
+	
+	<div>
+		<form id="liveTicketForm" action="http://54.200.138.139:8080/BeaconServlet/api/rest/ScanEntry">
+			 EventID (int): <input type="text" name="eventId"/><br/>
+			 Time Passed (int): <input type="text" name="timePassed"/></br>
+			 <!-- Show Errors (boolean): <input type="text"/> [TODO - not working] -->
+			 <input type="submit"/>
+		</form>
+	</div>
+	
+</body>
+</html>
