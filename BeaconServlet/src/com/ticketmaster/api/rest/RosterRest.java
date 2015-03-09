@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -62,11 +63,6 @@ public class RosterRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setUserAttend(@FormParam("eventId") @DefaultValue("-1") int eventId,
 								  @FormParam("username") @DefaultValue("") String username) {
-
-		if(eventId == 100) {
-			String response = "Successfully Scanned ticket. Welcome to: Statically Programmed Event";
-			return Response.status(200).entity(response).build();
-		}
 		
 		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
 		EventTimeDao eventTimeDao = MySqlDaoFactory.getEventTimeDAO();
@@ -115,13 +111,22 @@ public class RosterRest {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection("jdbc:mysql://54.200.138.139:3306/beacon_servlet", "mysql_workbench", "dbadmin");
-				
+				/*
 				String logQuery = "INSERT INTO analyticsRoster (userID, eventID, errorMsg) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?)";
 				PreparedStatement pStatementLog = con.prepareStatement(logQuery);
 				pStatementLog = con.prepareStatement(logQuery);
 				pStatementLog.setString(1, username);
 				pStatementLog.setInt(2, eventId);
 				pStatementLog.setString(3, response);
+				pStatementLog.executeUpdate();
+				*/
+
+				String logQuery = "INSERT INTO eventEntryScans (userID, username, eventID, responseMessage) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?, ?)";
+				PreparedStatement pStatementLog = con.prepareStatement(logQuery);
+				pStatementLog.setString(1, username);
+				pStatementLog.setString(2, username);
+				pStatementLog.setInt(3, eventId);
+				pStatementLog.setString(4, response);
 				pStatementLog.executeUpdate();
 				
 				pStatementLog.close();
