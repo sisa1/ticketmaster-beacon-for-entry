@@ -111,15 +111,6 @@ public class RosterRest {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection("jdbc:mysql://54.200.138.139:3306/beacon_servlet", "mysql_workbench", "dbadmin");
-				/*
-				String logQuery = "INSERT INTO analyticsRoster (userID, eventID, errorMsg) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?)";
-				PreparedStatement pStatementLog = con.prepareStatement(logQuery);
-				pStatementLog = con.prepareStatement(logQuery);
-				pStatementLog.setString(1, username);
-				pStatementLog.setInt(2, eventId);
-				pStatementLog.setString(3, response);
-				pStatementLog.executeUpdate();
-				*/
 
 				String logQuery = "INSERT INTO eventEntryScans (userID, username, eventID, responseMessage) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?, ?)";
 				PreparedStatement pStatementLog = con.prepareStatement(logQuery);
