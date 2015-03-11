@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Camera</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../template/mustache.js"></script>
+	<script type="text/javascript" src="./js/read-user.js"></script>
+	
+</head>
+<body>
+	<div id="tableDiv"></div>
+	<script id="mustacheTemplate" type="x-tmpl-mustache">
+	<table>
+	<tbody>
+		<tr>
+			<td>ID</td>
+			<td>Username</td>
+			<td>First Name</td>
+			<td>Last Name</td>
+			<td>Password</td>
+		</tr>
+		{{#.}}
+		<tr>
+			<td>{{id}}</td>
+			<td>{{username}}</td> 
+			<td>{{firstName}}</td>
+			<td>{{lastName}}</td>
+			<td>{{password}}</td>
+			<td><a href="./update-user.html?id={{id}}">edit me</a></td>
+			<td><a href="./delete-user.html?id={{id}}">delete me</a></td>
+		</tr>
+		{{/.}}
+	</tbody>
+	</table>
+	</script>
+	<br>
+	<a href="create-user.html">Add User</a><br>
+	<a href="../index.html">Back to all tables</a>
+</body> 
+</html>
+
+
+

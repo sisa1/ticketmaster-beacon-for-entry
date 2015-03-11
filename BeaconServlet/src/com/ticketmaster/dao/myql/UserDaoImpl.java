@@ -14,6 +14,133 @@ import com.ticketmaster.dao.UserDao;
 
 public class UserDaoImpl extends MySqlDao implements UserDao {
 	
+	/** CRUD OPERATIONS **/
+	// CREATE
+	@Override
+	public UserBean createUser(UserBean user) {
+		String insertCamQuery = "INSERT INTO users (`UserId`, `FirstName`, `LastName`, `Username`, `Password`) VALUES (?, ?, ?, ?, ?)";
+		Connection mySqlConnection = null;
+		mySqlConnection = MySqlDao.getConnection();
+		try {
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(insertCamQuery, Statement.RETURN_GENERATED_KEYS);
+			pStatement.setInt(1, user.getId());
+			pStatement.setString(2, user.getFirstName());
+			pStatement.setString(3, user.getLastName());
+			pStatement.setString(4, user.getUsername());
+			pStatement.setString(5, user.getPassword());
+			pStatement.executeUpdate();// INSERT INTO Camera
+			
+			//Get generated key
+			int newId = -1;
+			ResultSet generatedKeys = pStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				newId = (int) generatedKeys.getLong(1);
+			}
+			user.setId(newId);
+			
+			return user;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			user = null;
+			
+		} finally {
+			MySqlDao.cleanup(mySqlConnection);
+		}
+		return user;
+	}
+	
+	//READ
+	@Override
+	public UserBean readUser(int id) {
+		Connection mySqlConnection = null;
+		mySqlConnection = MySqlDao.getConnection();
+		Statement stmt = null;
+		
+		UserBean userToReturn = null;
+		try {
+			stmt = mySqlConnection.createStatement();
+			String readByIdQuery = "SELECT * FROM users WHERE UserId = ?";
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(readByIdQuery);
+			pStatement.setInt(1, id);
+			ResultSet rs = pStatement.executeQuery();
+			
+			// Iterate ResultSet and Initialize Camera list
+			while(rs.next()) {
+				userToReturn = new UserBean();
+				userToReturn.setId(Integer.parseInt(rs.getString("UserId")));
+				userToReturn.setFirstName(rs.getString("FirstName"));
+				userToReturn.setLastName(rs.getString("LastName"));
+				userToReturn.setUsername(rs.getString("Username"));
+				userToReturn.setPassword(rs.getString("Password"));
+			}
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			userToReturn = null;
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(mySqlConnection);
+		}
+		return userToReturn;
+	}	
+	
+	//UPDATE
+	@Override
+	public UserBean updateUser(int id, UserBean userToUpdate){
+		String updateQuery = "UPDATE users SET FirstName = ?, LastName=?, Username=?, Password=? WHERE UserId=?";
+		UserBean result = null;
+		Connection mySqlConnection = null;
+		Statement stmt = null;
+		mySqlConnection = MySqlDao.getConnection();
+		try {
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(updateQuery);
+			pStatement.setString(1, userToUpdate.getFirstName());
+			pStatement.setString(2, userToUpdate.getLastName());			
+			pStatement.setString(3, userToUpdate.getUsername());
+			pStatement.setString(4, userToUpdate.getPassword());
+			pStatement.setInt(5, id);
+			pStatement.executeUpdate();
+			result = userToUpdate;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally{
+			cleanup(mySqlConnection, stmt);
+		}
+		return result;
+	}
+	
+	//DELETE
+	@Override
+	public UserBean deleteUser(int id){
+		Connection con = null;
+		Statement stmt = null;
+		UserBean result = null;
+		UserBean tmp = null;
+		con = MySqlDao.getConnection();
+		try {
+			tmp = readUser(id);
+			stmt = con.createStatement();		
+			stmt.executeUpdate("DELETE FROM users WHERE UserId = " + id + ";");
+			result = tmp;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			cleanup(con, stmt);
+		}
+		return result;		
+	}
+	
+	
+	
+	/** OTHER METHODS **/
 	@Override
 	public List<UserBean> getAllUsers() {
 		Connection mySqlConnection = null;
@@ -34,6 +161,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 				userToAddToList.setFirstName(rs.getString("FirstName"));
 				userToAddToList.setLastName(rs.getString("LastName"));
 				userToAddToList.setUsername(rs.getString("Username"));
+				userToAddToList.setPassword(rs.getString("Password"));
 				userList.add(userToAddToList);
 			}
 			
@@ -49,6 +177,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		return userList;
 	}
 	
+	@Override
 	public UserBean getUser(String username) {
 		Connection mySqlConnection = null;
 		mySqlConnection = MySqlDao.getConnection();
@@ -69,6 +198,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 				userToReturn.setFirstName(rs.getString("FirstName"));
 				userToReturn.setLastName(rs.getString("LastName"));
 				userToReturn.setUsername(rs.getString("Username"));
+				userToReturn.setPassword(rs.getString("Password"));
 			}
 			
 			pStatement.close();
@@ -110,88 +240,5 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 			cleanup(con, stmt);		
 		}
 		return tmp;		
-	}
-	
-	public UserBean readUser(int id) {
-		Connection mySqlConnection = null;
-		mySqlConnection = MySqlDao.getConnection();
-		Statement stmt = null;
-		
-		UserBean userToReturn = null;
-		try {
-			mySqlConnection.setAutoCommit(false);
-			stmt = mySqlConnection.createStatement();
-			String selectQuery = "SELECT ? FROM users WHERE Id = " + id + ";";
-			
-			
-			ResultSet rs = stmt.executeQuery(selectQuery);
-			
-			// Iterate ResultSet and Initialize Camera list
-			while(rs.next()) {
-				userToReturn = new UserBean();
-				userToReturn.setId(Integer.parseInt(rs.getString("Id")));
-				userToReturn.setFirstName(rs.getString("FirstName"));
-				userToReturn.setLastName(rs.getString("LastName"));
-				userToReturn.setUsername(rs.getString("Username"));
-			}
-			
-			stmt.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			userToReturn = null;
-		} finally {
-			// close the connection even if get was unsuccessful
-			MySqlDao.cleanup(mySqlConnection);
-		}
-		return userToReturn;
-	}	
-
-	public UserBean updateUser(int id, UserBean userToUpDate){
-		UserBean result = null;
-		Connection con = null;
-		Statement stmt = null;
-		con = MySqlDao.getConnection();
-		try {
-			stmt = con.createStatement();		
-			stmt.executeUpdate("UPDATE users SET FirstName = '"+ userToUpDate.getFirstName() 
-					+ "', LastName = '" + userToUpDate.getLastName() + "', UserName = '" 
-					+ userToUpDate.getUsername() +"' WHERE UserId = " + id + ";");
-			result = userToUpDate;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			cleanup(con, stmt);
-		}
-		return result;
-	}
-	
-	public UserBean deleteUser(int id){
-		Connection con = null;
-		Statement stmt = null;
-		UserBean result = null;
-		UserBean tmp = null;
-		con = MySqlDao.getConnection();
-		try {
-			tmp = readUser(id);
-			stmt = con.createStatement();		
-			stmt.executeUpdate("DELETE FROM users WHERE UserId = " + id + ";");
-			result = tmp;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			cleanup(con, stmt);
-		}
-		return result;		
 	}
 }
