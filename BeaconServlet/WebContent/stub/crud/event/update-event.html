@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>Update Event</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../template/mustache.js"></script>
+	<script type="text/javascript" src="./js/update-event.js"></script>
+	
+	<style>
+			input {
+				width:60px !important;
+			}
+	</style>
+	
+</head>
+
+<body>
+	<form id="editForm">
+	<div id="tableDiv">
+	 	<script id="mustacheTemplate"  type="x-tmpl-mustache">
+		<table>
+		<tbody>
+			<tr>
+				<td>ID</td>
+				<td>Event Name</td>
+			</tr>
+			<tr>
+				<td><input type="text" id="id" 			name="id" 		value="{{id}}" readonly/></td>
+				<td><input type="text" id="eventName" 	name="eventName" value="{{name}}"/></td>
+				<td><input type="submit"/></td>
+			</tr>
+		</tbody>
+		</table>
+		</script>
+	</div>
+	</form>
+	<br>
+	<a href="./read-event.html">Back</a>
+</body>
+</html> 

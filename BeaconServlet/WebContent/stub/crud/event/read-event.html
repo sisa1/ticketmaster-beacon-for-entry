@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Camera</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../template/mustache.js"></script>
+	<script type="text/javascript" src="./js/read-event.js"></script>
+	
+</head>
+<body>
+	<div id="tableDiv"></div>
+	<script id="mustacheTemplate" type="x-tmpl-mustache">
+	<table>
+	<tbody>
+		<tr>
+			<td>ID</td>
+			<td>Event Name</td>
+		</tr>
+		{{#.}}
+		<tr>
+			<td>{{id}}</td>
+			<td>{{name}}</td> 
+			<td><a href="./update-event.html?id={{id}}">edit me</a></td>
+			<td><a href="./delete-event.html?id={{id}}">delete me</a></td>
+		</tr>
+		{{/.}}
+	</tbody>
+	</table>
+	</script>
+	<br>
+	<a href="create-event.html">Add event</a><br>
+	<a href="../index.html">Back to all tables</a>
+</body> 
+</html>
+
+
+
