@@ -14,9 +14,104 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class EventTimeDaoImpl extends MySqlDao implements EventTimeDao {
-	public EventTimeBean getEventTime(int eventId){
-		return null;
+	public EventTimeBean readEventTime(int eventId){
+		Connection con = null;
+		EventTimeBean result = null;
+		Statement stmt = null;
+		con = MySqlDao.getConnection();
+		try {
+			stmt = con.createStatement();
+			String query = "SELECT * FROM eventTimes WHERE EventId = " + eventId;
+			ResultSet rs =stmt.executeQuery(query);
+			result = new EventTimeBean();
+			result.setId(eventId);
+			
+			while(rs.next()) {
+				result.setStartTime(rs.getTimestamp("StartTime"));
+				result.setEndTime(rs.getTimestamp("EndTime"));
+			}
+			
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(con);
+		}					
+		return result;
 	}
+	
+	public EventTimeBean createEventTime(int eventId, Timestamp startTime, Timestamp endTime){
+		EventTimeBean result = null;
+		Connection con = null;
+		Statement stmt = null;
+		con = MySqlDao.getConnection();
+		try {
+			stmt = con.createStatement();
+			String query = "INSERT INTO eventTimes VALUES (" + eventId + ", " + startTime.toString() + ", " + endTime.toString() +")";
+			stmt.executeUpdate(query);
+			stmt.close();
+			result = new EventTimeBean();
+			result.setId(eventId);
+			result.setStartTime(startTime);
+			result.setEndTime(endTime);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(con);
+		}	
+		
+		return result;
+	}
+	
+	public EventTimeBean updateEventTime(int eventId, Timestamp startTime, Timestamp endTime){
+		EventTimeBean result = null;
+		Connection con = null;
+		Statement stmt = null;
+		con = MySqlDao.getConnection();
+		try {
+			stmt = con.createStatement();
+			String query = "UPDATE eventTimes SET StartTime = '" + startTime.toString() + "',  EndTime = '" + endTime.toString() + "' WHERE EventId = " + eventId;
+			stmt.executeUpdate(query);
+			stmt.close();
+			result = new EventTimeBean();
+			result.setId(eventId);
+			result.setStartTime(startTime);
+			result.setEndTime(endTime);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(con);
+		}	
+		
+		return result;
+	}	
+	
+	public void deleteEventTime(int eventId){
+		EventTimeBean result = null;
+		Connection con = null;
+		Statement stmt = null;
+		con = MySqlDao.getConnection();
+		try {
+			stmt = con.createStatement();
+			String query = "DELETE FROM eventTimes WHERE EventId = " + eventId;
+			stmt.executeUpdate(query);
+			stmt.close();
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(con);
+		}		
+		return;
+	}	
 	
 	//checks if the current time is within the duration of the specified event. 
 	public boolean compareScanTime(int eventId){
