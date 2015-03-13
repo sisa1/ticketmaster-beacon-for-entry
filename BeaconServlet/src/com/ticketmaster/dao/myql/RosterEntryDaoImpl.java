@@ -16,6 +16,125 @@ import com.ticketmaster.dao.RosterEntryDao;
 
 public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 	
+	/** CRUD OPERATIONS **/
+	@Override
+	public RosterEntryBean createTicket(RosterEntryBean ticket) {
+		String insertBeanQuery = "INSERT INTO eventRoster (`UserId`, `EventId`, `AttendedFlag`) VALUES (?, ?, 0)";
+		Connection mySqlConnection = null;
+		mySqlConnection = MySqlDao.getConnection();
+		RosterEntryBean result = null;
+		try {
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(insertBeanQuery, Statement.RETURN_GENERATED_KEYS);
+			pStatement.setInt(1, ticket.getVisitor().getId());
+			pStatement.setInt(2, ticket.getEvent().getId());
+			pStatement.executeUpdate();
+			
+			//Get generated key
+			int newId = -1;
+			ResultSet generatedKeys = pStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				newId = (int) generatedKeys.getLong(1);
+			}
+			
+			//result.setId(newId);
+			return result;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = null;
+		} finally {
+			MySqlDao.cleanup(mySqlConnection);
+		}
+		return result;
+	}
+	
+	public RosterEntryBean readRoster(int id) {
+		Connection mySqlConnection = null;
+		mySqlConnection = MySqlDao.getConnection();
+		Statement stmt = null;
+		
+		RosterEntryBean rosterToReturn = null;
+		try {
+			stmt = mySqlConnection.createStatement();
+			String readByIdQuery = "SELECT * FROM eventRoster, users, events WHERE EntryId=? AND eventRoster.UserId=users.UserId AND eventRoster.EventId=events.EventId";
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(readByIdQuery);
+			pStatement.setInt(1, id);
+			ResultSet rs = pStatement.executeQuery();
+			
+			EventBean eventToReturn = null;
+			UserBean userToReturn = null;
+			
+			// Iterate ResultSet and Initialize Roster Entry Bean
+			while(rs.next()) {
+				userToReturn = new UserBean();
+				userToReturn.setId(rs.getInt("UserId"));
+				userToReturn.setFirstName(rs.getString("FirstName"));
+				userToReturn.setLastName(rs.getString("LastName"));
+				userToReturn.setUsername(rs.getString("Username"));
+				
+				eventToReturn = new EventBean();
+				eventToReturn.setId(rs.getInt("EventId"));
+				eventToReturn.setName((rs.getString("EventName")));
+				
+				rosterToReturn = new RosterEntryBean();
+				rosterToReturn.setId(id);
+				rosterToReturn.setVisitor(userToReturn);
+				rosterToReturn.setEvent(eventToReturn);
+				rosterToReturn.setDidAttend(rs.getBoolean("AttendedFlag"));
+			}
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			rosterToReturn = null;
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(mySqlConnection);
+		}
+		return rosterToReturn;
+	}
+
+	@Override
+	public RosterEntryBean updateRoster(int id, RosterEntryBean ticketToUpdate) {
+		String updateQuery = "UPDATE eventRoster SET UserId=?, EventId=?, AttendedFlag=? WHERE EntryId=?";
+		RosterEntryBean result = null;
+		Connection mySqlConnection = null;
+		Statement stmt = null;
+		mySqlConnection = MySqlDao.getConnection();
+		try {
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(updateQuery);
+			pStatement.setInt(1, ticketToUpdate.getVisitor().getId());
+			pStatement.setInt(2, ticketToUpdate.getEvent().getId());
+			pStatement.setBoolean(3, ticketToUpdate.isDidAttend());
+			pStatement.setInt(4, id);
+			pStatement.executeUpdate();
+			result = ticketToUpdate;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally{
+			cleanup(mySqlConnection, stmt);
+		}
+		return result;
+	}
+	
+	public void deleteRoster(int id) {
+		Connection mySqlConnection = null;
+		Statement stmt = null;
+		String deleteQuery = "DELETE FROM eventRoster WHERE EntryId=?";
+		mySqlConnection = MySqlDao.getConnection();
+		try {
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(deleteQuery);
+			pStatement.setInt(1, id);
+			pStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			cleanup(mySqlConnection, stmt);
+		}
+	}
+	
 	public List<RosterEntryBean> getAllRosterEntries() {
 		Connection con = null;
 		List<RosterEntryBean> result = new ArrayList<RosterEntryBean>();
@@ -41,6 +160,7 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 				boolean userAttendedEntry = rs.getBoolean("AttendedFlag");
 				
 				RosterEntryBean entry = new RosterEntryBean(eventToAddToEntry, userToAddToEntry, userAttendedEntry);
+				entry.setId(rs.getInt("EntryId"));
 				result.add(entry);
 			}
 			
@@ -152,10 +272,6 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		return null;
 	}
 	
-	public RosterEntryBean readRoster(int id) {
-		return null;
-	}
-	
 	// Returns a roster entry with the specified event id and user id
 	public RosterEntryBean readRoster(int eventId, int userId){
 		RosterEntryBean result = null;
@@ -233,14 +349,4 @@ public class RosterEntryDaoImpl extends MySqlDao implements RosterEntryDao {
 		}	
 		return result;
 	}
-	
-	public RosterEntryBean updateRoster(int id, UserBean userBean, EventBean eventBean) {
-		return null;
-	}
-	
-	public void deleteRoster(int id) {
-		
-	}
-	
-	
 }

@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>Update Roster</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../template/mustache.js"></script>
+	<script type="text/javascript" src="./js/update-roster.js"></script>
+	
+	<style>
+			input {
+				width:60px !important;
+			}
+	</style>
+	
+</head>
+
+<body>
+	<form id="editForm">
+	<div id="tableDiv">
+	 	<script id="mustacheTemplate"  type="x-tmpl-mustache">
+		<table>
+		<tbody>
+			<tr>
+				<td>ID</td>
+				<td>UserId</td>
+				<td>EventId</td>
+				<td>Attend Flag</td>
+			</tr>
+			<tr>
+				<td><input type="text" id="id" 			name="id" 		value="{{id}}" readonly/></td>
+				<td><input type="text" id="userId" 		name="userId" 	value="{{visitor.id}}"/></td>
+				<td><input type="text" id="eventId" 	name="eventId"	value="{{event.id}}"/></td>
+				<td><input type="text" id="attendedFlag"	name="attendedFlag" value="{{didAttend}}"/></td>
+				<td><input type="submit"/></td>
+			</tr>
+		</tbody>
+		</table>
+		</script>
+	</div>
+	</form>
+	<br>
+	<a href="./read-roster.html">Back to rosters</a>
+</body>
+</html> 

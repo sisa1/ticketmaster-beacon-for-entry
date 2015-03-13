@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class RosterEntryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	int Id;
 	EventBean Event;
 	UserBean Visitor;
 	boolean DidAttend;
@@ -38,5 +39,13 @@ public class RosterEntryBean implements Serializable {
 	}
 	public void setEvent(EventBean event) {
 		Event = event;
+	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
 	}
 }

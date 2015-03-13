@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Roster</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../template/mustache.js"></script>
+	<script type="text/javascript" src="./js/read-roster.js"></script>
+	
+</head>
+<body>
+	<div id="tableDiv"></div>
+	<script id="mustacheTemplate" type="x-tmpl-mustache">
+	<table>
+	<tbody>
+		<tr>
+			<td>ID</td>
+			<td>UserId</td>
+			<td>Username</td>
+			<td>|</td>
+			<td>EventId</td>
+			<td>Event Name</td>
+			<td>|</td>
+			<td>Attend Flag</td>
+		</tr>
+		{{#.}}
+		<tr>
+			<td>{{id}}</td>
+			<td>{{visitor.id}}</td>
+			<td>{{visitor.username}}</td> 
+			<td>|</td>
+			<td>{{event.id}}</td>
+			<td>{{event.name}}</td>
+			<td>|</td>
+			<td>{{didAttend}}</td>
+			<td><a href="./update-roster.html?id={{id}}">edit me</a></td>
+			<td><a href="./delete-roster.html?id={{id}}">delete me</a></td>
+		</tr>
+		{{/.}}
+	</tbody>
+	</table>
+	</script>
+	<br>
+	<a href="create-roster.html">Add Roster</a><br>
+	<a href="../index.html">Back to all tables</a>
+</body> 
+</html>
+
+
+

@@ -75,7 +75,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 			// close the connection even if get was unsuccessful
 			MySqlDao.cleanup(mySqlConnection);
 		}
-		return eventToReturn;	
+		return eventToReturn;
 	}
 	
 	@Override
@@ -93,7 +93,6 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 			result = eventToUpdate;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		} finally{
 			cleanup(mySqlConnection, stmt);
 		}
