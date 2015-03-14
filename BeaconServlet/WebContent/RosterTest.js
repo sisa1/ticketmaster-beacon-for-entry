@@ -27,12 +27,12 @@ $(document).ready(poll());
 function poll() {
 	setTimeout (function() {
 		$timesPolled++;
-		if($timesPolled <= 5) {
+		if($timesPolled <= 1) {
 			
 			
 			
 			// TEST: print $timesPolled
-			alert($timesPolled + " doing work, calling poll()");
+			//alert($timesPolled + " doing work, calling poll()");
 			
 			
 			
@@ -71,8 +71,8 @@ function poll() {
 			
 			
 		}
-		else
-			alert($timesPolled + " stopping...");
+		//else
+			//alert($timesPolled + " stopping...");
 	}, $timeout);
 };
 
@@ -200,7 +200,7 @@ function populateArray(url) {
 		$.each(data, function(i, item) {
 			
 			// TEST: print the polling# and which user is being stored in the array
-			alert("Polled: " + $timesPolled + " entering user " + item.visitor.firstName + " into array");
+			//alert("Polled: " + $timesPolled + " entering user " + item.visitor.firstName + " into array");
 			
 			$pastEntries[Number(item.visitor.id)] = item;
 
