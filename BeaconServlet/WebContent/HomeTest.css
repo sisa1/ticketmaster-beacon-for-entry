@@ -1,0 +1,142 @@
+/*	NOTES:
+ *  to fill up the horizontal space, divs need to be in block formatting
+ *  context (BFC). overflow: hidden does this.
+ *	any display styles stop the div value from being block (taking up)
+ *  the rest of the horizontal space. (e.x. display: inline-block)
+ *
+ *	Color Scheme:
+ *  black/letters: 	#1a1a1a
+ *  light gray:		#7f7f7f
+ *  orange:			#f53c17
+ *	red:			#D6301D		(success)
+ *  green:			#9AB147		(fail)
+ */
+
+/*	ISSUES
+ *	
+ *	#page-content margins don't decrease evenly as page width decreases
+ *	the whole #sign-in div disappears once the div overflows
+ *	#sign-in wraps when overflowed
+ *	don't worry about the blue space above the brown #stream, it's just the #stream-content div
+ *	div backgrounds don't extend near the bottom edge for some reason while the divs obviously do.
+ */
+
+html {
+	overflow-y: auto; /*should be able to scroll left/right to see hidden content*/
+
+	text-align: center; /*centers body div*/
+	
+	
+	
+	background: url(Orange_Momiji_2_background.jpg) no-repeat right top fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-size: 12;
+	font-weight: bold;
+	color: #1a1a1a;	/*black/letters*/
+
+	margin: 0;
+}
+
+#sidebar {
+	float: left;
+	position: fixed;
+	
+	height: 100%;
+	width: 300px;
+}
+
+		#menu {
+			float: left;
+			
+			height: 100%;
+			width: 235px;	/* = sidebar width - border width - padding left - padding right. needs to be right or border disappears*/
+			
+			padding: 0 30px 0 30px;
+			
+			/*setting white, opaque background*/
+			background-color: white;
+			opacity: 0.6;
+			filter: alpha(opacity=60); /*For IE8 and earlier */
+		}
+		
+				#logo {
+					font-family: "Cutive", serif;
+					font-size: 35;
+					
+					height: 40px;
+					
+					padding-top: 50px;
+				}
+				
+				#menu-buttons {
+					display: block;	
+				
+					padding: 20px 0 40px 0;
+					
+					text-align: left;
+				}
+				
+						#menu-buttons ul {}
+						
+									#menu-buttons ul li{
+										list-style: none;
+										border-bottom: 1px solid #1a1a1a; /*dark gray*/
+										
+										/*note: padding-bottom pushes underline down*/
+										padding: 20px 0 3px 10px;
+										margin-right: 70px;	/*shorten underline*/
+							
+										-webkit-transition: all .3s ease-out;
+									}
+									#menu-buttons ul li:hover {
+										color: #f53c17;
+										border-bottom: 1px solid #f53c17; /*orange*/
+							
+										margin-right: 50px;
+										margin-left: 20px;
+									}
+				
+				#menu-divider {
+					display: block;
+				
+					background-color: #7f7f7f;	/*light gray*/
+				
+					height: 1px;
+					width: 125px;
+				
+					/*center the line in the div*/
+					margin-left: auto;
+					margin-right: auto;
+				}
+				
+				#menu-content {
+					display: block;
+					
+					padding-top: 30px;
+					
+					line-height: 200%;	/*double spaced*/
+				}
+		
+		#border {
+			float: left;
+			
+			background-color: white;
+			
+			height: 100%;
+			width: 5px;
+		}
+
+#content {
+	display: block;
+	
+	margin-left: 300px;		/* = sidebar width. keeps content from hiding under fixed sidebar*/
+	width: auto;
+	min-width: 300px;		/*set this as something else later based on content*/
+}
