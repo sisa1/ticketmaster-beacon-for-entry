@@ -24,10 +24,14 @@ $(document).ready(poll());
 
 
 //******************************************************//
-//				polling, do calls 5 times				//
+//						polling							//
 //******************************************************//
 function poll() {
 	setTimeout (function() {
+		$timesPolled++;
+		
+		if($timesPolled <= 1)
+			setup();
 
 		//alert("clearing #results");
 		$("#results").empty();
@@ -40,6 +44,18 @@ function poll() {
 	}, $timeout);
 };
 
+
+
+//******************************************************//
+//setup							//
+//******************************************************//
+	function setup() {
+		$("#settings").append(
+			"Event: " + $eventNum + "<br>" +
+			"Timeout: " + $timeout + " milliseconds<br>" + 
+			"Time passed: " + $timePassed + " seconds"
+		);
+	};
 
 
 

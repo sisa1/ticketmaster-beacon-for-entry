@@ -145,6 +145,11 @@ body {
 	font-size: 15;
 }
 
+		#settings {
+			font-size: 12;
+			text-align: center;
+		}
+
 		#results {
 			font-family: "Open Sans", sans-serif;
 			font-size: 12;
