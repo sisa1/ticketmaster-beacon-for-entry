@@ -1,8 +1,10 @@
 
 //********************* settings ***********************//
-var $eventNum = 1		//which event do you want to display?
-var $timeout = 1000		//in milliseconds (5000 = 5 sec)
+var $eventNum = 1;		// which event do you want to display?
 var $timesPolled = 0;
+var $timeout = 1000;	// in milliseconds (5000 = 5 sec)
+var $timePassed = 300000;	// in seconds, remember scans from this long ago
+	//===> check every $timeout msec for scans that happened in the past $timePassed sec
 
 
 //***************** previous data array ****************//
@@ -26,53 +28,15 @@ $(document).ready(poll());
 //******************************************************//
 function poll() {
 	setTimeout (function() {
-		$timesPolled++;
-		if($timesPolled <= 1) {
-			
-			
-			
-			// TEST: print $timesPolled
-			//alert($timesPolled + " doing work, calling poll()");
-			
-			
-			
-			// The first time:	print first entries
-			//					save first entries in the array
-			if($timesPolled == 1) {
-				// Print all Roster entries
-				printRoster("/BeaconServlet/api/rest/Roster/Event/" + $eventNum);
-				
-				// Populate array
-				populateArray("/BeaconServlet/api/rest/Roster/Event/" + $eventNum);
-			}
-			
-			
-			
-			else {
-			
-				alert("Starting else stmt");
-				
-				// Check for differences between 
-				compareInputToArray("/BeaconServlet/api/rest/Roster/Event/" + $eventNum);
-	
-				
-				// TEST: print populated array
-				$("#results").append("Printing the saved array:<br>");
-				for(var i=0; i<$pastEntries.length; i++) {
-					//alert("Printing array: " + "Polled: " + $timesPolled);
-					if($pastEntries[i] != null)
-						$("#results").append("Poll number " + $timesPolled + ", first name: " + $pastEntries[i].visitor.firstName + "<br>");
-				}
-			}
-			
 
-			// Recursively call poll()
-			poll();
-			
-			
-		}
-		//else
-			//alert($timesPolled + " stopping...");
+		//alert("clearing #results");
+		$("#results").empty();
+		
+		//print results
+		printRoster("/BeaconServlet/api/rest/ScanEntry?eventId=" + $eventNum + "&timePassed=" + $timePassed);
+		
+		poll();
+
 	}, $timeout);
 };
 
@@ -222,33 +186,51 @@ function printRoster(url){
 		url: url
 	}).then(function(data) {
 		$.each(data, function(i, item) {
-			var $a = item.didAttend;
+	
+			//print results
+			$("#results").append(
+					"============================================" +
+					"<div id=" + item.userID + ">" +
+						"<h2>NEXT VISITOR:</h2>" +
+						"<p>Visitor ID: " + item.userID + "</p>" +
+						"<p>Visitor Username: " + item.username + "</p>" +
+
+						"<p>Event ID: " + item.eventID + "</p>" +
+						
+						"<p>Error message: " + item.errorMessage + "</p>" +
+					"</div>"
+				);	//end of .append
 			
+			
+			
+			// OLD WAY TO READ JSON
+/*			var $a = item.didAttend;
 			
 			$("#results").append(
 				"============================================" +
 				"<div id=" + item.visitor.id + ">" +
-				"<h2>NEXT VISITOR:</h2>" +
-				"<p>Visitor ID: " + item.visitor.id + "</p>" +
-				"<p>Visitor last name: " + item.visitor.lastName + "</p>" +
-				"<p>Visitor first name: " + item.visitor.firstName + "</p>" +
-				"<p>Visitor Username: " + item.visitor.username + "</p>" +
-				//"<p>Visitor Password: " + item.visitor.password + "</p>" +
-				
-				"<p id=attended" + item.visitor.id + ">Attended? " + item.didAttend + "</p>" +
-				
-				"<p>Event ID: " + item.event.id + "</p>" +
-				"<p>Event name: " + item.event.name + "</p>" +
+					"<h2>NEXT VISITOR:</h2>" +
+					"<p>Visitor ID: " + item.visitor.id + "</p>" +
+					"<p>Visitor last name: " + item.visitor.lastName + "</p>" +
+					"<p>Visitor first name: " + item.visitor.firstName + "</p>" +
+					"<p>Visitor Username: " + item.visitor.username + "</p>" +
+					//"<p>Visitor Password: " + item.visitor.password + "</p>" +
+					
+					"<p id=attended" + item.visitor.id + ">Attended? " + item.didAttend + "</p>" +
+					
+					"<p>Event ID: " + item.event.id + "</p>" +
+					"<p>Event name: " + item.event.name + "</p>" +
 				"</div>"
 			);	//end of .append
 			
 			
+			
 			//change the css color of the attended <p>
 			if($a)
-				$("#attended" + item.visitor.id).css("background-color", "green");
+				$("#attended" + item.visitor.id).css("background-color", "#6b9f40");
 			else
-				$("#attended" + item.visitor.id).css("background-color", "red");
-			
+				$("#attended" + item.visitor.id).css("background-color", "#9f4540");
+*/			
 
 		}) //end of .each item
 	});	//end of .then
