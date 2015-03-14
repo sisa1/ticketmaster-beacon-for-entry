@@ -1,12 +1,12 @@
 package com.ticketmaster.bean;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class EventTimeBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	int Id;
-	Date StartTime;
-	Date EndTime;
+	Timestamp StartTime;
+	Timestamp EndTime;
 	
 	
 	public EventTimeBean(){
@@ -23,17 +23,17 @@ public class EventTimeBean implements Serializable {
 		Id = id;
 	}
 	
-	public Date getStartTime() {
+	public Timestamp getStartTime() {
 		return StartTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Timestamp startTime) {
 		StartTime = startTime;
 	}
 	
-	public Date getEndTime() {
+	public Timestamp getEndTime() {
 		return StartTime;
 	}
-	public void setEndTime(Date startTime) {
+	public void setEndTime(Timestamp startTime) {
 		StartTime = startTime;
 	}	
 }
