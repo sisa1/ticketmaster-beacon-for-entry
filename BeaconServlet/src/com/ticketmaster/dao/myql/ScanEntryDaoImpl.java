@@ -91,6 +91,8 @@ public class ScanEntryDaoImpl extends MySqlDao implements ScanEntryDao {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 			returnMe = null;
+		} finally {
+			MySqlDao.cleanup(con);
 		}
 		
 		return returnMe;
