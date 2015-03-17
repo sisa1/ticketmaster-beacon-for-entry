@@ -1,8 +1,11 @@
 package com.ticketmaster.bean;
 
+import java.util.List;
+
 public class EventBean {
 	int Id;
 	String Name;
+	List<EventBeaconBean> BeaconGates;
 	
 	public EventBean(){
 		Id = 0;
@@ -26,6 +29,14 @@ public class EventBean {
 	}
 	public void setName(String name) {
 		Name = name;
+	}
+
+	public List<EventBeaconBean> getBeaconGates() {
+		return BeaconGates;
+	}
+
+	public void setBeaconGates(List<EventBeaconBean> beaconGates) {
+		BeaconGates = beaconGates;
 	}
 	
 	
