@@ -61,9 +61,13 @@ function poll() {
 		
 		//style setup
 		var setup = document.getElementById("settings-content");
+		
 		setup.style.textAlign = 'left';
+		
 		setup.style.paddingLeft = '40px';
 		setup.style.paddingTop = '10px';
+		
+		//setup.style.boxShadow = '5px 5px 5px black';
 	};
 
 
@@ -211,7 +215,7 @@ function printRoster(url){
 		url: url
 	}).then(function(data) {
 		$.each(data, function(i, item) {
-			$isSuccess = true;
+			var $isSuccess = item.didAttend;
 	
 			//print results
 			$("#results").append(
@@ -246,7 +250,7 @@ function printRoster(url){
 			
 			wrapper.style.borderStyle = 'solid';
 			wrapper.style.borderColor = 'white';
-			wrapper.style.borderWidth = '2px';
+			wrapper.style.borderWidth = '3px';
 			
 			wrapper.style.marginBottom = '30px';
 			
@@ -261,7 +265,7 @@ function printRoster(url){
 				content.style.position = 'relative';
 				
 				content.style.backgroundColor = 'white';
-				content.style.opacity = '0.6';
+				content.style.opacity = '0.75';
 				
 				content.style.width = '100%';
 			
@@ -278,18 +282,19 @@ function printRoster(url){
 					
 					var status = document.getElementById($uniqueId + "-status");
 					
-					status.style.position = 'relative';
-					status.style.cssFloat = 'right';
+					status.style.position = 'absolute';		/*don't change this. makes the size of this div correct*/
 					status.style.display = 'block';
 					
-					status.style.width = '50px';
-					//status.style.height = '100%';
+					status.style.right = '0%';		/*the right side of the div should be all the way to the right*/
+						
+					status.style.width = '75px';
+					status.style.height = '100%';
 					
 					if($isSuccess) {
-						status.style.backgroundColor = '#6b9f40';
+						status.style.backgroundColor = '#6b9f40';	/*green*/
 					}
 					else {
-						status.style.backgroundColor = '#9f4540';
+						status.style.backgroundColor = '#9f4540';	/*red*/
 					}
 			
 			//increment id variable

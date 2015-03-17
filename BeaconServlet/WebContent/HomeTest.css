@@ -28,7 +28,7 @@ html {
 	
 	
 	
-	background: url(Orange_Momiji_2_background.jpg) no-repeat right top fixed; 
+	background: url(Orange_Momiji_3_background.jpg) no-repeat right top fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -56,14 +56,14 @@ body {
 			float: left;
 			
 			height: 100%;
-			width: 245px;	/* = sidebar width - border width - padding left - padding right. needs to be right or border disappears*/
+			width: 255px;	/* = sidebar width - border width - padding left - padding right. needs to be right or border disappears*/
 			
-			padding: 0 25px 0 25px;
+			padding: 0 20px 0 20px;
 			
 			/*setting white, opaque background*/
 			background-color: white;
-			opacity: 0.6;
-			filter: alpha(opacity=60); /*For IE8 and earlier */
+			opacity: 0.75;
+			filter: alpha(opacity=75); /*For IE8 and earlier */
 		}
 		
 				#logo {
@@ -119,7 +119,7 @@ body {
 				#menu-content {
 					display: block;
 					
-					padding-top: 30px;
+					padding: 30px 10px 0 10px;
 					
 					line-height: 200%;	/*double spaced*/
 				}
@@ -151,7 +151,7 @@ body {
 			
 			border-style: solid;
 			border-color: white;
-			border-width: 2px;
+			border-width: 3px;
 			
 			width: 300px;
 			margin-bottom: 40px;
@@ -167,8 +167,8 @@ body {
 					
 					/*setting white, opaque background*/
 					background-color: white;
-					opacity: 0.6;
-					filter: alpha(opacity=60); /*For IE8 and earlier */
+					opacity: 0.75;
+					filter: alpha(opacity=75); /*For IE8 and earlier */
 				}
 				
 						#settings-header {
