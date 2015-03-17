@@ -44,9 +44,9 @@
 		<version>2.1</version>
 	</dependency>
 	<dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>4.1.1</version>
-    </dependency>
+	<groupId>org.apache.tomcat</groupId>
+		<artifactId>tomcat-coyote</artifactId>
+		<version>7.0.57</version>
+	</dependency>
   </dependencies>
 </project>
