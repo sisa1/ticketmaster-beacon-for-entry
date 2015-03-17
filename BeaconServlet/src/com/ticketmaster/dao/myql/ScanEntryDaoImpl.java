@@ -44,7 +44,17 @@ public class ScanEntryDaoImpl extends MySqlDao implements ScanEntryDao {
 				responseMessage = rs.getString("responseMessage");
 				timeScanned = rs.getTimestamp("timeScanned");
 				
-				ScanEntryBean addMe = new ScanEntryBean(userId, username, eventId, responseMessage, timeScanned);
+				String query2 = "SELECT AttendedFlag FROM eventRoster WHERE (EventId=? AND UserId=?)";
+				PreparedStatement pStatement2 = con.prepareStatement(query2);
+				pStatement2.setInt(1, eventId);
+				pStatement2.setInt(2, userId);
+				ResultSet rs2 = pStatement2.executeQuery();
+				boolean didAttend = false;
+				if(rs2.next()) {
+					didAttend = rs2.getBoolean("AttendedFlag");
+				}
+				
+				ScanEntryBean addMe = new ScanEntryBean(userId, username, eventId, responseMessage, timeScanned, didAttend);
 				returnMe.add(addMe);
 			}
 			stmt.close();
@@ -83,7 +93,16 @@ public class ScanEntryDaoImpl extends MySqlDao implements ScanEntryDao {
 				responseMessage = rs.getString("responseMessage");
 				timeScanned = rs.getTimestamp("timeScanned");
 				
-				ScanEntryBean addMe = new ScanEntryBean(userId, username, eventId, responseMessage, timeScanned);
+				String query2 = "SELECT AttendedFlag FROM eventRoster WHERE (EventId=? AND UserId=?)";
+				PreparedStatement pStatement2 = con.prepareStatement(query2);
+				pStatement2.setInt(1, eventId);
+				pStatement2.setInt(2, userId);
+				ResultSet rs2 = pStatement2.executeQuery();
+				boolean didAttend = false;
+				if(rs2.next()) {
+					didAttend = rs2.getBoolean("AttendedFlag");
+				}
+				ScanEntryBean addMe = new ScanEntryBean(userId, username, eventId, responseMessage, timeScanned, didAttend);
 				returnMe.add(addMe);
 			}
 			stmt.close();
