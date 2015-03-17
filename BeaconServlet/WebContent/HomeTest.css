@@ -5,7 +5,7 @@
  *  the rest of the horizontal space. (e.x. display: inline-block)
  *
  *	Color Scheme:
- *  black/letters: 	#1a1a1a
+ *  black/letters: 	#1a1a1a		
  *  light gray:		#7f7f7f
  *  orange:			#f53c17
  *	red:			#9f4540		(fail)
@@ -39,7 +39,7 @@ body {
 	font-family: "Open Sans", sans-serif;
 	font-size: 12;
 	font-weight: bold;
-	color: #1a1a1a;	/*black/letters*/
+	color: black;	/*black/letters*/
 
 	margin: 0;
 }
@@ -56,14 +56,14 @@ body {
 			float: left;
 			
 			height: 100%;
-			width: 235px;	/* = sidebar width - border width - padding left - padding right. needs to be right or border disappears*/
+			width: 245px;	/* = sidebar width - border width - padding left - padding right. needs to be right or border disappears*/
 			
-			padding: 0 30px 0 30px;
+			padding: 0 25px 0 25px;
 			
 			/*setting white, opaque background*/
 			background-color: white;
-			opacity: 0.5;
-			filter: alpha(opacity=50); /*For IE8 and earlier */
+			opacity: 0.6;
+			filter: alpha(opacity=60); /*For IE8 and earlier */
 		}
 		
 				#logo {
@@ -87,7 +87,7 @@ body {
 						
 									#menu-buttons ul li{
 										list-style: none;
-										border-bottom: 1px solid #1a1a1a; /*dark gray*/
+										border-bottom: 1px solid black; /*dark gray*/
 										
 										/*note: padding-bottom pushes underline down*/
 										padding: 20px 0 3px 10px;
@@ -143,17 +143,48 @@ body {
 	
 	font-family: "Cutive", serif;
 	font-size: 15;
+	text-align: center;		/*center #settings in its containing div, #content*/
 }
-
-		#settings {
-			font-size: 12;
-			text-align: center;
+		
+		#settings-wrapper {
+			display: inline-block;
+			
+			border-style: solid;
+			border-color: white;
+			border-width: 2px;
+			
+			width: 300px;
+			margin-bottom: 40px;
 		}
 
-		#results {
+				#settings {
+					display: inline-block;		/*allows #settings to be centered by text-align: center*/
+					
+					width: 300px;
+					padding: 20px 0 20px 0;
+					
+					font-size: 12;
+					
+					/*setting white, opaque background*/
+					background-color: white;
+					opacity: 0.6;
+					filter: alpha(opacity=60); /*For IE8 and earlier */
+				}
+				
+						#settings-header {
+							text-align: center;
+							font-size: 20;
+						}
+						
+						#settings-content {
+							text-align: left;
+							background-color: white;
+						}
+
+		#results {		
 			font-family: "Open Sans", sans-serif;
 			font-size: 12;
 			text-align: left;
 			
-			padding-left: 20px;
+			padding: 0 20px 0 20px;
 		}

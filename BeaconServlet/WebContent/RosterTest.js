@@ -1,9 +1,11 @@
 
 //********************* settings ***********************//
-var $eventNum = 1;		// which event do you want to display?
+var $eventNum = 1;			// which event do you want to display?
 var $timesPolled = 0;
-var $timeout = 1000;	// in milliseconds (5000 = 5 sec)
-var $timePassed = 300000;	// in seconds, remember scans from this long ago
+var $uniqueId = 0;			// used to id divs created from json obj
+
+var $timeout = 1000;		// in milliseconds (5000 = 5 sec)
+var $timePassed = 90000;	// in seconds, remember scans from this long ago
 	//===> check every $timeout msec for scans that happened in the past $timePassed sec
 
 
@@ -39,7 +41,8 @@ function poll() {
 		//print results
 		printRoster("/BeaconServlet/api/rest/ScanEntry?eventId=" + $eventNum + "&timePassed=" + $timePassed);
 		
-		poll();
+		//recursively call poll()
+		//poll();
 
 	}, $timeout);
 };
@@ -47,14 +50,20 @@ function poll() {
 
 
 //******************************************************//
-//setup							//
+//						setup							//
 //******************************************************//
 	function setup() {
-		$("#settings").append(
+		$("#settings-content").append(
 			"Event: " + $eventNum + "<br>" +
 			"Timeout: " + $timeout + " milliseconds<br>" + 
 			"Time passed: " + $timePassed + " seconds"
 		);
+		
+		//style setup
+		var setup = document.getElementById("settings-content");
+		setup.style.textAlign = 'left';
+		setup.style.paddingLeft = '40px';
+		setup.style.paddingTop = '10px';
 	};
 
 
@@ -202,22 +211,89 @@ function printRoster(url){
 		url: url
 	}).then(function(data) {
 		$.each(data, function(i, item) {
+			$isSuccess = true;
 	
 			//print results
 			$("#results").append(
-					"============================================" +
-					"<div id=" + item.userID + ">" +
-						"<h2>NEXT VISITOR:</h2>" +
-						"<p>Visitor ID: " + item.userID + "</p>" +
-						"<p>Visitor Username: " + item.username + "</p>" +
-
-						"<p>Event ID: " + item.eventID + "</p>" +
+					
+				"<div id=" + $uniqueId + "-wrapper>" +
+				
+					"<div id=" + $uniqueId + "-content>" +
+					
+						"<div id=" + $uniqueId + "-words>" +
+							"<h2>NEXT VISITOR:</h2>" +
+							"<p>Visitor ID: " + item.userID + "</p>" +
+							"<p>Visitor Username: " + item.username + "</p>" +
+	
+							"<p>Event ID: " + item.eventID + "</p>" +
+							
+							"<p>Error message: " + item.errorMessage + "</p>" +
+						"</div>" +
 						
-						"<p>Error message: " + item.errorMessage + "</p>" +
-					"</div>"
-				);	//end of .append
+						"<div id=" + $uniqueId + "-status>" +
+						"</div>" +
+						
+					"</div>" +
+					
+				"</div>"
+			);	//end of .append
 			
 			
+			//style results
+			var wrapper = document.getElementById($uniqueId + "-wrapper");
+			
+			wrapper.style.display = 'inline-block';
+			
+			wrapper.style.borderStyle = 'solid';
+			wrapper.style.borderColor = 'white';
+			wrapper.style.borderWidth = '2px';
+			
+			wrapper.style.marginBottom = '30px';
+			
+			wrapper.style.width = '100%';
+			//wrapper.style.height = '100%';
+			//wrapper.style.overflow = 'hidden';
+
+			
+				var content = document.getElementById($uniqueId + "-content");
+			
+				content.style.display = 'inline-block';
+				content.style.position = 'relative';
+				
+				content.style.backgroundColor = 'white';
+				content.style.opacity = '0.6';
+				
+				content.style.width = '100%';
+			
+				
+					var words = document.getElementById($uniqueId + "-words");
+				
+					words.style.cssFloat = 'left';
+					words.style.display = 'block';
+					
+					words.style.paddingTop = '10px';		//compensate for header "next visitor"
+					words.style.paddingRight = '30px';
+					words.style.paddingBottom = '15px';
+					words.style.paddingLeft = '30px';
+					
+					var status = document.getElementById($uniqueId + "-status");
+					
+					status.style.position = 'relative';
+					status.style.cssFloat = 'right';
+					status.style.display = 'block';
+					
+					status.style.width = '50px';
+					//status.style.height = '100%';
+					
+					if($isSuccess) {
+						status.style.backgroundColor = '#6b9f40';
+					}
+					else {
+						status.style.backgroundColor = '#9f4540';
+					}
+			
+			//increment id variable
+			$uniqueId++;
 			
 			// OLD WAY TO READ JSON
 /*			var $a = item.didAttend;
