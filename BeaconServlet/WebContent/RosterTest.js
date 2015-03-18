@@ -94,20 +94,32 @@ function printSettings() {
 //					edit settings btn					//
 //******************************************************//
 function editSettingsBtn() {
-	var $newEvent = prompt("Enter an event id (integer)");
-	var $newTimeout = prompt("Enter a timeout (miliseconds)");
-	var $newTimePassed = prompt("Enter a new time passed (seconds)");
+	var $newEvent = prompt("Enter an event id (integer)", $eventNum);
+	var $newTimeout = prompt("Enter a timeout (miliseconds)", $timeout);
+	var $newTimePassed = prompt("Enter a new time passed (seconds)", $timePassed);
 	
-	if(($newEvent != null) && ($newTimeout != null) && ($newTimePassed != null)) {
+	if(($newEvent != null) && 
+	   ($newTimeout != null) && 
+	   ($newTimePassed != null) && 
+	   ($newEvent != "") && 
+	   ($newTimeout != "") && 
+	   ($newTimePassed != "") &&
+	   ($newEvent >= 1) &&
+	   ($newTimeout >= 50) &&
+	   ($newTimePassed >= 1)) {
 		
-		//set the new values
-		$eventNum = $newEvent;
-		$timeout = $newTimeout;
-		$timePassed = $newTimePassed;
-		
-		//re-print the settings
-		$("#settings-content").empty();
-		printSettings();
+			//set the new values
+			$eventNum = $newEvent;
+			$timeout = $newTimeout;
+			$timePassed = $newTimePassed;
+			
+			//re-print the settings
+			$("#settings-content").empty();
+			printSettings();
+	}
+	
+	else {
+		alert("Invalid Input. Please try again.");
 	}
 };
 
