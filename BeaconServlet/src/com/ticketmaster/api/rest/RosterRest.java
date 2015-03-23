@@ -189,7 +189,42 @@ public class RosterRest {
 			EventBean currentEvent = eventDao.readEvent(eventId);
 			dao.setAttend(eventId, username);
 			String response = "Successfully Scanned ticket. Welcome to: " + currentEvent.getName();
+			
+			Connection con = null;
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				con = DriverManager.getConnection("jdbc:mysql://54.200.138.139:3306/beacon_servlet", "mysql_workbench", "dbadmin");
+
+				String logQuery = "INSERT INTO eventEntryScans (userID, username, eventID, responseMessage) VALUES ((SELECT UserId FROM users WHERE users.Username=?), ?, ?, ?)";
+				PreparedStatement pStatementLog = con.prepareStatement(logQuery);
+				pStatementLog.setString(1, username);
+				pStatementLog.setString(2, username);
+				pStatementLog.setInt(3, eventId);
+				pStatementLog.setString(4, response);
+				pStatementLog.executeUpdate();
+				
+				pStatementLog.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally{
+				if(con != null){
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
 			return Response.status(200).entity(response).build();
+			
+			
 		}else{
 
 			String response = "Invalid Ticket. ";
