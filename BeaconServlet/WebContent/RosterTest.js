@@ -1,11 +1,15 @@
 
 //********************* settings ***********************//
-var $eventNum = 1;			// which event do you want to display?
+var $errorMsg1 = "Invalid Ticket. Your ticket was not found.";
+var $errorMsg2 = "Invalid Ticket. Your ticket has already been scanned.";
+var $errorMsg3 = "Invalid Ticket. Event has already passed.";
+
 var $timesPolled = 0;
 var $uniqueId = 0;			// used to id divs created from json obj
 
-var $timeout = 1000;		// in milliseconds (5000 = 5 sec)
-var $timePassed = 90000;	// in seconds, remember scans from this long ago
+var $eventNum;		// which event do you want to display?
+var $timeout;		// in milliseconds (5000 = 5 sec)
+var $timePassed;	// in seconds, remember scans from this long ago
 	//===> check every $timeout msec for scans that happened in the past $timePassed sec
 
 
@@ -32,8 +36,11 @@ function poll() {
 	setTimeout (function() {
 		$timesPolled++;
 		
-		if($timesPolled <= 1)
-			setup();
+		//startup activities
+		if($timesPolled <= 1) {
+			setSettings();
+			printSettings();
+		}
 
 		//alert("clearing #results");
 		$("#results").empty();
@@ -42,7 +49,7 @@ function poll() {
 		printRoster("/BeaconServlet/api/rest/ScanEntry?eventId=" + $eventNum + "&timePassed=" + $timePassed);
 		
 		//recursively call poll()
-		//poll();
+		poll();
 
 	}, $timeout);
 };
@@ -50,25 +57,71 @@ function poll() {
 
 
 //******************************************************//
-//						setup							//
+//					set settings						//
 //******************************************************//
-	function setup() {
-		$("#settings-content").append(
-			"Event: " + $eventNum + "<br>" +
-			"Timeout: " + $timeout + " milliseconds<br>" + 
-			"Time passed: " + $timePassed + " seconds"
-		);
+function setSettings() {
+	$eventNum = 1;			// which event do you want to display?
+	$timeout = 2000;		// in milliseconds (5000 = 5 sec)
+	$timePassed = 300000;	// in seconds, remember scans from this long ago
+		//===> check every $timeout msec for scans that happened in the past $timePassed sec
+};
+
+
+
+//******************************************************//
+//					print settings						//
+//******************************************************//
+function printSettings() {
+	$("#settings-content").append(
+		"Event: " + $eventNum + "<br>" +
+		"Timeout: " + $timeout + " milliseconds<br>" + 
+		"Time passed: " + $timePassed + " seconds<br><br>" +
+		"<button onclick=\"editSettingsBtn()\">Edit Settings</button>"
+	);
+	
+	//style setup
+	var settings = document.getElementById("settings-content");
+	
+	settings.style.textAlign = 'left';
+	
+	settings.style.paddingLeft = '40px';
+	settings.style.paddingTop = '10px';
+};
+
+
+
+//******************************************************//
+//					edit settings btn					//
+//******************************************************//
+function editSettingsBtn() {
+	var $newEvent = prompt("Enter an event id (integer)", $eventNum);
+	var $newTimeout = prompt("Enter a timeout (miliseconds)", $timeout);
+	var $newTimePassed = prompt("Enter a new time passed (seconds)", $timePassed);
+	
+	if(($newEvent != null) && 
+	   ($newTimeout != null) && 
+	   ($newTimePassed != null) && 
+	   ($newEvent != "") && 
+	   ($newTimeout != "") && 
+	   ($newTimePassed != "") &&
+	   ($newEvent >= 1) &&
+	   ($newTimeout >= 50) &&
+	   ($newTimePassed >= 1)) {
 		
-		//style setup
-		var setup = document.getElementById("settings-content");
-		
-		setup.style.textAlign = 'left';
-		
-		setup.style.paddingLeft = '40px';
-		setup.style.paddingTop = '10px';
-		
-		//setup.style.boxShadow = '5px 5px 5px black';
-	};
+			//set the new values
+			$eventNum = $newEvent;
+			$timeout = $newTimeout;
+			$timePassed = $newTimePassed;
+			
+			//re-print the settings
+			$("#settings-content").empty();
+			printSettings();
+	}
+	
+	else {
+		alert("Invalid Input. Please try again.");
+	}
+};
 
 
 
@@ -215,7 +268,8 @@ function printRoster(url){
 		url: url
 	}).then(function(data) {
 		$.each(data, function(i, item) {
-			var $isSuccess = item.didAttend;
+			
+			var $isSuccess = item.errorMessage;
 	
 			//print results
 			$("#results").append(
@@ -243,7 +297,7 @@ function printRoster(url){
 			);	//end of .append
 			
 			
-			//style results
+			//style wrapper
 			var wrapper = document.getElementById($uniqueId + "-wrapper");
 			
 			wrapper.style.display = 'inline-block';
@@ -255,10 +309,9 @@ function printRoster(url){
 			wrapper.style.marginBottom = '30px';
 			
 			wrapper.style.width = '100%';
-			//wrapper.style.height = '100%';
-			//wrapper.style.overflow = 'hidden';
 
 			
+				//style content
 				var content = document.getElementById($uniqueId + "-content");
 			
 				content.style.display = 'inline-block';
@@ -270,6 +323,7 @@ function printRoster(url){
 				content.style.width = '100%';
 			
 				
+					//style words
 					var words = document.getElementById($uniqueId + "-words");
 				
 					words.style.cssFloat = 'left';
@@ -280,6 +334,7 @@ function printRoster(url){
 					words.style.paddingBottom = '15px';
 					words.style.paddingLeft = '30px';
 					
+					//style status
 					var status = document.getElementById($uniqueId + "-status");
 					
 					status.style.position = 'absolute';		/*don't change this. makes the size of this div correct*/
@@ -290,44 +345,15 @@ function printRoster(url){
 					status.style.width = '75px';
 					status.style.height = '100%';
 					
-					if($isSuccess) {
-						status.style.backgroundColor = '#6b9f40';	/*green*/
+					if(($isSuccess == $errorMsg1) || ($isSuccess == $errorMsg2) || ($isSuccess == $errorMsg3)) {
+						status.style.backgroundColor = '#9f4540';	/*red*/
 					}
 					else {
-						status.style.backgroundColor = '#9f4540';	/*red*/
+						status.style.backgroundColor = '#6b9f40';	/*green*/
 					}
 			
 			//increment id variable
 			$uniqueId++;
-			
-			// OLD WAY TO READ JSON
-/*			var $a = item.didAttend;
-			
-			$("#results").append(
-				"============================================" +
-				"<div id=" + item.visitor.id + ">" +
-					"<h2>NEXT VISITOR:</h2>" +
-					"<p>Visitor ID: " + item.visitor.id + "</p>" +
-					"<p>Visitor last name: " + item.visitor.lastName + "</p>" +
-					"<p>Visitor first name: " + item.visitor.firstName + "</p>" +
-					"<p>Visitor Username: " + item.visitor.username + "</p>" +
-					//"<p>Visitor Password: " + item.visitor.password + "</p>" +
-					
-					"<p id=attended" + item.visitor.id + ">Attended? " + item.didAttend + "</p>" +
-					
-					"<p>Event ID: " + item.event.id + "</p>" +
-					"<p>Event name: " + item.event.name + "</p>" +
-				"</div>"
-			);	//end of .append
-			
-			
-			
-			//change the css color of the attended <p>
-			if($a)
-				$("#attended" + item.visitor.id).css("background-color", "#6b9f40");
-			else
-				$("#attended" + item.visitor.id).css("background-color", "#9f4540");
-*/			
 
 		}) //end of .each item
 	});	//end of .then
