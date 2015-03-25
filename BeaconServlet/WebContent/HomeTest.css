@@ -58,7 +58,7 @@ body {
 			height: 100%;
 			width: 255px;	/* = sidebar width - border width - padding left - padding right. needs to be right or border disappears*/
 			
-			padding: 0 20px 0 20px;
+			padding: 40px 20px 0 20px;
 			
 			/*setting white, opaque background*/
 			background-color: white;
@@ -67,18 +67,57 @@ body {
 		}
 		
 				#logo {
+/* 					background: url(Logo 1.jpg) no-repeat right top fixed;  */
+/* 					-webkit-background-size: cover; */
+/* 					-moz-background-size: cover; */
+/* 					-o-background-size: cover; */
+/* 					background-size: cover; */
+					
+					text-align: center;		/*center the logo in the div*/
 					font-family: "Cutive", serif;
-					font-size: 35;
 					
 					height: 40px;
-					
-					padding-top: 40px;
 				}
+				
+						#logo ul {
+							font-size: 35;
+							color: #f53c17; /*orange*/
+							
+							/*immitate text outline by making a shadow of 1px around the text*/
+							text-shadow:
+						    1px 1px 0 #000,
+						    /* Simulated effect for Firefox and Opera
+						       and nice enhancement for WebKit */
+ 						   -1px -1px 0 #000,
+ 						    1px -1px 0 #000,
+ 						   -1px  1px 0 #000,
+ 						    1px  1px 0 #000; 
+							
+							padding: 0;
+							margin: 0;
+						}
+								
+								#logo ul li {
+									display: inline-block;
+									
+									margin: -5px;
+									/*padding: -5px;*/
+								}
+
+								#l2 {
+									color: #6b9f40 /*green*/
+								}
+						
+						#logo p {
+							font-size: 10;
+							
+							margin: 0;
+						}
 				
 				#menu-buttons {
 					display: block;	
 				
-					padding: 20px 0 40px 0;
+					padding: 40px 0 40px 0;
 					
 					text-align: left;
 				}
