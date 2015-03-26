@@ -103,7 +103,7 @@ body {
 				#menu-buttons {
 					display: block;	
 				
-					padding: 40px 0 40px 0;
+					padding: 40px 0 5px 0;
 					
 					text-align: left;
 				}
@@ -136,24 +136,12 @@ body {
 												margin-right: 50px;
 												margin-left: 20px;
 											}
-				
-				#menu-divider {
-					display: block;
-				
-					background-color: #7f7f7f;	/*light gray*/
-				
-					height: 1px;
-					width: 125px;
-				
-					/*center the line in the div*/
-					margin-left: auto;
-					margin-right: auto;
-				}
+
 				
 				#menu-content {
 					display: block;
 					
-					padding: 30px 10px 0 10px;
+					padding: 0 10px 0 10px;		/*no top padding because the <p> tag within it is padded*/
 					
 					line-height: 200%;	/*double spaced*/
 				}
@@ -166,9 +154,52 @@ body {
 			height: 100%;
 			width: 5px;
 		}
+
+#content {
+	display: block;
+	
+	padding: 20px;
+	margin-left: 300px;		/* = sidebar width. keeps content from hiding under fixed sidebar*/
+	width: auto;
+	min-width: 300px;		/*set this as something else later based on content*/
+	
+	font-family: "Cutive", serif;
+	font-size: 15;
+}
+
+		#content table {
+			width: 100%;
+			
+			text-align: left;
+		}
 		
-
+		.centered {
+			text-align: center;		/*center #settings in its containing div, #content*/
+		}
+				
+				#title-wrapper {
+					display: inline-block;
+					
+					border-style: solid;
+					border-color: white;
+					border-width: 3px;
+					
+					width: 300px;
+					
+					text-align: center
+				}
 		
-//STYLE #CONTENT HERE
-
-
+		
+						#title {
+							//display: inline-block;		/*allows #settings to be centered by text-align: center*/
+							
+							width: 300px;
+							padding: 20px 0 20px 0;
+							
+							font-size: 20;
+							
+							/*setting white, opaque background*/
+							background-color: white;
+							opacity: 0.75;
+							filter: alpha(opacity=75); /*For IE8 and earlier */
+						}

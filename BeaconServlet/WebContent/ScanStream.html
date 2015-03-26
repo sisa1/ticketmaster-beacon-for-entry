@@ -17,6 +17,7 @@
 	<!-- JS -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
 	<script type="text/javascript" src="./RosterTest.js"></script>
+	<script type="text/javascript" src="./EditSettingsBtn.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -40,10 +41,11 @@
 				<ul>
 					<a href="Home.html"><li>Home</li></a>
 					<a href="ScanStream.html"><li>Scan Stream</li></a>
-					<a href="#QR"><li>Scan Yourself In</li></a>
+					<a href="#Hist"><li>Event History</li></a>
+					<a href="QRcode.html"><li>Scan Yourself In</li></a>
+					<a href="#Sale"><li>Buy A Ticket Today!</li></a>
 				</ul>
 			</div>
-			<div id="menu-divider"></div>
 			<div id="menu-content">
 				<p>Welcome to our scan stream page. This page displays information aboout the most recent scans from a certain event.
 				Feel free to change the polling settings to whatever you like. Event selects the event displayed. <br>
@@ -62,18 +64,31 @@
 	
 	<div id="content">
 	
-		<div id="settings-wrapper">
-			<div id="settings">
-				<div id="settings-header">
-					Scan Stream:
+		<table>
+			<tr><td class="centered">
+				<div id="title-wrapper">
+					<div id="title">
+						Scan Stream
+					</div>		
 				</div>
-				<div id="settings-content">
+			</td></tr>
+			
+			<tr><td class="centered">
+				<div id="settings">
+					<select id="choose-event">
+						<option value="1">1</option>
+					    <option value="2">2</option>
+					</select>
+					<input type="button" value="Change Event" onclick="chooseEventClick();">
 				</div>
-			</div>
-		</div>
+			</td></tr>
+			
+			<tr><td>
+				<div id="results">
+				</div>
+			</td></tr>
+		</table>
 		
-		<div id="results">
-		</div>
 	</div>
 
 </BODY>

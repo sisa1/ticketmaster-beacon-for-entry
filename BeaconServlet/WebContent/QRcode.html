@@ -12,7 +12,11 @@
 	
 	<!-- CSS -->
 	<link type="text/css" rel="stylesheet" href="Template.css"/>
-	<link type="text/css" rel="stylesheet" href="HomeTest.css"/>
+	<link type="text/css" rel="stylesheet" href="QRcode.css"/>
+	
+	<!-- JS -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
+	<script type="text/javascript" src="./EditSettingsBtn.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -42,7 +46,17 @@
 				</ul>
 			</div>
 			<div id="menu-content">
-				<p>Welcome to our home page.</p>
+			
+			
+			
+			
+				<p>Welcome to the Scan Yourself In page. Here, you can scan this QR code with your phone
+				in order to enter the venue.</p>
+				
+				
+				
+				
+				
 			</div>
 
 		</div>
@@ -55,13 +69,23 @@
 	
 	
 	<div id="content">
-	
+		
 		<table>
 			<tr><td class="centered">
 				<div id="title-wrapper">
 					<div id="title">
-						Home
+						Scan Yourself In
 					</div>		
+				</div>
+			</td></tr>
+			
+			<tr><td class="centered">
+				<div id="settings">
+					<select id="choose-event">
+						<option value="1">1</option>
+					    <option value="2">2</option>
+					</select>
+					<input type="button" value="Change Event" onclick="chooseEventClick();">
 				</div>
 			</td></tr>
 			

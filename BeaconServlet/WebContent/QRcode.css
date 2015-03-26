@@ -11,7 +11,8 @@
  *	red:			#b92e26		(fail)
  *  green:			#6b9f40		(success)
  */
- 		
+ 
+ 
 #settings {
 	display: inline-block;
 	margin-bottom: 40px;
@@ -21,12 +22,3 @@
 		#choose-event {
 			width: 100%;
 		}
-		
-
-#results {		
-	font-family: "Open Sans", sans-serif;
-	font-size: 12;
-	text-align: left;
-	
-	padding: 0 20px 0 20px;
-}
