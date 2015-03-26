@@ -12,7 +12,11 @@
 	
 	<!-- CSS -->
 	<link type="text/css" rel="stylesheet" href="Template.css"/>
-	<link type="text/css" rel="stylesheet" href="HomeTest.css"/>
+	<link type="text/css" rel="stylesheet" href="ScanStream.css"/>
+	
+	<!-- JS -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
+	<script type="text/javascript" src="./RosterTest.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -41,7 +45,10 @@
 			</div>
 			<div id="menu-divider"></div>
 			<div id="menu-content">
-				<p>Welcome to our home page.</p>
+				<p>Welcome to our scan stream page. This page displays information aboout the most recent scans from a certain event.
+				Feel free to change the polling settings to whatever you like. Event selects the event displayed. <br>
+				Timeout sets how often you check for new scans. Time passed sets the time frame (since now) in which you look for scans.
+				So, for event 'event' we check every 'timeout' milliseconds for scans in the past 'time passed' seconds.</p>
 			</div>
 
 		</div>
@@ -55,17 +62,18 @@
 	
 	<div id="content">
 	
-	
-	
-	
-	
-		<!-- ADD YOUR OWN CONTENT HERE -->
+		<div id="settings-wrapper">
+			<div id="settings">
+				<div id="settings-header">
+					Scan Stream:
+				</div>
+				<div id="settings-content">
+				</div>
+			</div>
+		</div>
 		
-		
-		
-		
-		
-
+		<div id="results">
+		</div>
 	</div>
 
 </BODY>

@@ -62,7 +62,7 @@ function poll() {
 function setSettings() {
 	$eventNum = 1;			// which event do you want to display?
 	$timeout = 2000;		// in milliseconds (5000 = 5 sec)
-	$timePassed = 300000;	// in seconds, remember scans from this long ago
+	$timePassed = 30;	// in seconds, remember scans from this long ago
 		//===> check every $timeout msec for scans that happened in the past $timePassed sec
 };
 
@@ -279,13 +279,10 @@ function printRoster(url){
 					"<div id=" + $uniqueId + "-content>" +
 					
 						"<div id=" + $uniqueId + "-words>" +
-							"<h2>NEXT VISITOR:</h2>" +
+							"<h2>NEXT VISITOR: "+ item.username +"</h2>" +
 							"<p>Visitor ID: " + item.userID + "</p>" +
-							"<p>Visitor Username: " + item.username + "</p>" +
-	
-							"<p>Event ID: " + item.eventID + "</p>" +
 							
-							"<p>Error message: " + item.errorMessage + "</p>" +
+							"<p>Scan Result: " + item.errorMessage + "</p>" +
 						"</div>" +
 						
 						"<div id=" + $uniqueId + "-status>" +
@@ -342,11 +339,11 @@ function printRoster(url){
 					
 					status.style.right = '0%';		/*the right side of the div should be all the way to the right*/
 						
-					status.style.width = '75px';
+					status.style.width = '200px';
 					status.style.height = '100%';
 					
 					if(($isSuccess == $errorMsg1) || ($isSuccess == $errorMsg2) || ($isSuccess == $errorMsg3)) {
-						status.style.backgroundColor = '#9f4540';	/*red*/
+						status.style.backgroundColor = '#b92e26';	/*red*/
 					}
 					else {
 						status.style.backgroundColor = '#6b9f40';	/*green*/
