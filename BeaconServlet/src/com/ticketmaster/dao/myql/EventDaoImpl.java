@@ -50,11 +50,10 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 	public EventBean readEvent(int id){
 		Connection mySqlConnection = null;
 		mySqlConnection = MySqlDao.getConnection();
-		Statement stmt = null;
 		
 		EventBean eventToReturn = null;
 		try {
-			stmt = mySqlConnection.createStatement();
+
 			String readByIdQuery = "SELECT * FROM events WHERE EventId = ?";
 			PreparedStatement pStatement = mySqlConnection.prepareStatement(readByIdQuery);
 			pStatement.setInt(1, id);
@@ -66,7 +65,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 				eventToReturn.setId(rs.getInt("EventId"));
 				eventToReturn.setName((rs.getString("EventName")));
 			}
-			stmt.close();
+			pStatement.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -102,7 +101,6 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 	@Override
 	public void deleteEvent(int id) {
 		Connection mySqlConnection = null;
-		Statement stmt = null;
 		String deleteQuery = "DELETE FROM events WHERE EventId = ?";
 		mySqlConnection = MySqlDao.getConnection();
 		try {
@@ -113,7 +111,7 @@ public class EventDaoImpl extends MySqlDao implements EventDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			cleanup(mySqlConnection, stmt);
+			cleanup(mySqlConnection);
 		}
 	}
 	

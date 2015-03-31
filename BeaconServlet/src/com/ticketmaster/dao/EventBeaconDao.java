@@ -1,6 +1,7 @@
 package com.ticketmaster.dao;
 
 import com.ticketmaster.bean.EventBeaconBean;
+import java.util.List;
 
 public interface EventBeaconDao {
 	/** Standard - CRUD operation **/
@@ -8,4 +9,5 @@ public interface EventBeaconDao {
 	public EventBeaconBean readEventBeacon(int id);
 	public EventBeaconBean updateEventBeacon(int id, EventBeaconBean eventBeacon);
 	public void deleteEventBeacon(int id);
+	public List<EventBeaconBean> getBeaconsForEvent(int eventId);
 }

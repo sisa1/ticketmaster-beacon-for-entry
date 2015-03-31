@@ -12,6 +12,24 @@ public class EventBeaconBean implements Serializable {
 	private int Major;
 	private int Minor;
 	
+	public EventBeaconBean(int id, String name, int eventId, String uuid, int major, int minor){
+		Id = id;
+		Name = name;
+		EventId = eventId;
+		UUID = uuid;
+		Major = major;
+		Minor = minor;
+	}
+	
+	public EventBeaconBean(){
+		Id = -1;
+		Name = null;
+		EventId = 0;
+		UUID = null;
+		Major = 0;
+		Minor = 0;
+	}
+	
 	public int getId() {
 		return Id;
 	}
