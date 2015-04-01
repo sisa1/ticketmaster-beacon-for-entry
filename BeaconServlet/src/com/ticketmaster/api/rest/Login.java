@@ -1,5 +1,6 @@
 package com.ticketmaster.api.rest;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ws.rs.DefaultValue;
@@ -17,31 +18,55 @@ import com.ticketmaster.dao.UserDao;
 @Path("rest/Login")
 public class Login {
 	
+	public class LoginResponse implements Serializable {
+		int userId;
+		String loginMessage;
+		
+		public LoginResponse(int usrId, String loginMsg) {
+			userId = usrId;
+			loginMessage = loginMsg;
+		}
+		
+		public int getUserId() {
+			return userId;
+		}
+		public void setUserId(int userId) {
+			this.userId = userId;
+		}
+		public String getLoginMessage() {
+			return loginMessage;
+		}
+		public void setLoginMessage(String loginMessage) {
+			this.loginMessage = loginMessage;
+		}
+		
+	}
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getResponse(	@FormParam("username")@DefaultValue("") String strUsername ,
 									@FormParam("password")@DefaultValue("") String strPassword) {
 		
-		UserBean userBean = MySqlDaoFactory.getUserDAO().getUser(strUsername);
-		boolean didFindUser = false;
+		UserBean selectedUser = null;
 		
 		try {
 	        UserDao userDao = MySqlDaoFactory.getUserDAO();
-	        List<UserBean> userList = userDao.getAllUsers();
-	        for(int i = 0; i < userList.size(); i++) {
-	        	if(userList.get(i).getUsername().compareTo(strUsername) == 0) {
-	        		didFindUser = true;
-	        	}
+	        selectedUser = userDao.getUser(strUsername);
+	        
+	        if(selectedUser == null) {
+	        	LoginResponse responseObject = new LoginResponse(-1, "Invalid Login");
+	        	return Response.status(200).entity(responseObject).build();
+	        }
+	        
+	        if(selectedUser.getPassword().compareTo(strPassword) != 0) {
+	        	LoginResponse responseObject = new LoginResponse(-1, ("Invalid Password"));
+	        	return Response.status(200).entity(responseObject).build();
 	        }
         } catch (Exception Ex) {
         	return Response.status(500).entity("Error getting user list").build();
         }
 		
-		if(didFindUser) { // DANGEROUS - MUST CHANGE: PLAIN TXT PASS PASSING
-			String apiKey = strUsername.toLowerCase()+strPassword.toLowerCase();
-			return Response.status(200).entity(apiKey).build();
-		}
-		
-		return Response.status(200).entity("Invalid Login").build();
+		LoginResponse responseObject = new LoginResponse(selectedUser.getId(), ("Welcome " + selectedUser.getFirstName() + "!"));
+		return Response.status(200).entity(responseObject).build();
 	}
 }

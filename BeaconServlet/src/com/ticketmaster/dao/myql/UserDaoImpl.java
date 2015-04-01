@@ -185,7 +185,7 @@ public class UserDaoImpl extends MySqlDao implements UserDao {
 		UserBean userToReturn = null;
 		try {
 			mySqlConnection.setAutoCommit(false);
-			String selectAllQuery = "SELECT ? FROM users";
+			String selectAllQuery = "SELECT * FROM users WHERE Username = ?";
 			PreparedStatement pStatement = mySqlConnection.prepareStatement(selectAllQuery);
 			pStatement.setString(1, username);
 			
