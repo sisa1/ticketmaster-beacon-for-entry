@@ -22,3 +22,9 @@
 		#choose-event {
 			width: 100%;
 		}
+
+#results {	
+	height: 125px;
+	width: 125px;
+	margin: 0 auto 0 auto;
+}

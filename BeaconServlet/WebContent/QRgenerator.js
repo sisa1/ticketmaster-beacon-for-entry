@@ -1,6 +1,6 @@
 
 //********************* settings ***********************//
-//var $eventNum;
+var $eventNum = 1;
 var $uuid;
 var $major;
 var $minor;
@@ -18,8 +18,12 @@ $(document).ready(main());
 //							main						//
 //******************************************************//
 function main() {
-	setSettings("asdf", "123", "123");
-	printSettings();
+	
+	if($eventNum == 1)
+		setSettings("asdf", "123", "123");
+	else
+		setSettings("lkjh", "321", "321");
+
 	generate("http://54.200.138.139:8080/BeaconServlet/api/rest/QRGen?UUID=" + $uuid + "&Major=" + $major + "&Minor=" + $minor);
 };
 
@@ -30,7 +34,6 @@ function main() {
 //					set settings						//
 //******************************************************//
 function setSettings(uuid, major, minor) {
-	//$eventNum = 1;
 	$uuid = uuid;
 	$major = major;
 	$minor = minor;
@@ -41,11 +44,11 @@ function setSettings(uuid, major, minor) {
 //******************************************************//
 //					print settings						//
 //******************************************************//
-function printSettings() {
+/*function printSettings() {
 	$("#settings").append(
 		//"Event: " + $eventNum + "<br>" +
 		"UUID: " + $uuid + "<br>" +
-		"Major: " + $ajor + "<br>" + 
+		"Major: " + $major + "<br>" + 
 		"Minor: " + $minor + "<br><br>" +
 		"<button onclick=\"editSettingsBtn()\">Edit Settings</button>"
 	);
@@ -57,7 +60,7 @@ function printSettings() {
 //	
 //	settings.style.paddingLeft = '40px';
 //	settings.style.paddingTop = '10px';
-};
+};*/
 
 
 
@@ -65,7 +68,7 @@ function printSettings() {
 //******************************************************//
 //					edit settings btn					//
 //******************************************************//
-function editSettingsBtn() {
+/*function editSettingsBtn() {
 	var $newUuid = prompt("Enter a UUID (string)", $uuid);
 	var $newMajor = prompt("Enter a timeout (integer)", $major);
 	var $newMinor = prompt("Enter a new time passed (integer)", $minor);
@@ -88,8 +91,24 @@ function editSettingsBtn() {
 	else {
 		alert("Invalid Input. Please try again.");
 	}
-};
+};*/
 
+
+
+//******************************************************//
+//					choose event btn					//
+//******************************************************//
+function chooseEventClick() { 
+	//find selected event
+	var $event = document.getElementById("choose-event");
+	$eventNum = $event.options[$event.selectedIndex].value;
+	
+	//alert($event.options[$event.selectedIndex].value);
+	
+	//clear div, reload page
+	$("#results").empty();
+	main();
+};
 
 
 
@@ -98,6 +117,9 @@ function editSettingsBtn() {
 //					generate QR code					//
 //******************************************************//
 function generate(url) {
-	var $QRdiv = getElementById("QR");
-	$QRdiv.innerHTMl = '<iframe style="width:100%;height:100%;" frameborder="0" src="' + url + '" />';
+    clearTimeout(window.ht);
+    window.ht = setTimeout(function(){
+		var $QRdiv = document.getElementById("results");
+		$QRdiv.innerHTML = '<iframe style="width:100%;height:100%;" frameborder="0" src="' + url + '" />';
+    },20);
 };
