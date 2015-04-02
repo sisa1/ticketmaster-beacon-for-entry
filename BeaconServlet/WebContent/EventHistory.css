@@ -11,9 +11,9 @@
  *	red:			#b92e26		(fail)
  *  green:			#6b9f40		(success)
  */
+
  
- 
-#settings {
+ #settings {
 	display: inline-block;
 	margin-bottom: 40px;
 }
@@ -22,10 +22,33 @@
 		#choose-event {
 			width: 100%;
 		}
+		
 
-
-#results {	
-	height: 125px;
-	width: 125px;
-	margin: 0 auto 0 auto;
+#results {
+	
 }
+
+
+		#json-results {
+			border-collapse: collapse;		/*because solid borders aren't really solid*/
+			
+			font-size: 14;
+		}
+		
+				
+				.header-row {
+					text-align: center;
+					font-weight: bold;
+				}
+				
+				
+						#json-results td {
+							border: 3px solid white;
+						
+							/*setting white, opaque background*/
+							background-color: white;
+							opacity: 0.75;
+							filter: alpha(opacity=75); /*For IE8 and earlier */
+							
+							padding: 5px 0 5px 10px;
+						}
