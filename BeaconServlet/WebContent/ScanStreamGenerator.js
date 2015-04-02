@@ -76,7 +76,7 @@ function chooseEventClick() {
 function setSettings() {
 	$eventNum = 1;			// which event do you want to display?
 	$timeout = 2000;		// in milliseconds (5000 = 5 sec)
-	$timePassed = 10000;	// in seconds, remember scans from this long ago
+	$timePassed = 300000;	// in seconds, remember scans from this long ago
 		//===> check every $timeout msec for scans that happened in the past $timePassed sec
 };
 
