@@ -121,8 +121,41 @@ public class EventBeaconDaoImpl implements EventBeaconDao {
 			e.printStackTrace();
 		} finally {
 			MySqlDao.cleanup(mySqlConnection);
-		}
+		}	
+	}
+	
+	public EventBeaconBean readEventBeacon(String UUID){
+		Connection mySqlConnection = null;
+		mySqlConnection = MySqlDao.getConnection();
 		
+		EventBeaconBean result = null;
+		try {
+
+			String readByIdQuery = "SELECT * FROM eventBeacons WHERE UUID = ?";
+			PreparedStatement pStatement = mySqlConnection.prepareStatement(readByIdQuery);
+			pStatement.setString(1, UUID);
+			ResultSet rs = pStatement.executeQuery();
+			
+			// Iterate ResultSet and Initialize Camera list
+			while(rs.next()) {
+				result = new EventBeaconBean();
+				result.setId(rs.getInt("BeaconId"));
+				result.setName(rs.getString("BeaconName"));
+				result.setEventId(rs.getInt("EventId"));
+				result.setUUID(rs.getString("UUID"));
+				result.setMajor(rs.getInt("Major"));
+				result.setMinor(rs.getInt("Minor"));
+			}
+			pStatement.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = null;
+		} finally {
+			// close the connection even if get was unsuccessful
+			MySqlDao.cleanup(mySqlConnection);
+		}
+		return result;
 	}
 	
 	public List<EventBeaconBean> getBeaconsForEvent(int eventId){
@@ -139,8 +172,6 @@ public class EventBeaconDaoImpl implements EventBeaconDao {
 		int Major;
 		int Minor;
 	
-		
-
 		try {
 			stmt = con.createStatement();
 			String query = "SELECT * FROM eventBeacons WHERE EventId = " + eventId;
@@ -164,5 +195,45 @@ public class EventBeaconDaoImpl implements EventBeaconDao {
 		}
 		
 		return returnMe;
+	}
+	
+	public List<EventBeaconBean> getAllEventBeacons(){
+		Connection con = null;
+		Statement stmt = null;
+		con = MySqlDao.getConnection();
+		
+		List<EventBeaconBean> returnMe = new ArrayList<EventBeaconBean>();
+		
+		int BeaconId;
+		String BeaconName;
+		int EventId;
+		String UUID;
+		int Major;
+		int Minor;
+	
+		try {
+			stmt = con.createStatement();
+			String query = "SELECT * FROM eventBeacons";
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while(rs.next()) {
+				BeaconId = rs.getInt("BeaconId");
+				BeaconName = rs.getString("BeaconName");
+				EventId = rs.getInt("EventID");
+				UUID = rs.getString("UUID");
+				Major = rs.getInt("Major");
+				Minor = rs.getInt("Minor");
+							
+				EventBeaconBean addMe = new EventBeaconBean(BeaconId, BeaconName, EventId, UUID, Major, Minor);
+				returnMe.add(addMe);
+			}
+			stmt.close();
+			
+		} catch(Exception ex) {
+			returnMe = null;
+		}
+		
+		return returnMe;
+
 	}
 }
