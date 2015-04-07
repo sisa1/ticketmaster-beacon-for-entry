@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>Update Event</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../template/mustache.js"></script>
+	<script type="text/javascript" src="./js/update-event-beacon.js"></script>
+	
+	<style>
+			input {
+				width:60px !important;
+			}
+	</style>
+	
+</head>
+
+<body>
+	<form id="editForm">
+	<div id="tableDiv">
+	 	<script id="mustacheTemplate"  type="x-tmpl-mustache">
+		<table>
+		<tbody>
+			<tr>
+				<td>Id</td>
+				<td>Name</td>
+				<td>EventId</td>
+				<td>UUID</td>
+				<td>Major</td>
+				<td>Minor</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="id" readonly value="{{id}}"/></td>
+				<td><input type="text" name="beaconName" value="{{name}}"/></td>
+				<td><input type="text" name="eventId" value="{{eventId}}"/></td>
+				<td><input type="text" name="uuid" value="{{uuid}}"/></td>
+				<td><input type="text" name="major" value="{{major}}"/></td>
+				<td><input type="text" name="minor" value="{{minor}}"/></td>
+				<td><input type="submit"/></td>
+			</tr>
+		</tbody>
+		</table>
+		</script>
+	</div>
+	</form>
+	<br>
+	<a href="./read-event-beacon.html">Back</a>
+</body>
+</html> 
