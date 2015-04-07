@@ -103,7 +103,7 @@ public class BeaconRest {
 			return response;
 		}
 		
-		// READ by UUID
+		/* READ by UUID
 		@GET
 		@Path("/{uuid}")
 		@Produces(MediaType.APPLICATION_JSON)
@@ -126,7 +126,7 @@ public class BeaconRest {
 			}
 			
 			return response;
-		}
+		}*/
 		
 		// GET ALL BEACONS FOR EVENT
 		/* Not sure if this works
