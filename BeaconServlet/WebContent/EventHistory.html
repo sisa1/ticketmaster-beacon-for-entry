@@ -12,7 +12,11 @@
 	
 	<!-- CSS -->
 	<link type="text/css" rel="stylesheet" href="Template.css"/>
-	<link type="text/css" rel="stylesheet" href="Home.css"/>
+	<link type="text/css" rel="stylesheet" href="EventHistory.css"/>
+	
+	<!-- JS -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
+	<script type="text/javascript" src="./EventHistoryGenerator.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -42,7 +46,16 @@
 				</ul>
 			</div>
 			<div id="menu-content">
-				<p>Welcome to our home page.</p>
+			
+			
+			
+			
+				<p>Welcome to our Event History page. Here you can see all previous scans for an event.</p>
+				
+				
+				
+				
+				
 			</div>
 
 		</div>
@@ -60,13 +73,28 @@
 			<tr><td class="centered">
 				<div id="title-wrapper">
 					<div id="title">
-						Home
+						Event History
 					</div>		
+				</div>
+			</td></tr>
+			
+			<tr><td class="centered">
+				<div id="settings">
+					<select id="choose-event">
+						<option value="1">1</option>
+					    <option value="2">2</option>
+					</select>
+					<input type="button" value="Change Event" onclick="chooseEventClick()">
 				</div>
 			</td></tr>
 			
 			<tr><td>
 				<div id="results">
+				
+					<table id="json-results">
+						<!-- JS APPENDED HERE -->
+					</table>
+				
 				</div>
 			</td></tr>
 		</table>

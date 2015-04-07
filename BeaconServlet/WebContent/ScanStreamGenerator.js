@@ -56,6 +56,20 @@ function poll() {
 
 
 
+
+//******************************************************//
+//					choose event btn					//
+//******************************************************//
+function chooseEventClick() { 
+	var $event = document.getElementById("choose-event");
+	$eventNum = $event.options[$event.selectedIndex].value;
+	
+	//alert($event.options[$event.selectedIndex].value); 
+};
+
+
+
+
 //******************************************************//
 //					set settings						//
 //******************************************************//
@@ -71,7 +85,7 @@ function setSettings() {
 //******************************************************//
 //					print settings						//
 //******************************************************//
-function printSettings() {
+/*function printSettings() {
 	$("#settings-content").append(
 		"Event: " + $eventNum + "<br>" +
 		"Timeout: " + $timeout + " milliseconds<br>" + 
@@ -86,14 +100,14 @@ function printSettings() {
 	
 	settings.style.paddingLeft = '40px';
 	settings.style.paddingTop = '10px';
-};
+};*/
 
 
 
 //******************************************************//
 //					edit settings btn					//
 //******************************************************//
-function editSettingsBtn() {
+/*function editSettingsBtn() {
 	var $newEvent = prompt("Enter an event id (integer)", $eventNum);
 	var $newTimeout = prompt("Enter a timeout (miliseconds)", $timeout);
 	var $newTimePassed = prompt("Enter a new time passed (seconds)", $timePassed);
@@ -121,7 +135,7 @@ function editSettingsBtn() {
 	else {
 		alert("Invalid Input. Please try again.");
 	}
-};
+};*/
 
 
 //******************************************************//
@@ -278,7 +292,7 @@ function printRoster(url){
 					"<div id=" + $uniqueId + "-content>" +
 					
 						"<div id=" + $uniqueId + "-words>" +
-							"<h2>NEXT VISITOR: "+ item.username +"</h2>" +
+							"<h1>Hello, "+ item.username +"!</h1>" +
 							"<p>Visitor ID: " + item.userID + "</p>" +
 							
 							"<p>Scan Result: " + item.errorMessage + "</p>" +

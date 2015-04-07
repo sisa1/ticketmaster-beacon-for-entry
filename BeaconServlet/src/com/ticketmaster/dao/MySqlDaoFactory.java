@@ -14,6 +14,7 @@ import com.ticketmaster.dao.myql.ScanEntryDaoImpl;
 import com.ticketmaster.dao.myql.UserDaoImpl;
 import com.ticketmaster.dao.myql.EventDaoImpl;
 import com.ticketmaster.dao.myql.EventTimeDaoImpl;
+import com.ticketmaster.dao.myql.EventBeaconDaoImpl;
 
 public class MySqlDaoFactory {
 
@@ -35,5 +36,9 @@ public class MySqlDaoFactory {
 	
 	public static  ScanEntryDao getScanEntryDAO() {
 		return new ScanEntryDaoImpl();
+	}
+	
+	public static EventBeaconDao getEventBeaconDAO(){
+		return new EventBeaconDaoImpl();
 	}
 }
