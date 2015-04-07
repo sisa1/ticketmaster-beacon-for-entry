@@ -1,8 +1,8 @@
-
 //********************* settings ***********************//
 var $errorMsg1 = "Invalid Ticket. Your ticket was not found.";
 var $errorMsg2 = "Invalid Ticket. Your ticket has already been scanned.";
 var $errorMsg3 = "Invalid Ticket. Event has already passed.";
+var $uniqueId = 0;		//for styling the error msg readout with red/green
 
 var $eventNum = 1;		// which event do you want to display?
 var $timePassed;	// in seconds, remember scans from this long ago
@@ -87,15 +87,25 @@ function printRoster(url){
 		
 		
 		$.each(data, function(i, item) {		
+			var $isSuccess = item.errorMessage			
 			
 			//print results
 			$("#json-results").append(
 				"<tr>" +
-					"<td>" + item.username + "</td><td>" + item.userID + "</td><td>" + item.errorMessage + "</td><td>" + item.timeOfScan + "</td>" + 
+					"<td>" + item.username + "</td><td>" + item.userID + "</td><td id=" + $uniqueId + ">" + item.errorMessage + "</td><td>" + item.timeOfScan + "</td>" + 
 				"</tr>"
 			);	//end of .append
 		
-			
+			if(($isSuccess == $errorMsg1) || ($isSuccess == $errorMsg2) || ($isSuccess == $errorMsg3)) {
+				document.getElementById($uniqueId).style.backgroundColor = '#b92e26';	/*red*/
+				document.getElementById($uniqueId).style.color = 'white';
+			}
+			else
+				document.getElementById($uniqueId).style.backgroundColor = '#6b9f40';	/*green*/
+				
+			//increment ID variable
+			$uniqueId++;
+				
 		}) //end of .each item
 		
 		

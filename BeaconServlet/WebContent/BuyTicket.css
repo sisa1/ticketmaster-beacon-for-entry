@@ -14,27 +14,24 @@
  
  
  #results {
- 	position: absolute;		/*Otherwise table won't format*/
- }
- 
- 
- #input-form {
- 	border-collapse: collapse;
+	display: inline-block;		/*make div shrink to fit content*/
  	
- 	width: 1000px;
- 	 	
- 	padding-left: auto;
- 	padding-right: auto;
+ 	padding-top: 30px;
+ }
+ 
+ 
+ #input-table {
+ 	border-collapse: collapse;
  }
  
  
  
- 		#input-form tr {
+ 		#input-table tr {
  			width: 100px;
  		}
  
  
-		 		#input-form td {
+		 		#input-table td {
 		 			border: 3px solid white;
 								
 					/*setting white, opaque background*/
@@ -42,5 +39,5 @@
 					opacity: 0.75;
 					filter: alpha(opacity=75); /*For IE8 and earlier */
 					
-					padding: 5px 0 5px 10px;
+					padding: 5px 10px 5px 10px;
 		 		}
