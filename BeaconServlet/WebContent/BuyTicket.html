@@ -12,9 +12,11 @@
 	
 	<!-- CSS -->
 	<link type="text/css" rel="stylesheet" href="Template.css"/>
+	<link type="text/css" rel="stylesheet" href="BuyTicket.css"/>
 	
 	<!-- JS -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
+	<script type="text/javascript" src="./BuyTicketGenerator.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -48,7 +50,7 @@
 			
 			
 			
-				<p>ADD YOUR OWN MENU MESSAGE HERE</p>
+				<p>Welcome to our Buy Ticket page. Here you can buy a new valid ticket.</p>
 				
 				
 				
@@ -71,7 +73,7 @@
 			<tr><td class="centered">
 				<div id="title-wrapper">
 					<div id="title">
-						Scan Stream
+						Purchase A Ticket
 					</div>		
 				</div>
 			</td></tr>
@@ -91,7 +93,23 @@
 				<div id="results">
 				
 				
-				<!-- ADD YOUR OWN CONTENT HERE -->
+					<table id="input-form">
+						<tr>
+							<td>	Username:	</td>	<td><input type="text" name="username"/></td>
+						</tr>
+						<tr>
+							<td>	First Name:	</td>	<td><input type="text" name="firstname"/></td>
+						</tr>
+						<tr>
+							<td>	Last Name:	</td>	<td><input type="text" name="lastname"/></td>
+						</tr>
+						<tr>
+							<td>	Password:	</td>	<td><input type="text" name="password"/></td>
+						</tr>
+						<tr>
+							<td><input type="submit"/></td>
+						</tr>
+					</table>
 				
 				
 				</div>

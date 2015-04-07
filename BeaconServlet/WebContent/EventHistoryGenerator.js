@@ -10,7 +10,6 @@ var $timePassed;	// in seconds, remember scans from this long ago
 
 
 
-
 //******************************************************//
 //				start function call						//
 //******************************************************//
@@ -42,8 +41,9 @@ function main() {
 //******************************************************//
 //				calculate time passed					//
 //******************************************************//
+//set time passed to the time between now and the start time of the event
 function calculateTimePassed() { 
-	$timePassed = 300000;
+	$timePassed = 3000000;
 };
 
 
@@ -57,7 +57,7 @@ function chooseEventClick() {
 	var $event = document.getElementById("choose-event");
 	$eventNum = $event.options[$event.selectedIndex].value;
 	
-	alert($event.options[$event.selectedIndex].value); 
+	//alert($event.options[$event.selectedIndex].value); 
 	
 	//reload page
 	main();
@@ -97,5 +97,7 @@ function printRoster(url){
 		
 			
 		}) //end of .each item
+		
+		
 	});	//end of .then
 };	//end of printRoster
