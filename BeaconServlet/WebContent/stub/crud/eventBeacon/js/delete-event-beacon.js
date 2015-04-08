@@ -14,7 +14,7 @@ function getUrlParameter(sParam)
 $(document).ready(function(){
 	// Setup RESTful URL for Ajax call
 	var camId = getUrlParameter('id');
-	var restUrl = ("/BeaconServlet/api/rest/EventBeacon/"+camId);
+	var restUrl = ("/BeaconServlet/api/rest/Beacon/"+camId);
 	
 	// Make Ajax call to get info on current Camera
 	$.ajax({
@@ -28,7 +28,7 @@ $(document).ready(function(){
 	// Form to delete camera is submitted 
 	$("form#deleteForm").submit(function() {
 		// Setup data for Ajax call (Pass in only the id of the camera)
-		restUrl = ("/BeaconServlet/api/rest/EventBeacon");
+		restUrl = ("/BeaconServlet/api/rest/Beacon");
 		var myData = $("form#deleteForm").serialize();
 		
 		//Make Ajax call to delete camera at specified id

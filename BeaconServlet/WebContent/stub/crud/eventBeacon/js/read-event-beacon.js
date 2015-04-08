@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$.ajax({
-		url: "/BeaconServlet/api/rest/EventBeacon",
+		url: "/BeaconServlet/api/rest/Beacon",
 		dataType:"json"
 	}).then(function(data) {
 		var template = $('#mustacheTemplate').html();
