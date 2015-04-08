@@ -92,29 +92,49 @@
 			<tr><td class="centered">
 				<div id="results">
 				
-				<form id="inputform">
-				<div>
-					<table id="input-table">
-						<tr>
-							<td>	Username:	</td>	<td><input type="text" name="username"/></td>
-						</tr>
-						<tr>
-							<td>	First Name:	</td>	<td><input type="text" name="firstname"/></td>
-						</tr>
-						<tr>
-							<td>	Last Name:	</td>	<td><input type="text" name="lastname"/></td>
-						</tr>
-						<tr>
-							<td>	Password:	</td>	<td><input type="text" name="password"/></td>
-						</tr>
-						<tr>
-							<td><input type="submit"/></td>
-						</tr>
-					</table>
-				</div>
-				</form>
 				
-				</div>
+					<form id="inputform" method="post">
+					<div>
+						<table class="input-table">
+							<tr>
+								<td>	Username:	</td>	<td><input type="text" name="username"/></td>
+							</tr>
+							<tr>
+								<td>	First Name:	</td>	<td><input type="text" name="firstname"/></td>
+							</tr>
+							<tr>
+								<td>	Last Name:	</td>	<td><input type="text" name="lastname"/></td>
+							</tr>
+							<tr>
+								<td>	Password:	</td>	<td><input type="password" name="password"/></td>
+							</tr>
+							<tr>
+								<td><input type="submit"/></td>
+	<!-- 						could also implement a submit btn like this: <a href="javascript: submitform()">Search</a> -->
+							</tr>
+						</table>
+					</div>
+					</form>
+				
+					<br>
+				
+					<!-- following example: http://blog.teamtreehouse.com/create-ajax-contact-form -->
+	<!-- 				<form id="download-apk" method="post" action="mailer.php"> -->
+					<form id="download-apk" method="post">
+					<div>
+						<table class="input-table">
+							<tr>
+								<td>	Email:	</td>	<td><input type="text" name="email" /></td>
+							</tr>
+							<tr>
+								<td><input type="submit" value="Email me the app!" /></td>
+							</tr>
+						</table>
+					</div>
+					</form>
+				
+				
+				</div>	<!-- end of #results -->
 			</td></tr>
 		</table>
 

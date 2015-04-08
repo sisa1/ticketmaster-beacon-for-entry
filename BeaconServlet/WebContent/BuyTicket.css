@@ -20,18 +20,18 @@
  }
  
  
- #input-table {
+ .input-table {
  	border-collapse: collapse;
  }
  
  
  
- 		#input-table tr {
+ 		.input-table tr {
  			width: 100px;
  		}
  
  
-		 		#input-table td {
+		 		.input-table td {
 		 			border: 3px solid white;
 								
 					/*setting white, opaque background*/

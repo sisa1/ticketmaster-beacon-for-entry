@@ -26,11 +26,13 @@ $(document).ready(main());
 //							main						//
 //******************************************************//
 function main() {
-	$("form#inputForm").submit(function() {
+	var form = $('#inputform');
+	
+	$(form).submit(function(event) {
 		
 		//get POST call inputs
 		var restUrl = ("/BeaconServlet/api/rest/User");
-		var myData = $("form#inputForm").serialize();
+		var myData = $(form).serialize();
 		
 		// POST call to create new user rest service at restUrl
 		$.ajax({
