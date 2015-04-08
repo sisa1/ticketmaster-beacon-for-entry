@@ -86,7 +86,7 @@ public class EventBeaconDaoImpl implements EventBeaconDao {
 	}
 	
 	public EventBeaconBean updateEventBeacon(int id, EventBeaconBean eventBeacon) {
-		String updateQuery = "UPDATE events SET BeaconName = ?, EventId = ?, UUID = ?, Major = ?, Minor = ?  WHERE EventId=?";
+		String updateQuery = "UPDATE eventBeacons SET BeaconName = ?, EventId = ?, UUID = ?, Major = ?, Minor = ?  WHERE BeaconId=?";
 		EventBeaconBean result = null;
 		Connection mySqlConnection = null;
 		mySqlConnection = MySqlDao.getConnection();

@@ -14,7 +14,7 @@ function getUrlParameter(sParam)
 $(document).ready(function(){
 	// Get RESTful service's URL with an id parameter
 	var camId = getUrlParameter('id');
-	var restUrl = ("/BeaconServlet/api/rest/EventBeacon/"+camId);
+	var restUrl = ("/BeaconServlet/api/rest/Beacon/"+camId);
 	
 	// Make Ajax call to RESTful service to get camera's current info
 	$.ajax({
@@ -30,7 +30,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		
 		// Set data for Ajax call
-		var restUrl = ("/BeaconServlet/api/rest/EventBeacon");
+		var restUrl = ("/BeaconServlet/api/rest/Beacon");
 		var myData = $("form#editForm").serialize();
 		
 		// Make Ajax call to update camera via RESTful POST method
