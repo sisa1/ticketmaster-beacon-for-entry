@@ -18,6 +18,7 @@ public interface RosterEntryDao {
 	public List<RosterEntryBean> getAllRosterEntries();
 	public List<RosterEntryBean> getRosterForEvent(int eventId);
 	public boolean setAttend(int eventId, String username);
+	public boolean setUnAttend(int eventId, String username);
 	
 	public RosterEntryBean createRoster(String name);
 	public RosterEntryBean readRoster(int eventId, int userId);
