@@ -22,11 +22,7 @@ function main() {
 	//get beacon's ID numbers based on event num
 	getAndSetBeaconInfo("http://54.200.138.139:8080/BeaconServlet/api/rest/Beacon/" + $eventNum);
 	
-//	if($eventNum == 1)
-//		setSettings("asdf", "123", "123");
-//	else
-//		setSettings("lkjh", "321", "321");
-
+	//generate QR code
 	generate("http://54.200.138.139:8080/BeaconServlet/api/rest/QRGen?UUID=" + $uuid + "&Major=" + $major + "&Minor=" + $minor);
 };
 
@@ -41,31 +37,13 @@ function getAndSetBeaconInfo(url){
 		dataType: 'json',
 		success: function(data) {
 			
-			alert("trying to parse data");
-			alert("major: " + data.major);
-			alert("minor: " + data.minor);
-			alert("uuid? " + data[0].uuid);
-			alert("uuid: " + data.item.uuid);
-			
-			var $newUuid = data.item.uuid;
-			var $newMajor = data.item.major;
-			var $newMinor = data.item.minor;
+			var $newUuid = data.uuid;
+			var $newMajor = data.major;
+			var $newMinor = data.minor;
 			
 			setSettings($newUuid, $newMajor, $newMinor);
 		}
-//	}).then(function(data) {
-//		
-//		alert("uuid: " + data.item.uuid + "   major: " + data.item.major + "   minor: " + data.item.minor + " uuid? " + data[0].uuid);
-//		
-//		var $newUuid = data.item.uuid;
-//		var $newMajor = data.item.major;
-//		var $newMinor = data.item.minor;
-//		
-//		setSettings($newUuid, $newMajor, $newMinor);
-//		
-//		
-//	});	//end of .then	
-	});
+	});	//end of.ajax
 };
 
 
