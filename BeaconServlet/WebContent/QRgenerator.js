@@ -40,9 +40,11 @@ function getAndSetBeaconInfo(url){
 		url: url,
 		dataType: 'json',
 		success: function(data) {
+			var json = $.parseJSON(data);
+			
 			alert("trying to parse data");
-			alert("major: " + data.item.major);
-			alert("minor: " + data.item.minor);
+			alert("major: " + json.major);
+			alert("minor: " + data.minor);
 			alert("uuid? " + data[0].uuid);
 			alert("uuid: " + data.item.uuid);
 			
