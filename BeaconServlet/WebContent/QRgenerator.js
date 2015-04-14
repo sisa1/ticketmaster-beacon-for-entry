@@ -40,6 +40,8 @@ function getAndSetBeaconInfo(url){
 		url: url,
 	}).then(function(data) {
 		
+		alert("uuid: " + data.item.uuid + "   major: " + data.item.major + "   minor: " + data.item.minor);
+		
 		var $newUuid = data.item.uuid;
 		var $newMajor = data.item.major;
 		var $newMinor = data.item.minor;
