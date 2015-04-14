@@ -38,18 +38,28 @@ function main() {
 function getAndSetBeaconInfo(url){
 	$.ajax({
 		url: url,
-	}).then(function(data) {
-		
-		alert("uuid: " + data.item.uuid + "   major: " + data.item.major + "   minor: " + data.item.minor);
-		
-		var $newUuid = data.item.uuid;
-		var $newMajor = data.item.major;
-		var $newMinor = data.item.minor;
-		
-		setSettings($newUuid, $newMajor, $newMinor);
-		
-		
-	});	//end of .then	
+		dataType: 'json',
+		success: function(data) {
+			alert(" uuid? " + data[0].uuid + "uuid: " + data.item.uuid + "   major: " + data.item.major + "   minor: " + data.item.minor);
+			
+			var $newUuid = data.item.uuid;
+			var $newMajor = data.item.major;
+			var $newMinor = data.item.minor;
+			
+			setSettings($newUuid, $newMajor, $newMinor);
+		}
+//	}).then(function(data) {
+//		
+//		alert("uuid: " + data.item.uuid + "   major: " + data.item.major + "   minor: " + data.item.minor + " uuid? " + data[0].uuid);
+//		
+//		var $newUuid = data.item.uuid;
+//		var $newMajor = data.item.major;
+//		var $newMinor = data.item.minor;
+//		
+//		setSettings($newUuid, $newMajor, $newMinor);
+//		
+//		
+//	});	//end of .then	
 };
 
 
