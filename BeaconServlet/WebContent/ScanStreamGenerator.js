@@ -285,7 +285,7 @@ function printRoster(url){
 			var $isSuccess = item.errorMessage;
 	
 			//print results
-			$("#results").append(
+			$("#results").prepend(
 					
 				"<div id=" + $uniqueId + "-wrapper>" +
 				
