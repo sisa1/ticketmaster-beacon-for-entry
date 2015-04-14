@@ -60,6 +60,7 @@ function getAndSetBeaconInfo(url){
 //		
 //		
 //	});	//end of .then	
+	});
 };
 
 
