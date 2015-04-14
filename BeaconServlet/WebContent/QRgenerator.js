@@ -19,14 +19,39 @@ $(document).ready(main());
 //******************************************************//
 function main() {
 	
-	if($eventNum == 1)
-		setSettings("asdf", "123", "123");
-	else
-		setSettings("lkjh", "321", "321");
+	//get beacon's ID numbers based on event num
+	getAndSetBeaconInfo("http://54.200.138.139:8080/BeaconServlet/api/rest/Beacon/" + $eventNum);
+	
+//	if($eventNum == 1)
+//		setSettings("asdf", "123", "123");
+//	else
+//		setSettings("lkjh", "321", "321");
 
 	generate("http://54.200.138.139:8080/BeaconServlet/api/rest/QRGen?UUID=" + $uuid + "&Major=" + $major + "&Minor=" + $minor);
 };
 
+
+
+//******************************************************//
+//				getAndSetBeaconInfo						//
+//******************************************************//
+function getAndSetBeaconInfo(url){
+	$.ajax({
+		url: url,
+	}).then(function(data) {
+		$.each(data, function(i, item) {
+		
+		var $newUuid = item.uuid;
+		var $newMajor = item.major;
+		var $newMinor = item.minor;
+		
+		})
+		
+		setSettings($newUuid, $newMajor, $newMinor);
+		
+		
+	});	//end of .then	
+};
 
 
 
