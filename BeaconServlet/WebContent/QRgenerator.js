@@ -39,13 +39,10 @@ function getAndSetBeaconInfo(url){
 	$.ajax({
 		url: url,
 	}).then(function(data) {
-		$.each(data, function(i, item) {
 		
-		var $newUuid = item.uuid;
-		var $newMajor = item.major;
-		var $newMinor = item.minor;
-		
-		})
+		var $newUuid = data.item.uuid;
+		var $newMajor = data.item.major;
+		var $newMinor = data.item.minor;
 		
 		setSettings($newUuid, $newMajor, $newMinor);
 		
