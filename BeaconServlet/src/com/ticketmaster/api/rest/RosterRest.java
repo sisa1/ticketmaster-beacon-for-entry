@@ -39,6 +39,30 @@ import com.ticketmaster.bean.EventBeaconBean;
 public class RosterRest {
 	private static Logger logger = LogManager.getLogManager().getLogger(RosterRest.class.getCanonicalName());
 	
+	private class ResponseObject {
+		String eventName;
+		String response;
+		Boolean didSucceedScan;
+		public String getEventName() {
+			return eventName;
+		}
+		public void setEventName(String eventName) {
+			this.eventName = eventName;
+		}
+		public String getResponse() {
+			return response;
+		}
+		public void setResponse(String response) {
+			this.response = response;
+		}
+		public Boolean getDidSucceedScan() {
+			return didSucceedScan;
+		}
+		public void setDidSucceedScan(Boolean didSucceedScan) {
+			this.didSucceedScan = didSucceedScan;
+		}
+	}
+	
 	/** CRUD OPERATIONS **/
 	// CREATE OR UPDATE by form parameters
 	@PUT
@@ -291,7 +315,9 @@ public class RosterRest {
 	@Path("/uuid")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setUserAttend(@FormParam("uuid") @DefaultValue("-1") String uuid,
-								  @FormParam("username") @DefaultValue("") String username) {
+								  @FormParam("userId") @DefaultValue("0") int userId) {
+		
+		
 		
 		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
 		EventTimeDao eventTimeDao = MySqlDaoFactory.getEventTimeDAO();
@@ -300,6 +326,46 @@ public class RosterRest {
 		int eventId = tmp.getEventId();
 		int errorCode = 0;
 		boolean didSucceed = false;
+		UserBean user = MySqlDaoFactory.getUserDAO().readUser(userId);
+		if(user == null) {
+			ResponseObject response = new ResponseObject();
+			response.setEventName("");
+			response.setResponse("User does not exist");
+			response.setDidSucceedScan(false);
+			Connection con = null;
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				con = DriverManager.getConnection("jdbc:mysql://54.200.138.139:3306/beacon_servlet", "mysql_workbench", "dbadmin");
+
+				String logQuery = "INSERT INTO eventEntryScans (userID, username, eventID, responseMessage) VALUES (null, null, ?, ?)";
+				PreparedStatement pStatementLog = con.prepareStatement(logQuery);
+				pStatementLog.setInt(1, eventId);
+				pStatementLog.setString(2, response.getResponse() + " - " + response.getEventName());
+				pStatementLog.executeUpdate();
+				
+				pStatementLog.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally{
+				if(con != null){
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			
+			return Response.status(200).entity(response).build();
+		}
+		String username = user.getUsername();
 		RosterEntryBean entry = dao.readRoster(eventId, username);
 			
 		//Check for valid entry
@@ -327,13 +393,24 @@ public class RosterRest {
 		if(didSucceed) {
 			EventDao eventDao = MySqlDaoFactory.getEventDAO();
 			EventBean currentEvent = eventDao.readEvent(eventId);
-			String response = "";
+			ResponseObject response = new ResponseObject();
+			
+			response.setEventName(currentEvent.getName());
+			response.setResponse("Unsuccessful Scan");
+			response.setDidSucceedScan(true);
+			
 			if(errorCode == 0){
-				response = "Successfully Scanned entry. Welcome to: " + currentEvent.getName();
+				response.setEventName(currentEvent.getName());
+				response.setResponse("Successfully Scanned entry");
+				response.setDidSucceedScan(true);
 				dao.setAttend(eventId, username);
 			} else if (errorCode == 2) {
-				response = "Successfully Scanned exit. Exitting: " + currentEvent.getName();
+				response.setEventName(currentEvent.getName());
+				response.setResponse("Successfully Scanned exit");
+				response.setDidSucceedScan(true);
 				dao.setUnAttend(eventId, username);
+			} else {
+				
 			}
 			
 			Connection con = null;
@@ -346,7 +423,7 @@ public class RosterRest {
 				pStatementLog.setString(1, username);
 				pStatementLog.setString(2, username);
 				pStatementLog.setInt(3, eventId);
-				pStatementLog.setString(4, response);
+				pStatementLog.setString(4, response.getResponse() + " - " + response.getEventName());
 				pStatementLog.executeUpdate();
 				
 				pStatementLog.close();
@@ -372,17 +449,24 @@ public class RosterRest {
 			
 			
 		}else{
-
-			String response = "Invalid Ticket. ";
+			ResponseObject response = new ResponseObject();
+			response.setEventName("");
+			response.setDidSucceedScan(true);
+			
+			String serverResponse = "Invalid Ticket. ";
+			
 			if(errorCode == 1){
-				response += "Your ticket was not found.";
+				
+				serverResponse += "Your ticket was not found.";
 			}
 			if(errorCode == 2){
-				response += "Event has already passed.";
+				serverResponse += "Event has already passed.";
 			}
 			if(errorCode == 3){
-				response += "Event has already passed.";
+				serverResponse += "Event has already passed.";
 			}
+			
+			response.setResponse(serverResponse);
 			
 			Connection con = null;
 			try {
@@ -394,7 +478,7 @@ public class RosterRest {
 				pStatementLog.setString(1, username);
 				pStatementLog.setString(2, username);
 				pStatementLog.setInt(3, eventId);
-				pStatementLog.setString(4, response);
+				pStatementLog.setString(4, response.getResponse());
 				pStatementLog.executeUpdate();
 				
 				pStatementLog.close();
