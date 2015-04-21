@@ -13,6 +13,7 @@ public class ScanEntryBean implements Serializable {
 	String errorMessage;
 	Timestamp timeOfScan;
 	boolean didAttend;
+	String timeOfScanFormatted;
 	
 	public ScanEntryBean(int uId, String uName, int eId, String errMsg, Timestamp scan, boolean attended) {
 		userID = uId;
@@ -21,6 +22,7 @@ public class ScanEntryBean implements Serializable {
 		errorMessage = errMsg;
 		timeOfScan = scan;
 		didAttend  = attended;
+		timeOfScanFormatted = scan.toString();
 	}
 	
 	public int getUserID() {
@@ -60,6 +62,14 @@ public class ScanEntryBean implements Serializable {
 
 	public void setDidAttend(boolean didAttend) {
 		this.didAttend = didAttend;
+	}
+	
+	public void setTimeOFScanFormatted(String time){
+		timeOfScanFormatted = time;
+	}
+	
+	public String getTimeOfScanFormatted(){
+		return timeOfScanFormatted;
 	}
 	
 	
