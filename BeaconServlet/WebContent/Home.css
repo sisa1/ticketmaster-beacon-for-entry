@@ -29,7 +29,7 @@
 	width: auto;
 	min-width: 300px;		/*set this as something else later based on content*/
 	
-	font-family: "Cutive", serif;
+	font-family: "Open Sans", sans-serif;
 	font-size: 15;
 	text-align: center;		/*center #settings in its containing div, #content*/
 }
