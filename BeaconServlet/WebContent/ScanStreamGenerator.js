@@ -3,6 +3,7 @@
 var $errorMsg1 = "Invalid Ticket. Your ticket was not found.";
 var $errorMsg2 = "Invalid Ticket. Your ticket has already been scanned.";
 var $errorMsg3 = "Invalid Ticket. Event has already passed.";
+var $errorMsg4 = "User does not exist - ";
 
 var $timesPolled = 0;
 var $uniqueId = 0;			// used to id divs created from json obj
@@ -76,7 +77,7 @@ function chooseEventClick() {
 function setSettings() {
 	$eventNum = 1;			// which event do you want to display?
 	$timeout = 2000;		// in milliseconds (5000 = 5 sec)
-	$timePassed = 300000;	// in seconds, remember scans from this long ago
+	$timePassed = 60;	// in seconds, remember scans from this long ago
 		//===> check every $timeout msec for scans that happened in the past $timePassed sec
 };
 
@@ -296,6 +297,7 @@ function printRoster(url){
 							"<p>Visitor ID: " + item.userID + "</p>" +
 							
 							"<p>Scan Result: " + item.errorMessage + "</p>" +
+							"<p>Time of Scan: " + item.timeOfScanFormatted + "</p>" +
 						"</div>" +
 						
 						"<div id=" + $uniqueId + "-status>" +
@@ -355,7 +357,7 @@ function printRoster(url){
 					status.style.width = '200px';
 					status.style.height = '100%';
 					
-					if(($isSuccess == $errorMsg1) || ($isSuccess == $errorMsg2) || ($isSuccess == $errorMsg3)) {
+					if(($isSuccess == $errorMsg1) || ($isSuccess == $errorMsg2) || ($isSuccess == $errorMsg3) || ($isSuccess == $errorMsg4)) {
 						status.style.backgroundColor = '#b92e26';	/*red*/
 					}
 					else {

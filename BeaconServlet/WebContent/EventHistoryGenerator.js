@@ -3,6 +3,7 @@ var $errorMsg1 = "Invalid Ticket. Your ticket was not found.";
 var $errorMsg2 = "Invalid Ticket. Your ticket has already been scanned.";
 var $errorMsg3 = "Invalid Ticket. Event has already passed.";
 var $errorMsg4 = "User does not exist - ";
+
 var $uniqueId = 0;		//for styling the error msg readout with red/green
 
 var $eventNum = 1;		// which event do you want to display?
@@ -25,7 +26,7 @@ $(document).ready(main());
 //******************************************************//
 function main() {
 	
-	calculateTimePassed();
+	calculateTimePassed("/BeaconServlet/api/rest/EventTime/" + $eventNum);
 	
 	//alert("clearing #json-results");
 	$("#json-results").empty();
@@ -43,8 +44,17 @@ function main() {
 //				calculate time passed					//
 //******************************************************//
 //set time passed to the time between now and the start time of the event
-function calculateTimePassed() { 
-	$timePassed = 3000000;
+function calculateTimePassed(url) {
+	var timeLength = 3000000;
+	
+//	$.ajax({
+//		url: url
+//	}).then(function(data) {
+//		timeLength = data.startTime;
+//	});	//end of .then
+	
+
+	$timePassed = timeLength;
 };
 
 
@@ -79,24 +89,17 @@ function printRoster(url){
 	}).then(function(data) {
 		
 		
-		//print header row
-		$("#json-results").append(
-			"<tr class=\"header-row\">" +
-				"<td>Username</td>	<td>User Id</td>	<td>Scan Result</td>	<td>Time of Scan</td>" +
-			"</tr>"
-		);	//end of .append	
-		
-		
 		$.each(data, function(i, item) {		
 			var $isSuccess = item.errorMessage			
 			
 			//print results
-			$("#json-results").append(
+			$("#json-results").prepend(
 				"<tr>" +
 					"<td>" + item.username + "</td><td>" + item.userID + "</td><td id=" + $uniqueId + ">" + item.errorMessage + "</td><td>" + item.timeOfScanFormatted + "</td>" + 
 				"</tr>"
-			);	//end of .append
+			);	//end of .prepend
 		
+			//choose color of results
 			if(($isSuccess == $errorMsg1) || ($isSuccess == $errorMsg2) || ($isSuccess == $errorMsg3) || ($isSuccess == $errorMsg4)) {
 				document.getElementById($uniqueId).style.backgroundColor = '#b92e26';	/*red*/
 				document.getElementById($uniqueId).style.color = 'white';				/*white text*/
@@ -108,6 +111,14 @@ function printRoster(url){
 			$uniqueId++;
 				
 		}) //end of .each item
+	
+		
+		//print header row
+		$("#json-results").prepend(
+			"<tr class=\"header-row\">" +
+				"<td>Username</td>	<td>User Id</td>	<td>Scan Result</td>	<td>Time of Scan</td>" +
+			"</tr>"
+		);	//end of .prepend
 		
 		
 	});	//end of .then
