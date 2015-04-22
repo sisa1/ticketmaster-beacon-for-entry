@@ -12,6 +12,15 @@
  *  green:			#6b9f40		(success)
  */
 
+
+.opaque {
+	/*setting white, opaque background*/
+	background-color: white;
+	opacity: 0.75;
+	filter: alpha(opacity=75); /*For IE8 and earlier */
+}
+
+
  #content {
 	display: block;
 	
@@ -24,6 +33,12 @@
 	font-size: 15;
 	text-align: center;		/*center #settings in its containing div, #content*/
 }
+
+
+table {
+	width: 100%;
+}
+
 
 		#title-wrapper {
 			display: inline-block;
@@ -45,9 +60,41 @@
 					padding: 20px 0 20px 0;
 					
 					font-size: 20;
+				}
+			
+			
+		#option-wrapper {
+			display: inline-block;
+			
+			border-style: solid;
+			border-color: white;
+			border-width: 3px;
+			
+			width: 80%;
+			
+			margin-bottom: 20px;
+			
+			text-align: center
+		}
+		
+				/*this div takes up the whole <tr>, optionally holds other divs*/
+				#option {
+					overflow: hidden;	/*div stretches to fit wrapper*/
 					
-					/*setting white, opaque background*/
-					background-color: white;
-					opacity: 0.75;
-					filter: alpha(opacity=75); /*For IE8 and earlier */
+					padding: 10px 0 10px 0;
+					
+					font-size: 12;
+				}
+		
+				/*left and right are used if the tr needs two options in it side by side*/
+				#option-left {
+					display: block;
+					float: left;
+					
+					width: 48%;
+				}
+				
+				
+				#option-right {
+					display: block;
 				}
