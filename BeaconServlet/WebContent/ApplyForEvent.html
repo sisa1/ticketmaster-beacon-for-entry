@@ -1,0 +1,194 @@
+<!-- NOTE: -->
+<!-- 
+		Make sure menu buttons stay constant throughout all html pages
+ -->
+
+
+
+<HTML>
+
+<HEAD>
+	<title>HandsFree</title>
+	
+	<!-- CSS -->
+	<link type="text/css" rel="stylesheet" href="Template.css"/>
+	<link type="text/css" rel="stylesheet" href="BuyTicket.css"/>
+	
+	<!-- JS -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
+	<script type="text/javascript" src="./BuyTicketGenerator.js"></script>
+	
+	<!-- FONT -->
+	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
+</HEAD>
+
+<BODY>
+
+
+	<div id="sidebar">
+	
+		<div id="menu">
+		
+			<div id="logo">
+				<ul>
+					<li id="l1">Hands</li>
+					<li id="l2">Free</ul>
+				<p>A Ticketmaster Project by A-Team</p>
+			</div>
+				
+			<div id="menu-buttons">
+				<ul>
+					<a href="Home.html"><li>Home</li></a>
+					<a href="ScanStream.html"><li>Scan Stream</li></a>
+					<a href="EventHistory.html"><li>Event History</li></a>
+					<a href="QRcode.html"><li>Scan Yourself In</li></a>
+					<a href="BuyTicket.html"><li>Buy A Ticket Today!</li></a>
+				</ul>
+			</div>
+			<div id="menu-content">
+			
+			
+			
+			
+				<p>Welcome to our Buy Ticket page. Here you can buy a new valid ticket.</p>
+				
+				
+				
+				
+				
+			</div>
+
+		</div>
+		
+		<div id="border"></div>
+
+	</div>
+
+	
+	
+	
+	<div id="content">
+	
+		<table>
+			<tr><td class="centered">
+				<div id="title-wrapper">
+					<div id="title">
+						Purchase A Ticket
+					</div>		
+				</div>
+			</td></tr>
+			
+<!-- 			Optional space for settings
+			<tr><td class="centered">
+				<div id="settings">
+					<select id="choose-event">
+						<option value="1">1</option>
+					    <option value="2">2</option>
+					</select>
+					<input type="button" value="Change Event" onclick="chooseEventClick();">
+				</div>
+			</td></tr> -->
+			
+			
+			
+			<tr>
+				<td id ="loadgif" class="centered"  colspan="5">
+					<div>
+						<img src="./loading_spinner.gif" alt="loading..."></img>
+					</div>
+				</td>
+			</tr>
+			
+			
+			<tr><td class="centered">
+				<div id="results">
+				
+				
+					<form id="inputform" method="post">
+					<div>
+						<table class="input-table">
+							<tr>
+								<td>	Username:	</td>	<td><input id="usrname" type="text" name="username"/></td>
+							</tr>
+							<tr>
+								<td>	Password:	</td>	<td><input id="pswd" type="password" name="password"/></td>
+							</tr>
+							<tr>
+								<td>Event:</td>
+								<td id="selectBox">
+									<select id="select-box" name="eventId">
+										<option value="1">1</option>
+									    <option value="2">2</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="submit"/></td>
+							</tr>
+							
+						</table>
+					</div>
+					</form>
+				
+					<br>
+				
+				
+				</div>	<!-- end of #results -->
+			</td></tr>
+		</table>
+
+	</div>
+<script>
+
+$(document).ready(function(){
+	var form = $('#inputform');
+	var content = "";
+	$('#select-box').empty();
+	
+	$.ajax({
+		url: ("/BeaconServlet/api/rest/Event")
+	}).then(function(data) {
+		$("#loadgif").hide();
+		$('#select-box').show();
+				
+		$.each(data, function(i, item) {
+			content += "<option value=" + item.id + ">" + item.name + "</option>";
+		});
+		$('#select-box').append(content);
+	});
+	
+	$(form).submit(function(event) {
+		
+		//get POST call inputs
+		var restUrl = ("/BeaconServlet/api/rest/Roster/NewAdmission");
+		var myData = $(form).serialize();
+		$('#usrname').text = "";
+		$('#eventid').text = "";
+		$('#pswd').text = "";
+		
+		// POST call to create new user rest service at restUrl
+		$.ajax({
+			type:	'PUT',
+			url:	restUrl,
+			data:	myData,
+			dataType: 'text',
+			complete:function(data) {
+				if(data.responseText == "Wrong password") {
+					alert("Wrong Password!");
+				} else if (data.responseText == "Wrong username") {
+					alert("Wrong Username!");
+				} else if (data.responseText == "Wrong event") {
+					alert("Wrong Event!");
+				} else {
+					alert("Your request has been processed... Thank You!");
+				}
+			}
+		});
+		
+	});// end form.submit()
+	
+});
+
+</script>
+</BODY>
+</HTML>

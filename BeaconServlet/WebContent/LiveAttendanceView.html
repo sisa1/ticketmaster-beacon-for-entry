@@ -12,7 +12,11 @@
 	
 	<!-- CSS -->
 	<link type="text/css" rel="stylesheet" href="Template.css"/>
-	<link type="text/css" rel="stylesheet" href="Home.css"/>
+	<link type="text/css" rel="stylesheet" href="LiveAttendenceView.css"/>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
+	<script type="text/javascript" src="./LiveAttendanceView.js"></script>
+	<script type="text/javascript" src="./stub/crud/template/mustache.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -20,11 +24,8 @@
 
 <BODY>
 
-
 	<div id="sidebar">
-	
 		<div id="menu">
-		
 			<div id="logo">
 				<ul>
 					<li id="l1">Hands</li>
@@ -42,59 +43,36 @@
 				</ul>
 			</div>
 			<div id="menu-content">
-				<p>Welcome to our home page.</p>
+				<p>View attendance for a specific event</p>
 			</div>
-
 		</div>
-		
 		<div id="border"></div>
-
 	</div>
-
-	
-	
 	
 	<div id="content">
-	
 		<table>
-			<tr><td class="centered">
-				<div id="title-wrapper">
-					<div id="title">
-						Home
-					</div>		
-				</div>
-			</td></tr>
-			
-			<tr><td><div style="height:50px"></td></div></tr>
-			
-			<tr><td class="centered">
-				<div id="title-wrapper">
-					<div id="title">
-						(1) Not a member?
-						<p>Click here: <a href="./Enroll.html">here</a> to enroll</p>
+			<tr>
+				<td class="centered"  colspan="5">
+					<div id="title-wrapper">
+						<div id="title">
+							Event
+						</div>		
 					</div>
-				</div>
-			</td></tr>
+				</td>
+			</tr>
 			
-			<tr><td class="centered">
-				<div id="title-wrapper">
-					<div id="title">
-						(2)Need to attend a meeting/event?
-						<p>Click here: <a href="./ApplyForEvent.html">here</a> to sign up for an event</p>
+			<tr>
+				<td id ="loadgif" class="centered"  colspan="5">
+					<div>
+						<img src="./loading_spinner.gif" alt="loading..."></img>
 					</div>
-				</div>
-			</td></tr>
+				</td>
+			</tr>
 			
-			<tr><td class="centered">
-				<div id="title-wrapper">
-					<div id="title">
-						(3)Have a meeting?
-						<p>Click here: <a href="./LiveAttendanceView.html?eventId=1">here</a> to see the roster</p>
-					</div>
-				</div>
-			</td></tr>
+			<tr><td><div style="height:50px;"></td></div></tr>
 		</table>
-
+		<table id="rosterTable">
+		</table>
 	</div>
 
 </BODY>

@@ -63,6 +63,50 @@ public class RosterRest {
 		}
 	}
 	
+	
+	@PUT
+	@Path("/NewAdmission")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response responseUpdateRoster(
+										@FormParam("username") String username,
+										@FormParam("password") String userPassword,
+										@FormParam("eventId") int eventId
+																			) {
+		Response response = null;
+		RosterEntryDao dao = MySqlDaoFactory.getRosterEntryDAO();
+		
+		RosterEntryBean rosterToUpdate = new RosterEntryBean();
+		EventBean eventInRoster = MySqlDaoFactory.getEventDAO().readEvent(eventId);
+		UserBean userInRoster = MySqlDaoFactory.getUserDAO().getUser(username);
+		if(eventInRoster == null) {
+			return Response.status(200).entity("Wrong event").build();
+		}
+		if(userInRoster == null) {
+			return Response.status(200).entity("Wrong username").build();
+		}
+		if(userInRoster.getPassword().compareTo(userPassword) != 0) {
+			return Response.status(200).entity("Wrong password").build();
+		}
+		rosterToUpdate.setEvent(eventInRoster);
+		rosterToUpdate.setVisitor(userInRoster);
+		
+		/* Id has been provided -> UPDATE the event */
+		try {
+			rosterToUpdate = dao.createTicket(rosterToUpdate);
+		} catch (Exception e) {
+			//Print stack trace and return a 500 status code
+			logger.log(Level.SEVERE, "unexpecting error while creating event", e);
+			e.printStackTrace();
+			response = Response.status(500).build();
+			return response;
+		}
+		
+		// Return updated event
+		response = Response.status(200).entity(rosterToUpdate).build();
+		return response;
+	}
+	
+	
 	/** CRUD OPERATIONS **/
 	// CREATE OR UPDATE by form parameters
 	@PUT
