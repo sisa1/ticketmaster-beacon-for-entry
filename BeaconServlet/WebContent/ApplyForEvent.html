@@ -12,11 +12,10 @@
 	
 	<!-- CSS -->
 	<link type="text/css" rel="stylesheet" href="Template.css"/>
-	<link type="text/css" rel="stylesheet" href="BuyTicket.css"/>
+	<link type="text/css" rel="stylesheet" href="ApplyForEvent.css"/>
 	
 	<!-- JS -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	<!-- need this api -->
-	<script type="text/javascript" src="./BuyTicketGenerator.js"></script>
 	
 	<!-- FONT -->
 	<link href='http://fonts.googleapis.com/css?family=Cutive|Open+Sans' rel='stylesheet' type='text/css'>
@@ -39,10 +38,12 @@
 			<div id="menu-buttons">
 				<ul>
 					<a href="Home.html"><li>Home</li></a>
+					<a href="QRcode.html"><li>Scan Yourself In</li></a>
+					<a href="Enroll.html"><li>Buy A Ticket Today!</li></a>
+					<a href="ApplyForEvent.html"><li>Sign Up For An Event</li></a>
+					<a href="LiveAttendanceView.html"><li>Real-Time Roster</li></a>
 					<a href="ScanStream.html"><li>Scan Stream</li></a>
 					<a href="EventHistory.html"><li>Event History</li></a>
-					<a href="QRcode.html"><li>Scan Yourself In</li></a>
-					<a href="BuyTicket.html"><li>Buy A Ticket Today!</li></a>
 				</ul>
 			</div>
 			<div id="menu-content">
@@ -50,7 +51,8 @@
 			
 			
 			
-				<p>Welcome to our Buy Ticket page. Here you can buy a new valid ticket.</p>
+				<p>Welcome to our Apply For Event page! <br>
+				Please use this page to select which event you would like to attend.</p>
 				
 				
 				
@@ -73,7 +75,7 @@
 			<tr><td class="centered">
 				<div id="title-wrapper">
 					<div id="title">
-						Purchase A Ticket
+						Apply for Event
 					</div>		
 				</div>
 			</td></tr>
@@ -91,13 +93,13 @@
 			
 			
 			
-			<tr>
-				<td id ="loadgif" class="centered"  colspan="5">
-					<div>
-						<img src="./loading_spinner.gif" alt="loading..."></img>
-					</div>
-				</td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 				<td id ="loadgif" class="centered"  colspan="5"> -->
+<!-- 					<div> -->
+<!-- 						<img src="./loading_spinner.gif" alt="loading..."></img> -->
+<!-- 					</div> -->
+<!-- 				</td> -->
+<!-- 			</tr> -->
 			
 			
 			<tr><td class="centered">
@@ -123,10 +125,15 @@
 								</td>
 							</tr>
 							<tr>
-								<td><input type="submit"/></td>
+								<td colspan="2"><input type="submit"/></td>
 							</tr>
 							
 						</table>
+						
+						<div id="next-wrapper">
+							<div id="next">Want to see who else is going? 
+							<a href="LiveAttendanceView.html">View an event's real-time roster</a></div>
+						</div>
 					</div>
 					</form>
 				

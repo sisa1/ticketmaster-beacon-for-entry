@@ -36,7 +36,7 @@ function poll() {
 			
 			$.each(data, function(i, item) {
 				if(i % 4 == 0) {
-					content += "<tr>";
+					content += "<tr style='margin-bottom: 5px'>";
 				}
 				
 				if(i == 0) {
