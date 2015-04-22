@@ -1,20 +1,33 @@
 var didStart;
+var eventId;
 
 $.ajaxSetup({async: false});
 
 $(document).ready(function(){
 	
+	selectEvent();
 	poll();
 	didStart = false;
 	
 });
 
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+function selectEvent() {
+	var eventNum = prompt("Please enter \"1\" to view event 1 or \"2\" to view event 2.");
+	if(eventNum == 1)
+		eventId = 1;
+	else if(eventNum == 2)
+		eventId = 2;
+	else
+		selectEvent();
+			
 }
+
+//function getParameterByName(name) {
+//    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+//    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+//        results = regex.exec(location.search);
+//    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+//}
 
 function poll() {
 	setTimeout (function() {
@@ -25,7 +38,7 @@ function poll() {
 		
 		$("#rosterTable").empty();
 		
-		var eventId = getParameterByName('eventId');
+		//var eventId = getParameterByName('eventId');		//event getting now handled by selectEvent()
 		
 		$.ajax({
 			url: ("/BeaconServlet/api/rest/Roster/Event/" + eventId)
